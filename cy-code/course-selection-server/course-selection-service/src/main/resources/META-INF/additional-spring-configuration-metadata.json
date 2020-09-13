@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "logging.org.springframework.boot.autoconfigure",
+      "type": "java.lang.String",
+      "description": "Description for logging.org.springframework.boot.autoconfigure."
+  }
+] }

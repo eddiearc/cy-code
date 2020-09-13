@@ -1,0 +1,34 @@
+# servive
+#  compression:
+#    enabled: true
+spring:
+  profiles:
+    active: dubbo
+  application:
+    name: course-selection-service
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: rootqwer
+    url: jdbc:mysql://localhost:3306/course_selection?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#  rabbitmq:
+#    username: guest
+#    password: guest
+#    host: 127.0.0.1
+#    publisher-confirms: true
+#    publisher-returns: true
+#  redis:
+#    host: 127.0.0.1
+#    database: 0
+#    port: 6379
+#    password:
+
+#mybatis配置
+mybatis:
+  #实体类所在包名
+  type-aliases-package: cn.cy.course.pojo
+#通用mapper配置
+mapper:
+  #公用接口类路径
+  mappers: tk.mybatis.mapper.common.Mapper
+  identity: MYSQL

@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: dubbo
+  application:
+    name: course-selection-api
+
+server:
+  port: 8081
