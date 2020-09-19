@@ -13,17 +13,16 @@ import java.io.Serializable;
 @Table(name = "tb_selection")
 public class Selection implements Serializable {
 
-    @Id
-    private String id;
-
     /**
      * 学生ID
      */
+    @Id
     private String studentId;
 
     /**
      * 课程ID
      */
+    @Id
     private String courseId;
 
     /**
@@ -39,20 +38,11 @@ public class Selection implements Serializable {
     @Override
     public String toString() {
         return "Selection{" +
-                "id='" + id + '\'' +
                 ", studentId='" + studentId + '\'' +
                 ", courseId='" + courseId + '\'' +
                 ", term=" + term +
                 ", stage=" + stage +
                 '}';
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getStudentId() {

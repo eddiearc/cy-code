@@ -18,4 +18,5 @@ public class CourseServiceProvider {
         new SpringApplicationBuilder(CourseServiceProvider.class)
                 .web(WebApplicationType.NONE) // 非 Web 应用
                 .run(args);
-    }}
+    }
+}

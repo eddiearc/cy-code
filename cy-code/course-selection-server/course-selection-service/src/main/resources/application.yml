@@ -17,11 +17,11 @@ spring:
 #    host: 127.0.0.1
 #    publisher-confirms: true
 #    publisher-returns: true
-#  redis:
-#    host: 127.0.0.1
-#    database: 0
-#    port: 6379
-#    password:
+  redis:
+    host: 127.0.0.1
+    database: 0
+    port: 6379
+    password:
 
 #mybatis配置
 mybatis:
