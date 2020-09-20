@@ -1,6 +1,6 @@
 package cn.cy.course.task;
 
-import cn.cy.course.mapper.SelectionMapper;
+import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Pack;
 import cn.cy.course.pojo.Selection;
 import cn.cy.course.service.SelectionService;
@@ -20,7 +20,7 @@ import java.util.Set;
  * @create 2020/9/18 5:10 下午
  */
 @Component
-public class CreateSelectionTask {
+public class CreateSelectionExcutor {
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -30,24 +30,46 @@ public class CreateSelectionTask {
 
     private String SECKILL_QUEUE = "SECKILL_QUEUE";
 
+    private String COURSE_MSG_HASH = "COURSE_MSG_HASH";
+
+    private String COURSE_STOCK_QUEUE = "COURSE_STOCK_QUEUE";
+
+    private String COURSE_STOCK_HASH = "COURSE_STOCK_HASH";
+
     /**
-     * 从redis list中取出处理
-     * 1. Redis课程剩余数量-1
+     * 1. 从redis list中取出处理
+     * 2. 处理库存（库存队列，课程信息库存）
      * 2. 将处理好的抢课信息入到MQ延时队列中，等待入库
-     * 3. Web-Socket回调前端提示抢课成功
      */
     @Async
     @Transactional(rollbackFor = Exception.class)
     public void createSelection() {
+        System.out.println("-----抢课Pack处理-----");
+        // 1. 取出任务
         Pack pack = (Pack) redisTemplate.boundListOps(SECKILL_QUEUE).rightPop();
         Set<String> courseIdSet = pack.getCourseIdSet();
 
-        // 迭代 将选课成功的信息入到数据库中
         for (String courseId : courseIdSet) {
+            String queueId = (String) redisTemplate.boundListOps(COURSE_STOCK_QUEUE).rightPop();
+
+            if (queueId == null || courseId.equals(queueId)) {
+                continue;
+            }
+            /**
+             * 从Course-stock-hash中取出库存数量
+             * 借助Redis的单线程原子性操作进行库存自减
+             *
+             * 防止多线程问题出现数据不一致问题
+              */
+            Course course = (Course) redisTemplate.boundHashOps(COURSE_MSG_HASH).get(courseId);
+            Long count = redisTemplate.boundHashOps(COURSE_STOCK_HASH).increment(courseId, -1);
+            course.setCount(count.intValue());
+            redisTemplate.boundHashOps(COURSE_MSG_HASH).put(courseId, course);
+
+            // 选课信息入库
             Selection selection = new Selection();
-            selection.setCourseId(courseId);
             selection.setStudentId(pack.getStudentId());
-            selection.setTerm(pack.getTerm());
+            selection.setCourseId(courseId);
             selectionService.add(selection);
         }
     }

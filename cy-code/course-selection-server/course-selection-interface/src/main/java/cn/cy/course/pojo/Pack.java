@@ -1,5 +1,6 @@
 package cn.cy.course.pojo;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +10,7 @@ import java.util.Set;
  * @blog https://blog.csdn.net/weixin_44129784
  * @create 2020/9/18 4:22 下午
  */
-public class Pack {
+public class Pack implements Serializable {
 
     /**
      * 学号
