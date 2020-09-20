@@ -41,11 +41,15 @@ public class SelectionController {
         return  selectionService.findPage(searchMap,page,size);
     }
 
-    @GetMapping("/findById")
-    public Selection findById(String id){
-        return selectionService.findById(id);
+    @GetMapping("/findByCourseId")
+    public List<Selection> findByCourseId(String courseId) {
+        return selectionService.findByStudentId(courseId);
     }
 
+    @GetMapping("/findByStudentId")
+    public List<Selection> findByStudentId(String studentId) {
+        return selectionService.findByStudentId(studentId);
+    }
 
     @PostMapping("/add")
     public Result add(@RequestBody Selection selection){
@@ -60,9 +64,8 @@ public class SelectionController {
     }
 
     @GetMapping("/delete")
-    public Result delete(String id){
-        selectionService.delete(id);
+    public Result delete(String studentId, String courseId){
+        selectionService.delete(studentId, courseId);
         return new Result();
     }
-
 }

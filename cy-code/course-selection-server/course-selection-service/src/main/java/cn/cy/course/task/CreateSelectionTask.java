@@ -3,6 +3,8 @@ package cn.cy.course.task;
 import cn.cy.course.mapper.SelectionMapper;
 import cn.cy.course.pojo.Pack;
 import cn.cy.course.pojo.Selection;
+import cn.cy.course.service.SelectionService;
+import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
@@ -23,8 +25,8 @@ public class CreateSelectionTask {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Autowired(required = false)
-    private SelectionMapper selectionMapper;
+    @Reference
+    private SelectionService selectionService;
 
     private String SECKILL_QUEUE = "SECKILL_QUEUE";
 
@@ -40,13 +42,13 @@ public class CreateSelectionTask {
         Pack pack = (Pack) redisTemplate.boundListOps(SECKILL_QUEUE).rightPop();
         Set<String> courseIdSet = pack.getCourseIdSet();
 
+        // 迭代 将选课成功的信息入到数据库中
         for (String courseId : courseIdSet) {
             Selection selection = new Selection();
             selection.setCourseId(courseId);
             selection.setStudentId(pack.getStudentId());
             selection.setTerm(pack.getTerm());
+            selectionService.add(selection);
         }
-
-
     }
 }
