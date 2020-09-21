@@ -96,10 +96,10 @@ public class SelectionServiceImpl implements SelectionService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void add(Selection selection) {
+    public int add(Selection selection) {
         // 使对应的redis中的学生选课信息过期
         redisTemplate.delete(SELECTION_STU + selection.getStudentId());
-        selectionMapper.insertSelective(selection);
+        return selectionMapper.insertSelective(selection);
     }
 
     /**

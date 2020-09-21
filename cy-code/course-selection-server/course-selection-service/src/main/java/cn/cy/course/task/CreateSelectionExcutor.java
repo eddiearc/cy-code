@@ -4,12 +4,10 @@ import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Pack;
 import cn.cy.course.pojo.Selection;
 import cn.cy.course.service.SelectionService;
-import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author eddieVim
@@ -34,17 +32,22 @@ public class CreateSelectionExcutor {
 
     private String COURSE_STOCK_HASH = "COURSE_STOCK_HASH";
 
+    @Async
+    public void testAsync() {
+        System.out.println("---TEST_ASYNC---");
+    }
+
     /**
      * 1. 从redis list中取出处理
      * 2. 处理库存（库存队列，课程信息库存）
-     * 2. 将处理好的抢课信息入到MQ延时队列中，等待入库
+     * 3. 将处理好的抢课信息入到MQ延时队列中，等待入库
      */
     @Async
-    @Transactional(rollbackFor = Exception.class)
     public void createSelection() {
         System.out.println("-----抢课Pack处理-----");
         // 1. 取出任务
         Pack pack = (Pack) redisTemplate.boundListOps(SECKILL_QUEUE).rightPop();
+        System.out.println(pack);
         String courseId = pack.getCourseId();
 
         // 2. 消去库存，并验证是否已经被抢完了
@@ -72,8 +75,13 @@ public class CreateSelectionExcutor {
         Selection selection = new Selection();
         selection.setStudentId(pack.getStudentId());
         selection.setCourseId(courseId);
-        selectionService.add(selection);
+        int add = selectionService.add(selection);
 
         // 5. 回调前端
+        if (add <= 0) {
+            System.out.println("FAIL!");
+        } else {
+            System.out.println("SUCCESS!");
+        }
     }
 }

@@ -69,7 +69,7 @@ public interface SelectionService {
     /**
      * 需指明studentId 与 courseId
      */
-    public void add(Selection selection);
+    public int add(Selection selection);
 
 
     /**

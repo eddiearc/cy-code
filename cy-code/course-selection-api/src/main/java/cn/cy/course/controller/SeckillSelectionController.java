@@ -50,9 +50,9 @@ public class SeckillSelectionController {
 
         //4. 是否成功返回
         if (bool) {
-            return new Result(0, "选课成功，等待20分钟后的课程确定！");
+            return new Result(0, "选课排队中！");
         } else {
-            return new Result(1, "课程已经选完了！");
+            return new Result(1, "您所选的课程已经被选完了！");
         }
     }
 

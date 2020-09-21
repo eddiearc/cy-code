@@ -2,6 +2,7 @@ package cn.cy.course.service.impl;
 
 import cn.cy.course.pojo.Pack;
 import cn.cy.course.service.SeckillSelectionService;
+import cn.cy.course.task.CreateSelectionExcutor;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,6 +18,9 @@ public class SeckillSelectionServiceImpl implements SeckillSelectionService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private CreateSelectionExcutor createSelectionExcutor;
 
     private String SECKILL_QUEUE = "SECKILL_QUEUE";
 
@@ -37,6 +41,9 @@ public class SeckillSelectionServiceImpl implements SeckillSelectionService {
 
         //3. 入队列
         Long aLong = redisTemplate.boundListOps(SECKILL_QUEUE).leftPush(pack);
+
+        //4. 异步处理任务
+        createSelectionExcutor.createSelection();
 
         return true;
     }
