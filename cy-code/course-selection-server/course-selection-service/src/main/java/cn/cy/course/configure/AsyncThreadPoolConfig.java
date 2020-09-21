@@ -41,7 +41,7 @@ public class AsyncThreadPoolConfig implements AsyncConfigurer {
     /**
      * 自定义线程工厂
      */
-    static class AsyncThreadFactory implements ThreadFactory {
+    private static class AsyncThreadFactory implements ThreadFactory {
 
         private final ThreadGroup group;
         private final AtomicInteger threadNumber = new AtomicInteger(1);
