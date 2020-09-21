@@ -18,34 +18,22 @@ public class Pack implements Serializable {
     private String studentId;
 
     /**
-     * 选课包,存放courseID，根据Set不重复
+     * 选课id，一次请求只能有一个
      */
-    private Set<String> courseIdSet;
+    private String courseId;
 
     /**
      * 第几学期
      */
     private Integer term;
 
-    public Pack() {
-        this.courseIdSet = new HashSet<>(2);
-    }
-
     @Override
     public String toString() {
         return "Pack{" +
                 "studentId='" + studentId + '\'' +
-                ", courseIdSet=" + courseIdSet +
+                ", courseId='" + courseId + '\'' +
                 ", term=" + term +
                 '}';
-    }
-
-    public Integer getTerm() {
-        return term;
-    }
-
-    public void setTerm(Integer term) {
-        this.term = term;
     }
 
     public String getStudentId() {
@@ -56,11 +44,19 @@ public class Pack implements Serializable {
         this.studentId = studentId;
     }
 
-    public Set<String> getCourseIdSet() {
-        return courseIdSet;
+    public String getCourseId() {
+        return courseId;
     }
 
-    public void setCourseIdSet(Set<String> courseIdSet) {
-        this.courseIdSet = courseIdSet;
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
+    public Integer getTerm() {
+        return term;
+    }
+
+    public void setTerm(Integer term) {
+        this.term = term;
     }
 }

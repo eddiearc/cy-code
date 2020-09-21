@@ -11,8 +11,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
-
 /**
  * @author eddieVim
  * @微信公众号 埃迪的Code日记 / PositiveEddie
@@ -47,30 +45,35 @@ public class CreateSelectionExcutor {
         System.out.println("-----抢课Pack处理-----");
         // 1. 取出任务
         Pack pack = (Pack) redisTemplate.boundListOps(SECKILL_QUEUE).rightPop();
-        Set<String> courseIdSet = pack.getCourseIdSet();
+        String courseId = pack.getCourseId();
 
-        for (String courseId : courseIdSet) {
-            String queueId = (String) redisTemplate.boundListOps(COURSE_STOCK_QUEUE).rightPop();
-
-            if (queueId == null || courseId.equals(queueId)) {
-                continue;
-            }
-            /**
-             * 从Course-stock-hash中取出库存数量
-             * 借助Redis的单线程原子性操作进行库存自减
-             *
-             * 防止多线程问题出现数据不一致问题
-              */
-            Course course = (Course) redisTemplate.boundHashOps(COURSE_MSG_HASH).get(courseId);
-            Long count = redisTemplate.boundHashOps(COURSE_STOCK_HASH).increment(courseId, -1);
-            course.setCount(count.intValue());
-            redisTemplate.boundHashOps(COURSE_MSG_HASH).put(courseId, course);
-
-            // 选课信息入库
-            Selection selection = new Selection();
-            selection.setStudentId(pack.getStudentId());
-            selection.setCourseId(courseId);
-            selectionService.add(selection);
+        // 2. 消去库存，并验证是否已经被抢完了
+        String queueId = (String) redisTemplate.boundListOps(COURSE_STOCK_QUEUE).rightPop();
+        if (queueId == null || courseId.equals(queueId)) {
+            // 3. 提示没抢成功
+            return;
         }
+
+        /**
+         * 3. 更新课程信息中的库存
+         *
+         * 从Course-stock-hash中取出库存数量
+         * 借助Redis的单线程原子性操作进行库存自减
+         *
+         * 防止多线程问题出现数据不一致问题
+          */
+        Course course = (Course) redisTemplate.boundHashOps(COURSE_MSG_HASH).get(courseId);
+        Long count = redisTemplate.boundHashOps(COURSE_STOCK_HASH).increment(courseId, -1);
+        course.setCount(count.intValue());
+        redisTemplate.boundHashOps(COURSE_MSG_HASH).put(courseId, course);
+
+
+        // 4. 选课信息入库
+        Selection selection = new Selection();
+        selection.setStudentId(pack.getStudentId());
+        selection.setCourseId(courseId);
+        selectionService.add(selection);
+
+        // 5. 回调前端
     }
 }

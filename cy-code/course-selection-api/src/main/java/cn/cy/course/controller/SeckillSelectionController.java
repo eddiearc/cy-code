@@ -33,21 +33,17 @@ public class SeckillSelectionController {
     /**
      * 添加选课请求
      *
-     * @param courseIdList
+     * @param courseId
      * @return
      */
     @GetMapping("/add")
-    public Result add(List<String> courseIdList) {
+    public Result add(String courseId) {
         //1. 通过Sercurity获取学号
         String studentId = "";
 
         //2. 课程选课包
         Pack pack = new Pack();
         pack.setStudentId(studentId);
-        for (String courseId : courseIdList) {
-            // set去重
-            pack.getCourseIdSet().add(courseId);
-        }
 
         //3. 处理包，检查是否已经选过，检查课程是否还有剩余空位
         boolean bool = seckillSelectionService.add(pack);

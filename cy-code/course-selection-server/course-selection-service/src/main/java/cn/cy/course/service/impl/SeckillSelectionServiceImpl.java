@@ -20,11 +20,17 @@ public class SeckillSelectionServiceImpl implements SeckillSelectionService {
 
     private String SECKILL_QUEUE = "SECKILL_QUEUE";
 
+    private String COURSE_STOCK_QUEUE = "COURSE_STOCK_QUEUE";
+
 
     @Override
     public boolean add(Pack pack) {
         //1. 检查课程库存 减少无效排队
-
+        String courseId = pack.getCourseId();
+        Long count = redisTemplate.boundListOps(COURSE_STOCK_QUEUE + courseId).size();
+        if (count == null || count <= 0) {
+            throw new RuntimeException("该课程已经被选完了");
+        }
 
         //2. 检查用户是否有重复的选课， Redis - set
 
