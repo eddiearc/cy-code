@@ -3,6 +3,7 @@ package cn.cy.course;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.scheduling.annotation.EnableAsync;
 import tk.mybatis.spring.annotation.MapperScan;
 
 /**
@@ -12,6 +13,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @create 2020/9/12 11:41 上午
  */
 @SpringBootApplication
+@EnableAsync
 @MapperScan("cn.cy.course.mapper")
 public class CourseServiceProvider {
     public static void main(String[] args) {
