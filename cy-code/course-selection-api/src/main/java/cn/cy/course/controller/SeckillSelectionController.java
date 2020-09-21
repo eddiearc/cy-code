@@ -2,7 +2,6 @@ package cn.cy.course.controller;
 
 import cn.cy.course.entity.PageResult;
 import cn.cy.course.entity.Result;
-import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Pack;
 import cn.cy.course.pojo.Selection;
 import cn.cy.course.service.SeckillSelectionService;
@@ -39,11 +38,12 @@ public class SeckillSelectionController {
     @GetMapping("/add")
     public Result add(String courseId) {
         //1. 通过Sercurity获取学号
-        String studentId = "";
+        String studentId = "201841054085";
 
         //2. 课程选课包
         Pack pack = new Pack();
         pack.setStudentId(studentId);
+        pack.setCourseId(courseId);
 
         //3. 处理包，检查是否已经选过，检查课程是否还有剩余空位
         boolean bool = seckillSelectionService.add(pack);

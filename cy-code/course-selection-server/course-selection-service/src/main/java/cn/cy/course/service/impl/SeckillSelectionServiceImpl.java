@@ -29,7 +29,7 @@ public class SeckillSelectionServiceImpl implements SeckillSelectionService {
         String courseId = pack.getCourseId();
         Long count = redisTemplate.boundListOps(COURSE_STOCK_QUEUE + courseId).size();
         if (count == null || count <= 0) {
-            throw new RuntimeException("该课程已经被选完了");
+            throw new RuntimeException("该课程已经被选完了!");
         }
 
         //2. 检查用户是否有重复的选课， Redis - set

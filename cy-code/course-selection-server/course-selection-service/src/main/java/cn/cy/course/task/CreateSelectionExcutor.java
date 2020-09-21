@@ -23,7 +23,7 @@ public class CreateSelectionExcutor {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Reference
+    @Autowired
     private SelectionService selectionService;
 
     private String SECKILL_QUEUE = "SECKILL_QUEUE";

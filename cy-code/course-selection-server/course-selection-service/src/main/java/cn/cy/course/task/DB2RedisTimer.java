@@ -2,9 +2,11 @@ package cn.cy.course.task;
 
 import cn.cy.course.pojo.Course;
 import cn.cy.course.service.CourseService;
-import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,10 +19,11 @@ import java.util.List;
  * @blog https://blog.csdn.net/weixin_44129784
  * @create 2020/9/18 10:30 下午
  */
-@Component
+@Configuration
+@EnableScheduling
 public class DB2RedisTimer {
 
-    @Reference
+    @Autowired
     private CourseService courseService;
 
     @Autowired
@@ -35,6 +38,7 @@ public class DB2RedisTimer {
     /**
      * 将课程信息更新到Redis中
      */
+    @Scheduled(cron = "0/5 * * * * ?")
     public void Course2Redis() {
         List<Course> courseList = courseService.findAll();
         for (Course course : courseList) {
