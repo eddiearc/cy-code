@@ -30,7 +30,7 @@ public class SeckillSelectionServiceImpl implements SeckillSelectionService {
 
 
     @Override
-    public boolean add(Pack pack) {
+    public void add(Pack pack) {
         //1. 检查课程库存 减少无效排队
         String courseId = pack.getCourseId();
         Long stockCount = redisTemplate.boundListOps(COURSE_STOCK_QUEUE + courseId).size();
@@ -49,7 +49,5 @@ public class SeckillSelectionServiceImpl implements SeckillSelectionService {
 
         //4. 异步处理任务
         createSelectionExcutor.createSelection();
-
-        return true;
     }
 }

@@ -1,8 +1,6 @@
 package cn.cy.course.pojo;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author eddieVim

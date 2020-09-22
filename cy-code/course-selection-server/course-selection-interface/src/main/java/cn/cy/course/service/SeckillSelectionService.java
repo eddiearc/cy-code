@@ -15,5 +15,5 @@ public interface SeckillSelectionService {
      * @param pack 选课信息
      * @return
      */
-    public boolean add(Pack pack);
+    public void add(Pack pack);
 }

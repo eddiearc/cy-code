@@ -1,6 +1,5 @@
 package cn.cy.course.task;
 
-import cn.cy.course.mapper.CourseMapper;
 import cn.cy.course.mapper.SelectionMapper;
 import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Selection;

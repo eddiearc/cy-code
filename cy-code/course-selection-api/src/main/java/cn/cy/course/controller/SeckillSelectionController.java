@@ -46,7 +46,7 @@ public class SeckillSelectionController {
         pack.setCourseId(courseId);
 
         //3. 处理包，检查是否已经选过，检查课程是否还有剩余空位
-        boolean bool = seckillSelectionService.add(pack);
+        seckillSelectionService.add(pack);
 
         return new Result(0, "选课排队中！");
     }
