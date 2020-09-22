@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class DB2RedisTimer {
     /**
      * 将课程信息更新到Redis中
      */
-    @Scheduled(cron = "0/5 * * * * ?")
+    @Scheduled(cron = "0/30 * * * * ?")
     public void Course2Redis() {
         List<Course> courseList = courseService.findAll();
         for (Course course : courseList) {
@@ -51,8 +50,9 @@ public class DB2RedisTimer {
             redisTemplate.delete(COURSE_STOCK_QUEUE + course.getId());
             for (int i = 0; i < course.getCount(); i++) {
                 redisTemplate.boundListOps(COURSE_STOCK_QUEUE + course.getId()).leftPush(courseId);
-                redisTemplate.boundHashOps(COURSE_STOCK_HASH).put(courseId, course.getCount());
             }
+            // 初始化库存hash
+            redisTemplate.boundHashOps(COURSE_STOCK_HASH).increment(courseId, course.getCount().intValue());
         }
     }
 
