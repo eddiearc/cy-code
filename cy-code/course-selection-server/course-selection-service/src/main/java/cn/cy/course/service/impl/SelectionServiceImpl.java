@@ -45,6 +45,19 @@ public class SelectionServiceImpl implements SelectionService {
     @Override
     public List<Selection> findList(Map<String, Object> searchMap) {
         Example example = new Example(Selection.class);
+        Example.Criteria criteria = example.createCriteria();
+        for (Map.Entry<String, Object> entry : searchMap.entrySet()) {
+            switch (entry.getKey()) {
+//                case "studentId":
+//                    criteria.andEqualTo("student_id", entry.getValue());
+//                    break;
+//                case "courseId":
+//                    criteria.andEqualTo("course_id", entry.getValue());
+//                    break;
+                default:
+                    criteria.andEqualTo(entry.getKey(), entry.getValue());
+            }
+        }
         return selectionMapper.selectByExample(example);
     }
 

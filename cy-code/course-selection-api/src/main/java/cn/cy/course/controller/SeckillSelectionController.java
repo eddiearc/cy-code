@@ -1,6 +1,5 @@
 package cn.cy.course.controller;
 
-import cn.cy.course.entity.PageResult;
 import cn.cy.course.entity.Result;
 import cn.cy.course.pojo.Pack;
 import cn.cy.course.pojo.Selection;
@@ -36,16 +35,17 @@ public class SeckillSelectionController {
      * @return
      */
     @GetMapping("/add")
-    public Result add(String courseId) {
+    public Result add(String courseId, String stuId) {
+        String studentId = stuId;
         //1. 通过Sercurity获取学号
-        String studentId = "201841054085";
+        // String studentId = "201841054085";
 
         //2. 课程选课包
         Pack pack = new Pack();
         pack.setStudentId(studentId);
         pack.setCourseId(courseId);
 
-        //3. 处理包，检查是否已经选过，检查课程是否还有剩余空位
+        //3. 处理Pack任务
         seckillSelectionService.add(pack);
 
         return new Result(0, "选课排队中！");
@@ -57,17 +57,16 @@ public class SeckillSelectionController {
      * @return
      */
     @GetMapping("/query")
-    public PageResult<Selection> query(int page, int size) {
+    public List<Selection> query() {
         //1. 通过Sercurity获取学号
-        String studentId = "";
+        String studentId = "201841054085";
 
         //2. 获取对应的选课信息
         Map<String, Object> map = new HashMap<>();
         map.put("studentId", studentId);
-        PageResult<Selection> res = selectionService.findPage(map, page, size);
+        List<Selection> res = selectionService.findList(map);
         //3. 根据学期排序
-        List<Selection> rows = res.getRows();
-        Collections.sort(rows, new Comparator<Selection>() {
+        Collections.sort(res, new Comparator<Selection>() {
             @Override
             public int compare(Selection o1, Selection o2) {
                 return o2.getTerm() - o1.getTerm();

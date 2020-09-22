@@ -15,9 +15,10 @@ import java.util.List;
 public interface SelectionMapper extends Mapper<Selection> {
 
     /**
+     * 返回当前学期term值
      *
      * @return
      */
-    @Select("SELECT student_id, course_id FROM tb_selection GROUP BY student_id, course_id")
-    public List<Selection> selectGroupByStudentId();
+    @Select("SELECT MAX(term) currTerm FROM tb_curr_term")
+    public Integer currTerm();
 }

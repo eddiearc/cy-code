@@ -1,14 +1,13 @@
 package cn.cy.course.task;
 
+import cn.cy.course.mapper.CourseMapper;
 import cn.cy.course.mapper.SelectionMapper;
 import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Selection;
-import cn.cy.course.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -26,9 +25,9 @@ import java.util.List;
 public class DB2RedisTimer {
 
     @Autowired(required = false)
-    private CourseService courseService;
+    private CourseMapper courseMapper;
 
-    @Autowired
+    @Autowired(required = false)
     private SelectionMapper selectionMapper;
 
     @Autowired
@@ -42,12 +41,26 @@ public class DB2RedisTimer {
 
     private String SELECTION_SET = "SELECTION_SET";
 
+    private Integer term;
+
+    /**
+     * 初始化term值
+     */
+    private void initTerm() {
+        this.term = selectionMapper.currTerm();
+    }
+
     /**
      * 将课程信息更新到Redis中
      */
     @PostConstruct
     public void course2Redis() {
-        List<Course> courseList = courseService.findAll();
+        Course searchCourse = new Course();
+        if (term == null) {
+            initTerm();
+        }
+        searchCourse.setTerm(term);
+        final List<Course> courseList = courseMapper.select(searchCourse);
         // delete msg
         redisTemplate.delete(COURSE_STOCK_HASH);
         // 将所有的Course信息存入Redis
@@ -71,20 +84,16 @@ public class DB2RedisTimer {
      */
     @PostConstruct
     public void selection2Redis() {
-        List<Selection> list = selectionMapper.selectAll();
+        Selection searchSelection = new Selection();
+        if (term == null) {
+            initTerm();
+        }
+        final List<Selection> list = selectionMapper.select(searchSelection);
 
         // set
         for (Selection selection : list) {
             String currStuId = selection.getStudentId();
             redisTemplate.boundSetOps(SELECTION_SET + currStuId).add(selection.getCourseId());
         }
-
-
     }
-
-    @Scheduled(cron = "0 * * * * ?")
-    public void redis2DB() {
-
-    }
-
 }
