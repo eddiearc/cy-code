@@ -48,12 +48,7 @@ public class SeckillSelectionController {
         //3. 处理包，检查是否已经选过，检查课程是否还有剩余空位
         boolean bool = seckillSelectionService.add(pack);
 
-        //4. 是否成功返回
-        if (bool) {
-            return new Result(0, "选课排队中！");
-        } else {
-            return new Result(1, "您所选的课程已经被选完了！");
-        }
+        return new Result(0, "选课排队中！");
     }
 
     /**

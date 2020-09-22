@@ -1,6 +1,9 @@
 package cn.cy.course.task;
 
+import cn.cy.course.mapper.CourseMapper;
+import cn.cy.course.mapper.SelectionMapper;
 import cn.cy.course.pojo.Course;
+import cn.cy.course.pojo.Selection;
 import cn.cy.course.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
@@ -22,8 +26,11 @@ import java.util.List;
 @EnableScheduling
 public class DB2RedisTimer {
 
-    @Autowired
+    @Autowired(required = false)
     private CourseService courseService;
+
+    @Autowired
+    private SelectionMapper selectionMapper;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -34,12 +41,17 @@ public class DB2RedisTimer {
 
     private String COURSE_STOCK_HASH = "COURSE_STOCK_HASH";
 
+    private String SELECTION_SET = "SELECTION_SET";
+
     /**
      * 将课程信息更新到Redis中
      */
-    @Scheduled(cron = "0/30 * * * * ?")
-    public void Course2Redis() {
+    @PostConstruct
+    public void course2Redis() {
         List<Course> courseList = courseService.findAll();
+        // delete msg
+        redisTemplate.delete(COURSE_STOCK_HASH);
+        // 将所有的Course信息存入Redis
         for (Course course : courseList) {
             String courseId = course.getId();
             // 将课程信息存放到hash中
@@ -48,12 +60,32 @@ public class DB2RedisTimer {
 
             // 初始化库存队列
             redisTemplate.delete(COURSE_STOCK_QUEUE + course.getId());
-            for (int i = 0; i < course.getCount(); i++) {
+            for (int i = 0; i < course.getStock(); i++) {
                 redisTemplate.boundListOps(COURSE_STOCK_QUEUE + course.getId()).leftPush(courseId);
             }
-            // 初始化库存hash
-            redisTemplate.boundHashOps(COURSE_STOCK_HASH).increment(courseId, course.getCount().intValue());
+            redisTemplate.boundHashOps(COURSE_STOCK_HASH).increment(courseId, course.getStock());
         }
+    }
+
+    /**
+     * 将每个用户对应的选课信息以Set形式存到Redis中
+     */
+    @PostConstruct
+    public void selection2Redis() {
+        List<Selection> list = selectionMapper.selectAll();
+
+        // set
+        for (Selection selection : list) {
+            String currStuId = selection.getStudentId();
+            redisTemplate.boundSetOps(SELECTION_SET + currStuId).add(selection.getCourseId());
+        }
+
+
+    }
+
+    @Scheduled(cron = "0 * * * * ?")
+    public void redis2DB() {
+
     }
 
 }

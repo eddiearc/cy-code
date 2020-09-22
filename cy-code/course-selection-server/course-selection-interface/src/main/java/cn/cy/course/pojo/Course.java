@@ -78,7 +78,12 @@ public class Course implements Serializable {
     /**
      * 课程数量
      */
-    private Integer count;
+    private Integer stock;
+
+    /**
+     * 课程总数
+     */
+    private Integer total;
 
     @Override
     public boolean equals(Object o) {
@@ -90,11 +95,6 @@ public class Course implements Serializable {
         }
         Course course = (Course) o;
         return id.equals(course.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 
     @Override
@@ -112,8 +112,25 @@ public class Course implements Serializable {
                 ", teacherId='" + teacherId + '\'' +
                 ", teacherName='" + teacherName + '\'' +
                 ", categoryId=" + categoryId +
-                ", count=" + count +
+                ", stock=" + stock +
+                ", total=" + total +
                 '}';
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 
     public Integer getDurationStart() {
@@ -210,14 +227,6 @@ public class Course implements Serializable {
 
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
     }
 }
 

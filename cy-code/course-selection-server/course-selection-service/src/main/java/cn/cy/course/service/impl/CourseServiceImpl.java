@@ -7,6 +7,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
@@ -14,6 +15,11 @@ import java.util.Map;
 
 @Service(interfaceClass = CourseService.class)
 public class CourseServiceImpl implements CourseService {
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    private String COURSE_MSG_HASH = "COURSE_MSG_HASH";
 
     @Autowired
     private CourseMapper courseMapper;
@@ -91,6 +97,7 @@ public class CourseServiceImpl implements CourseService {
      */
     @Override
     public void update(Course course) {
+        redisTemplate.boundHashOps(COURSE_MSG_HASH).delete(course.getId());
         courseMapper.updateByPrimaryKeySelective(course);
     }
 

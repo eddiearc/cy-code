@@ -3,6 +3,7 @@ package cn.cy.course.task;
 import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Pack;
 import cn.cy.course.pojo.Selection;
+import cn.cy.course.service.CourseService;
 import cn.cy.course.service.SelectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -21,12 +22,13 @@ public class CreateSelectionExcutor {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Autowired
+    @Autowired(required = false)
     private SelectionService selectionService;
 
-    private String SECKILL_QUEUE = "SECKILL_QUEUE";
+    @Autowired(required = false)
+    private CourseService courseService;
 
-    private String COURSE_MSG_HASH = "COURSE_MSG_HASH";
+    private String SECKILL_QUEUE = "SECKILL_QUEUE";
 
     private String COURSE_STOCK_QUEUE = "COURSE_STOCK_QUEUE";
 
@@ -51,9 +53,11 @@ public class CreateSelectionExcutor {
 
         // 2. 消去库存，并验证是否已经被抢完了
         String queueId = (String) redisTemplate.boundListOps(COURSE_STOCK_QUEUE + courseId).rightPop();
-        // System.out.println("queueId:" + queueId);
         if (queueId == null || !courseId.equals(queueId)) {
             // 3. 提示没抢成功
+
+            //4. 修改课程数据库信息与redis中的信息
+            redisAndDbConsist(courseId, 0);
             return;
         }
 
@@ -65,12 +69,8 @@ public class CreateSelectionExcutor {
          *
          * 防止多线程问题出现数据不一致问题
           */
-        Course course = (Course) redisTemplate.boundHashOps(COURSE_MSG_HASH).get(courseId);
-        Long count = redisTemplate.boundHashOps(COURSE_STOCK_HASH).increment(courseId, -1);
-        System.out.println("剩余库存：" + count);
-        course.setCount(count.intValue());
-        redisTemplate.boundHashOps(COURSE_MSG_HASH).put(courseId, course);
-
+        Long stock = redisTemplate.boundHashOps(COURSE_STOCK_HASH).increment(courseId, -1);
+        System.out.println("剩余库存：" + stock);
 
         // 4. 选课信息入库
         Selection selection = new Selection();
@@ -84,5 +84,17 @@ public class CreateSelectionExcutor {
         } else {
             System.out.println("SUCCESS!");
         }
+    }
+
+    private void redisAndDbConsist(String courseId, int stock) {
+        Course course = new Course();
+        course.setId(courseId);
+        course.setStock(stock);
+
+        // redis
+
+
+        // DB
+        courseService.update(course);
     }
 }
