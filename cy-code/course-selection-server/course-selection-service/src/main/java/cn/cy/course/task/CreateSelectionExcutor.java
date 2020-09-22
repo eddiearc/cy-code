@@ -46,7 +46,7 @@ public class CreateSelectionExcutor {
      */
     @Async
     public void createSelection() {
-        System.out.println("-----抢课Pack处理-----");
+        System.out.println("-----抢课Pack处理-START-----");
         // 1. 取出任务
         Pack pack = (Pack) redisTemplate.boundListOps(SECKILL_QUEUE).rightPop();
         String courseId = pack.getCourseId();
@@ -58,6 +58,7 @@ public class CreateSelectionExcutor {
 
             //4. 修改课程数据库信息与redis中的信息
             redisAndDbConsist(courseId, 0);
+            System.out.println("-----抢课Pack处理-OVER-----");
             return;
         }
 
@@ -84,6 +85,7 @@ public class CreateSelectionExcutor {
         } else {
             System.out.println("SUCCESS!");
         }
+        System.out.println("-----抢课Pack处理-OVER-----");
     }
 
     private void redisAndDbConsist(String courseId, int stock) {

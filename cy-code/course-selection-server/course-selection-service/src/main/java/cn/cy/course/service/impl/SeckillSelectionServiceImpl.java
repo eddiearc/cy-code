@@ -47,7 +47,7 @@ public class SeckillSelectionServiceImpl implements SeckillSelectionService {
         //3. 入队列
         redisTemplate.boundListOps(SECKILL_QUEUE).leftPush(pack);
 
-        //4. 异步处理任务
+        //4. 异步处理任务Pack
         createSelectionExcutor.createSelection();
     }
 }

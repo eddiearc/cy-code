@@ -14,7 +14,6 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author eddieVim
@@ -30,8 +29,6 @@ public class SelectionServiceImpl implements SelectionService {
 
     @Autowired
     private RedisTemplate redisTemplate;
-
-    private String SELECTION_STU = "SELECTION_STU";
 
     @Override
     public List<Selection> findAll() {
@@ -80,25 +77,14 @@ public class SelectionServiceImpl implements SelectionService {
     @Override
     @Transactional
     public List<Selection> findByStudentId(String studentId) {
-        List<Selection> list = (List<Selection>) redisTemplate.boundValueOps(SELECTION_STU + studentId).get();
-
-        // redis中没有数据
-        if (list == null) {
-            Selection selection = new Selection();
-            selection.setCourseId(studentId);
-            list = selectionMapper.select(selection);
-            // 存到redis中 30分钟后过期
-            redisTemplate.boundValueOps(SELECTION_STU + studentId).set(list, 30, TimeUnit.MINUTES);
-        }
-
-        return list;
+        Selection selection = new Selection();
+        selection.setStudentId(studentId);
+        return selectionMapper.select(selection);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int add(Selection selection) {
-        // 使对应的redis中的学生选课信息过期
-        redisTemplate.delete(SELECTION_STU + selection.getStudentId());
         return selectionMapper.insertSelective(selection);
     }
 
@@ -116,9 +102,6 @@ public class SelectionServiceImpl implements SelectionService {
             throw new RuntimeException("需指明studentId与courseId!");
         }
 
-        // 使对应的redis中的学生选课信息过期
-        redisTemplate.delete(SELECTION_STU + selection.getStudentId());
-
         // 更新条件
         Example example = new Example(Selection.class);
         Example.Criteria criteria = example.createCriteria();
@@ -135,9 +118,6 @@ public class SelectionServiceImpl implements SelectionService {
      */
     @Override
     public void delete(String studentId, String courseId) {
-        // 使对应的redis中的学生选课信息过期
-        redisTemplate.delete(SELECTION_STU + studentId);
-
         Selection selection = new Selection();
         selectionMapper.delete(selection);
     }
