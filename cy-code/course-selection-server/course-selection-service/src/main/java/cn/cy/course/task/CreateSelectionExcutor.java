@@ -52,7 +52,7 @@ public class CreateSelectionExcutor {
             // 3. 提示没抢成功
 
             //4. 修改课程数据库信息与redis中的信息
-            redisAndDbConsist(courseId, 0);
+            updateStock(courseId, 0);
             System.out.println("-----抢课Pack处理-OVER-----");
             return;
         }
@@ -83,14 +83,16 @@ public class CreateSelectionExcutor {
         System.out.println("-----抢课Pack处理-OVER-----");
     }
 
-    private void redisAndDbConsist(String courseId, int stock) {
+    /**
+     * 更新数据库中的，课程库存信息
+     *
+     * @param courseId
+     * @param stock
+     */
+    private void updateStock(String courseId, int stock) {
         Course course = new Course();
         course.setId(courseId);
         course.setStock(stock);
-
-        // redis
-
-
         // DB
         courseService.update(course);
     }

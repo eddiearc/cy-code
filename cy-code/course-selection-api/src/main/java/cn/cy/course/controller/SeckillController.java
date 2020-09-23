@@ -62,8 +62,6 @@ public class SeckillController {
         String studentId = "201841054085";
 
         //2. 获取对应的选课信息
-        Map<String, Object> map = new HashMap<>();
-        map.put("studentId", studentId);
         List<Course> res = selectionService.historySelection(studentId);
         //3. 根据学期排序；同学期，根据学分排序
         Collections.sort(res, new Comparator<Course>() {
