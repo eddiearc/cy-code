@@ -145,21 +145,21 @@ public class SelectionServiceImpl implements SelectionService {
     @Override
     public List<Course> historySelection(String studentId) {
         // redis中存在该数据
-        List<Course> list = (List<Course>) redisTemplate.boundHashOps(RedisConstantKey.SELECTION_HISTORY_HASH).get(studentId);
+        List<Course> list = (List<Course>) redisTemplate.boundHashOps(RedisConstantKey.SELECTION_HISTORY_HASH.toString()).get(studentId);
         if (list != null) {
             return list;
         }
         // 获取本学期标记数
-        Integer term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM).get();
+        Integer term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM.toString()).get();
         if (term == null) {
             db2RedisTimer.initTerm();
-            term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM).get();
+            term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM.toString()).get();
         }
 
         // 除了当前学期其余都加载
         list = selectionMapper.historyTerm(term, studentId);
         // 存储到Redis中
-        redisTemplate.boundHashOps(RedisConstantKey.SELECTION_HISTORY_HASH).put(studentId, list);
+        redisTemplate.boundHashOps(RedisConstantKey.SELECTION_HISTORY_HASH.toString()).put(studentId, list);
         return list;
     }
 
@@ -172,17 +172,17 @@ public class SelectionServiceImpl implements SelectionService {
     @Override
     public List<Course> currTermSelection(String studentId) {
         // 获取本学期标记数
-        Integer term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM).get();
+        Integer term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM.toString()).get();
         if (term == null) {
             db2RedisTimer.initTerm();
-            term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM).get();
+            term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM.toString()).get();
         }
-        Set<String> ids = redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET + studentId).members();
+        Set<String> ids = redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET.toString() + studentId).members();
         List<Course> ans = new ArrayList<>(ids.size());
 
         for (String courseId : ids) {
             // redis中的课程信息
-            Course course = (Course) redisTemplate.boundHashOps(RedisConstantKey.COURSE_MSG_HASH).get(courseId);
+            Course course = (Course) redisTemplate.boundHashOps(RedisConstantKey.COURSE_MSG_HASH.toString()).get(courseId);
             ans.add(course);
         }
         return ans;

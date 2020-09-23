@@ -28,19 +28,19 @@ public class SeckillServiceImpl implements SeckillService {
     public void add(Pack pack) {
         //1. 检查课程库存 减少无效排队
         String courseId = pack.getCourseId();
-        Long stockCount = redisTemplate.boundListOps(RedisConstantKey.COURSE_STOCK_QUEUE + courseId).size();
+        Long stockCount = redisTemplate.boundListOps(RedisConstantKey.COURSE_STOCK_QUEUE.toString() + courseId).size();
         if (stockCount == null || stockCount <= 0) {
             throw new RuntimeException("该课程已经被选完了!");
         }
 
         //2. 检查用户是否有重复的选课， Redis - set
-        Boolean isSelected = redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET + pack.getStudentId()).isMember(pack.getCourseId());
+        Boolean isSelected = redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET.toString() + pack.getStudentId()).isMember(pack.getCourseId());
         if (isSelected != null && isSelected) {
             throw new RuntimeException("您已经选过该课程！");
         }
 
         //3. 入队列
-        redisTemplate.boundListOps(RedisConstantKey.SECKILL_QUEUE).leftPush(pack);
+        redisTemplate.boundListOps(RedisConstantKey.SECKILL_QUEUE.toString()).leftPush(pack);
 
         //4. 异步处理任务Pack
         createSelectionExcutor.createSelection();

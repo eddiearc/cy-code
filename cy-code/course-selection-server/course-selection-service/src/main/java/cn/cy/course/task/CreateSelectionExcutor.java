@@ -43,11 +43,11 @@ public class CreateSelectionExcutor {
     public void createSelection() {
         System.out.println("-----抢课Pack处理-START-----");
         // 1. 取出任务
-        Pack pack = (Pack) redisTemplate.boundListOps(RedisConstantKey.SECKILL_QUEUE).rightPop();
+        Pack pack = (Pack) redisTemplate.boundListOps(RedisConstantKey.SECKILL_QUEUE.toString()).rightPop();
         String courseId = pack.getCourseId();
 
         // 2. 消去库存，并验证是否已经被抢完了
-        String queueId = (String) redisTemplate.boundListOps(RedisConstantKey.COURSE_STOCK_QUEUE + courseId).rightPop();
+        String queueId = (String) redisTemplate.boundListOps(RedisConstantKey.COURSE_STOCK_QUEUE.toString() + courseId).rightPop();
         if (queueId == null || !courseId.equals(queueId)) {
             // 3. 提示没抢成功
 
@@ -65,7 +65,7 @@ public class CreateSelectionExcutor {
          *
          * 防止多线程问题出现数据不一致问题
           */
-        Long stock = redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH).increment(courseId, -1);
+        Long stock = redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).increment(courseId, -1);
         System.out.println("剩余库存：" + stock);
 
         // 4. 选课信息入库

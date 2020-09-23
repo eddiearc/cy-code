@@ -6,7 +6,6 @@ import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Selection;
 import cn.cy.course.util.RedisConstantKey;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
@@ -39,7 +38,7 @@ public class DB2RedisTimer {
      * 初始化term值
      */
     public void initTerm() {
-        redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM).set(selectionMapper.currTerm());
+        redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM.toString()).set(selectionMapper.currTerm());
     }
 
     /**
@@ -48,26 +47,26 @@ public class DB2RedisTimer {
     @PostConstruct
     public void course2Redis() {
         Course searchCourse = new Course();
-        Integer term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM).get();
+        Integer term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM.toString()).get();
         if (term == null) {
             initTerm();
         }
         searchCourse.setTerm(term);
         final List<Course> courseList = courseMapper.select(searchCourse);
         // delete msg
-        redisTemplate.delete(RedisConstantKey.COURSE_STOCK_HASH);
+        redisTemplate.delete(RedisConstantKey.COURSE_STOCK_HASH.toString());
         // 将所有的Course信息存入Redis
         for (Course course : courseList) {
             String courseId = course.getId();
             // 将课程信息存放到hash中
-            redisTemplate.boundHashOps(RedisConstantKey.COURSE_MSG_HASH).put(courseId, course);
+            redisTemplate.boundHashOps(RedisConstantKey.COURSE_MSG_HASH.toString()).put(courseId, course);
 
             // 初始化库存队列
-            redisTemplate.delete(RedisConstantKey.COURSE_STOCK_QUEUE + course.getId());
+            redisTemplate.delete(RedisConstantKey.COURSE_STOCK_QUEUE.toString() + course.getId());
             for (int i = 0; i < course.getStock(); i++) {
-                redisTemplate.boundListOps(RedisConstantKey.COURSE_STOCK_QUEUE + course.getId()).leftPush(courseId);
+                redisTemplate.boundListOps(RedisConstantKey.COURSE_STOCK_QUEUE.toString() + course.getId()).leftPush(courseId);
             }
-            redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH).increment(courseId, course.getStock());
+            redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).increment(courseId, course.getStock());
         }
     }
 
@@ -77,7 +76,7 @@ public class DB2RedisTimer {
     @PostConstruct
     public void selection2Redis() {
         Selection searchSelection = new Selection();
-        Integer term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM).get();
+        Integer term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM.toString()).get();
         if (term == null) {
             initTerm();
         }
@@ -86,7 +85,7 @@ public class DB2RedisTimer {
         // set
         for (Selection selection : list) {
             String currStuId = selection.getStudentId();
-            redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET + currStuId).add(selection.getCourseId());
+            redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET.toString() + currStuId).add(selection.getCourseId());
         }
     }
 }

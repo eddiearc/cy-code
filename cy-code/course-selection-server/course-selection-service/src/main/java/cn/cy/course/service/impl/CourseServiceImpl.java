@@ -97,7 +97,7 @@ public class CourseServiceImpl implements CourseService {
      */
     @Override
     public void update(Course course) {
-        redisTemplate.boundHashOps(RedisConstantKey.COURSE_MSG_HASH).delete(course.getId());
+        redisTemplate.boundHashOps(RedisConstantKey.COURSE_MSG_HASH.toString()).delete(course.getId());
         courseMapper.updateByPrimaryKeySelective(course);
     }
 
