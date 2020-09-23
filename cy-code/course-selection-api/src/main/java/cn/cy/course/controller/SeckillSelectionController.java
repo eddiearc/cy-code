@@ -83,7 +83,7 @@ public class SeckillSelectionController {
     }
 
     /**
-     *
+     * 查询本学期选课情况
      *
      * @return
      */
