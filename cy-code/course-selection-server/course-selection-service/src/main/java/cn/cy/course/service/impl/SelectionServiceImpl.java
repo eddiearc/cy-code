@@ -165,7 +165,7 @@ public class SelectionServiceImpl implements SelectionService {
         }
 
         // 除了当前学期其余都加载
-        list = selectionMapper.historyTerm(term);
+        list = selectionMapper.historyTerm(term, studentId);
         // 存储到Redis中
         redisTemplate.boundHashOps(SELECTION_HISTORY_HASH).put(studentId, list);
         return list;

@@ -3,7 +3,6 @@ package cn.cy.course.controller;
 import cn.cy.course.entity.Result;
 import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Pack;
-import cn.cy.course.pojo.Selection;
 import cn.cy.course.service.SeckillSelectionService;
 import cn.cy.course.service.SelectionService;
 import org.apache.dubbo.config.annotation.Reference;
@@ -88,7 +87,7 @@ public class SeckillSelectionController {
      *
      * @return
      */
-    @GetMapping("/query/currTerm")
+    @GetMapping("/query/curr")
     public List<Course> queryCurrTerm() {
         //1. 通过Sercurity获取学号
         String studentId = "201841054085";

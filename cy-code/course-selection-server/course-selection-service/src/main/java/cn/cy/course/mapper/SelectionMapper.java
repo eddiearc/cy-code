@@ -29,6 +29,6 @@ public interface SelectionMapper extends Mapper<Selection> {
      *
      * @return
      */
-    @Select("SELECT ")
-    public List<Course> historyTerm(@Param("term") Integer term);
+    @Select("SELECT c.id,c.`name`,c.term,c.credit,c.time,c.duration_start,c.duration_end,c.place,c.`online`,c.teacher_name,c.category_id,c.total FROM tb_selection s LEFT JOIN tb_course c ON s.course_id=c.id WHERE s.student_id=#{studentId} AND s.term < #{term}")
+    public List<Course> historyTerm(@Param("term") Integer term, @Param("studentId") String studentId);
 }
