@@ -1,6 +1,8 @@
 package cn.cy.course.mapper;
 
+import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Selection;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -21,4 +23,12 @@ public interface SelectionMapper extends Mapper<Selection> {
      */
     @Select("SELECT MAX(term) currTerm FROM tb_curr_term")
     public Integer currTerm();
+
+    /**
+     * 查询历史的选课记录
+     *
+     * @return
+     */
+    @Select("SELECT ")
+    public List<Course> historyTerm(@Param("term") Integer term);
 }

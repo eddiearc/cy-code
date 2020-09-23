@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  * @blog https://blog.csdn.net/weixin_44129784
  * @create 2020/9/18 10:30 下午
  */
-@Configuration
+@Component
 @EnableScheduling
 public class DB2RedisTimer {
 
@@ -41,13 +42,13 @@ public class DB2RedisTimer {
 
     private String SELECTION_SET = "SELECTION_SET";
 
-    private Integer term;
+    private String CURR_TERM = "CURR_TERM";
 
     /**
      * 初始化term值
      */
-    private void initTerm() {
-        this.term = selectionMapper.currTerm();
+    public void initTerm() {
+        redisTemplate.boundValueOps(CURR_TERM).set(selectionMapper.currTerm());
     }
 
     /**
@@ -56,6 +57,7 @@ public class DB2RedisTimer {
     @PostConstruct
     public void course2Redis() {
         Course searchCourse = new Course();
+        Integer term = (Integer) redisTemplate.boundValueOps(CURR_TERM).get();
         if (term == null) {
             initTerm();
         }
@@ -68,7 +70,6 @@ public class DB2RedisTimer {
             String courseId = course.getId();
             // 将课程信息存放到hash中
             redisTemplate.boundHashOps(COURSE_MSG_HASH).put(courseId, course);
-
 
             // 初始化库存队列
             redisTemplate.delete(COURSE_STOCK_QUEUE + course.getId());
@@ -85,6 +86,7 @@ public class DB2RedisTimer {
     @PostConstruct
     public void selection2Redis() {
         Selection searchSelection = new Selection();
+        Integer term = (Integer) redisTemplate.boundValueOps(CURR_TERM).get();
         if (term == null) {
             initTerm();
         }

@@ -1,6 +1,7 @@
 package cn.cy.course.controller;
 
 import cn.cy.course.entity.Result;
+import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Pack;
 import cn.cy.course.pojo.Selection;
 import cn.cy.course.service.SeckillSelectionService;
@@ -52,24 +53,58 @@ public class SeckillSelectionController {
     }
 
     /**
-     * 查询选课情况
+     * 查询历史选课情况
      *
      * @return
      */
-    @GetMapping("/query")
-    public List<Selection> query() {
+    @GetMapping("/query/history")
+    public List<Course> queryHistory() {
         //1. 通过Sercurity获取学号
         String studentId = "201841054085";
 
         //2. 获取对应的选课信息
         Map<String, Object> map = new HashMap<>();
         map.put("studentId", studentId);
-        List<Selection> res = selectionService.findList(map);
-        //3. 根据学期排序
-        Collections.sort(res, new Comparator<Selection>() {
+        List<Course> res = selectionService.historySelection(studentId);
+        //3. 根据学期排序；同学期，根据学分排序
+        Collections.sort(res, new Comparator<Course>() {
             @Override
-            public int compare(Selection o1, Selection o2) {
+            public int compare(Course o1, Course o2) {
+                if (o1.getTerm() == null ||
+                        o2.getTerm() == null ||
+                        o1.getTerm().equals(o2.getTerm())
+                ) {
+                    return o2.getCredit() - o1.getCredit();
+                }
                 return o2.getTerm() - o1.getTerm();
+            }
+        });
+
+        return res;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    @GetMapping("/query/currTerm")
+    public List<Course> queryCurrTerm() {
+        //1. 通过Sercurity获取学号
+        String studentId = "201841054085";
+
+        //2. 获取对应的选课信息
+        List<Course> res = selectionService.currTermSelection(studentId);
+
+
+        //3. 根据学分排序
+        res.sort(new Comparator<Course>() {
+            @Override
+            public int compare(Course o1, Course o2) {
+                if (o1.getCredit() == null || o2.getCredit() == null) {
+                    return -1;
+                }
+                return o2.getCredit() - o1.getCredit();
             }
         });
 

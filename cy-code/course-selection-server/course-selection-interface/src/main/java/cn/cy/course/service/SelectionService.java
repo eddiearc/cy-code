@@ -1,6 +1,7 @@
 package cn.cy.course.service;
 
 import cn.cy.course.entity.PageResult;
+import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Selection;
 
 import java.util.*;
@@ -87,4 +88,21 @@ public interface SelectionService {
      * @param courseId
      */
     public void delete(String studentId, String courseId);
+
+
+    /**
+     * 根据studentId查询出历史的term
+     *
+     * @param studentId
+     * @return
+     */
+    public List<Course> historySelection(String studentId);
+
+    /**
+     * 根据studentId查询历史的term
+     *
+     * @param studentId
+     * @return
+     */
+    public List<Course> currTermSelection(String studentId);
 }
