@@ -3,6 +3,7 @@ import cn.cy.course.entity.PageResult;
 import cn.cy.course.mapper.CourseMapper;
 import cn.cy.course.pojo.Course;
 import cn.cy.course.service.CourseService;
+import cn.cy.course.util.RedisConstantKey;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.dubbo.config.annotation.Service;
@@ -19,7 +20,6 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    private String COURSE_MSG_HASH = "COURSE_MSG_HASH";
 
     @Autowired
     private CourseMapper courseMapper;
@@ -97,7 +97,7 @@ public class CourseServiceImpl implements CourseService {
      */
     @Override
     public void update(Course course) {
-        redisTemplate.boundHashOps(COURSE_MSG_HASH).delete(course.getId());
+        redisTemplate.boundHashOps(RedisConstantKey.COURSE_MSG_HASH).delete(course.getId());
         courseMapper.updateByPrimaryKeySelective(course);
     }
 

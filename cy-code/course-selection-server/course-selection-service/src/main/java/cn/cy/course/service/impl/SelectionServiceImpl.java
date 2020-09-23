@@ -6,6 +6,7 @@ import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Selection;
 import cn.cy.course.service.SelectionService;
 import cn.cy.course.task.DB2RedisTimer;
+import cn.cy.course.util.RedisConstantKey;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.dubbo.config.annotation.Service;
@@ -33,9 +34,6 @@ public class SelectionServiceImpl implements SelectionService {
 
     @Autowired
     private RedisTemplate redisTemplate;
-
-    private String CURR_TERM = "CURR_TERM";
-
     @Override
     public List<Selection> findAll() {
         return selectionMapper.selectAll();
@@ -144,30 +142,24 @@ public class SelectionServiceImpl implements SelectionService {
     @Autowired
     private DB2RedisTimer db2RedisTimer;
 
-    private String SELECTION_HISTORY_HASH = "SELECTION_HISTORY_HASH";
-
-    private String SELECTION_SET = "SELECTION_SET";
-
-    private String COURSE_MSG_HASH = "COURSE_MSG_HASH";
-
     @Override
     public List<Course> historySelection(String studentId) {
         // redis中存在该数据
-        List<Course> list = (List<Course>) redisTemplate.boundHashOps(SELECTION_HISTORY_HASH).get(studentId);
+        List<Course> list = (List<Course>) redisTemplate.boundHashOps(RedisConstantKey.SELECTION_HISTORY_HASH).get(studentId);
         if (list != null) {
             return list;
         }
         // 获取本学期标记数
-        Integer term = (Integer) redisTemplate.boundValueOps(CURR_TERM).get();
+        Integer term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM).get();
         if (term == null) {
             db2RedisTimer.initTerm();
-            term = (Integer) redisTemplate.boundValueOps(CURR_TERM).get();
+            term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM).get();
         }
 
         // 除了当前学期其余都加载
         list = selectionMapper.historyTerm(term, studentId);
         // 存储到Redis中
-        redisTemplate.boundHashOps(SELECTION_HISTORY_HASH).put(studentId, list);
+        redisTemplate.boundHashOps(RedisConstantKey.SELECTION_HISTORY_HASH).put(studentId, list);
         return list;
     }
 
@@ -180,17 +172,17 @@ public class SelectionServiceImpl implements SelectionService {
     @Override
     public List<Course> currTermSelection(String studentId) {
         // 获取本学期标记数
-        Integer term = (Integer) redisTemplate.boundValueOps(CURR_TERM).get();
+        Integer term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM).get();
         if (term == null) {
             db2RedisTimer.initTerm();
-            term = (Integer) redisTemplate.boundValueOps(CURR_TERM).get();
+            term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM).get();
         }
-        Set<String> ids = redisTemplate.boundSetOps(SELECTION_SET + studentId).members();
+        Set<String> ids = redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET + studentId).members();
         List<Course> ans = new ArrayList<>(ids.size());
 
         for (String courseId : ids) {
             // redis中的课程信息
-            Course course = (Course) redisTemplate.boundHashOps(COURSE_MSG_HASH).get(courseId);
+            Course course = (Course) redisTemplate.boundHashOps(RedisConstantKey.COURSE_MSG_HASH).get(courseId);
             ans.add(course);
         }
         return ans;
