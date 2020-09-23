@@ -185,12 +185,12 @@ public class SelectionServiceImpl implements SelectionService {
             db2RedisTimer.initTerm();
             term = (Integer) redisTemplate.boundValueOps(CURR_TERM).get();
         }
-        Set<String> ids = redisTemplate.boundSetOps(SELECTION_SET).members();
+        Set<String> ids = redisTemplate.boundSetOps(SELECTION_SET + studentId).members();
         List<Course> ans = new ArrayList<>(ids.size());
 
         for (String courseId : ids) {
-            // redis中的
-            Course course = (Course) redisTemplate.boundHashOps(COURSE_MSG_HASH).get(ids);
+            // redis中的课程信息
+            Course course = (Course) redisTemplate.boundHashOps(COURSE_MSG_HASH).get(courseId);
             ans.add(course);
         }
         return ans;
