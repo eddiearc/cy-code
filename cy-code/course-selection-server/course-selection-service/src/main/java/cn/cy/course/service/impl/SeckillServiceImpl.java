@@ -1,7 +1,7 @@
 package cn.cy.course.service.impl;
 
 import cn.cy.course.pojo.Pack;
-import cn.cy.course.service.SeckillSelectionService;
+import cn.cy.course.service.SeckillService;
 import cn.cy.course.task.CreateSelectionExcutor;
 import cn.cy.course.util.RedisConstantKey;
 import org.apache.dubbo.config.annotation.Service;
@@ -14,8 +14,8 @@ import org.springframework.data.redis.core.RedisTemplate;
  * @blog https://blog.csdn.net/weixin_44129784
  * @create 2020/9/17 10:36 下午
  */
-@Service(interfaceClass = SeckillSelectionService.class)
-public class SeckillSelectionServiceImpl implements SeckillSelectionService {
+@Service(interfaceClass = SeckillService.class)
+public class SeckillServiceImpl implements SeckillService {
 
     @Autowired
     private RedisTemplate redisTemplate;

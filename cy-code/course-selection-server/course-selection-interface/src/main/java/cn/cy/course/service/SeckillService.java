@@ -8,7 +8,7 @@ import cn.cy.course.pojo.Pack;
  * @blog https://blog.csdn.net/weixin_44129784
  * @create 2020/9/17 10:36 下午
  */
-public interface SeckillSelectionService {
+public interface SeckillService {
     /**
      * 添加选课信息
      *

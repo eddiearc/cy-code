@@ -3,7 +3,7 @@ package cn.cy.course.controller;
 import cn.cy.course.entity.Result;
 import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Pack;
-import cn.cy.course.service.SeckillSelectionService;
+import cn.cy.course.service.SeckillService;
 import cn.cy.course.service.SelectionService;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +19,11 @@ import java.util.*;
  * @create 2020/9/17 10:33 下午
  */
 @RestController
-@RequestMapping("/seckill/selection")
-public class SeckillSelectionController {
+@RequestMapping("/seckill")
+public class SeckillController {
 
     @Reference
-    private SeckillSelectionService seckillSelectionService;
+    private SeckillService seckillService;
 
     @Reference
     private SelectionService selectionService;
@@ -46,7 +46,7 @@ public class SeckillSelectionController {
         pack.setCourseId(courseId);
 
         //3. 处理Pack任务
-        seckillSelectionService.add(pack);
+        seckillService.add(pack);
 
         return new Result(0, "选课排队中！");
     }
