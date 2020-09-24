@@ -44,6 +44,7 @@ public class SeckillController {
         Pack pack = new Pack();
         pack.setStudentId(studentId);
         pack.setCourseId(courseId);
+        pack.setCreateTime(new Date());
 
         //3. 处理Pack任务
         seckillService.add(pack);

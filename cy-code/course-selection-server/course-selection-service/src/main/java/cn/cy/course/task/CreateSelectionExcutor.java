@@ -72,6 +72,7 @@ public class CreateSelectionExcutor {
         Selection selection = new Selection();
         selection.setStudentId(pack.getStudentId());
         selection.setCourseId(courseId);
+        selection.setCreateTime(pack.getCreateTime());
         int add = selectionService.add(selection);
 
         // 5. 回调前端

@@ -1,6 +1,7 @@
 package cn.cy.course.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author eddieVim
@@ -25,12 +26,18 @@ public class Pack implements Serializable {
      */
     private Integer term;
 
+    /**
+     * 选课的时间
+     */
+    private Date createTime;
+
     @Override
     public String toString() {
         return "Pack{" +
                 "studentId='" + studentId + '\'' +
                 ", courseId='" + courseId + '\'' +
                 ", term=" + term +
+                ", createTime=" + createTime +
                 '}';
     }
 
@@ -56,5 +63,13 @@ public class Pack implements Serializable {
 
     public void setTerm(Integer term) {
         this.term = term;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

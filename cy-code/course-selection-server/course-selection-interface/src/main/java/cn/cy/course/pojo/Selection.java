@@ -1,8 +1,11 @@
 package cn.cy.course.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author eddieVim
@@ -30,20 +33,21 @@ public class Selection implements Serializable {
      */
     private Integer term;
 
-    /**
-     * 选课阶段
-     */
-    private Integer stage;
-
     @Override
     public String toString() {
         return "Selection{" +
-                ", studentId='" + studentId + '\'' +
+                "studentId='" + studentId + '\'' +
                 ", courseId='" + courseId + '\'' +
                 ", term=" + term +
-                ", stage=" + stage +
+                ", createTime=" + createTime +
                 '}';
     }
+
+    /**
+     * 选课的时间段
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
     public String getStudentId() {
         return studentId;
@@ -69,11 +73,11 @@ public class Selection implements Serializable {
         this.term = term;
     }
 
-    public Integer getStage() {
-        return stage;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setStage(Integer stage) {
-        this.stage = stage;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
