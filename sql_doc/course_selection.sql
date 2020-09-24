@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 13/09/2020 14:25:58
+ Date: 24/09/2020 12:55:15
 */
 
 SET NAMES utf8mb4;
@@ -28,22 +28,13 @@ CREATE TABLE `tb_category` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='课程类别';
 
 -- ----------------------------
--- Records of tb_category
--- ----------------------------
-BEGIN;
-INSERT INTO `tb_category` VALUES (1, '自然科学');
-INSERT INTO `tb_category` VALUES (2, '体育艺术');
-INSERT INTO `tb_category` VALUES (3, '创新创业');
-COMMIT;
-
--- ----------------------------
 -- Table structure for tb_course
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_course`;
 CREATE TABLE `tb_course` (
   `id` varchar(15) NOT NULL COMMENT '选修的班级号',
   `name` varchar(50) NOT NULL COMMENT '选修课名称',
-  `term` int(2) DEFAULT NULL COMMENT '学期标识',
+  `term` int(2) unsigned DEFAULT '0' COMMENT '学期标识',
   `credit` int(2) NOT NULL COMMENT '学分',
   `time` varchar(50) DEFAULT NULL COMMENT '上课具体时间',
   `duration_start` int(2) DEFAULT NULL COMMENT '开始的周数',
@@ -53,29 +44,31 @@ CREATE TABLE `tb_course` (
   `teacher_id` varchar(12) DEFAULT NULL COMMENT '上课老师的工号',
   `teacher_name` varchar(30) DEFAULT NULL COMMENT '上课老师的姓名，冗余字段',
   `category_id` int(2) DEFAULT NULL COMMENT '课程类别Id',
-  `count` int(3) DEFAULT NULL COMMENT '课程数',
+  `stock` int(3) NOT NULL COMMENT '课程剩余数量',
+  `total` int(3) NOT NULL COMMENT '课程总数',
   PRIMARY KEY (`id`),
   KEY `idx_term_online` (`term`,`online`) COMMENT '学期与是否线上课索引'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='选修课表';
 
 -- ----------------------------
--- Records of tb_course
+-- Table structure for tb_curr_term
 -- ----------------------------
-BEGIN;
-INSERT INTO `tb_course` VALUES ('123', '分布式系统', 0, 3, '周三3-4', 1, 16, '13-301', 1, '123', 'eddie', 1, 100);
-COMMIT;
+DROP TABLE IF EXISTS `tb_curr_term`;
+CREATE TABLE `tb_curr_term` (
+  `term` int(2) NOT NULL COMMENT '当前学期',
+  PRIMARY KEY (`term`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Table structure for tb_selection
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_selection`;
 CREATE TABLE `tb_selection` (
-  `id` varchar(18) NOT NULL COMMENT '选课信息ID',
   `student_id` varchar(12) NOT NULL COMMENT '学生ID',
   `course_id` varchar(15) NOT NULL COMMENT '课程ID',
-  `term` int(2) DEFAULT NULL COMMENT '哪一个学期',
-  `stage` int(1) DEFAULT NULL COMMENT '选课阶段',
-  PRIMARY KEY (`id`),
+  `term` int(2) unsigned DEFAULT '0' COMMENT '哪一个学期',
+  `create_time` datetime(1) DEFAULT NULL COMMENT '选课时间',
+  PRIMARY KEY (`student_id`,`course_id`),
   KEY `idx_stuId` (`student_id`) COMMENT '以学生ID为索引'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='选课情况';
 
@@ -94,13 +87,6 @@ CREATE TABLE `tb_student` (
   `class` varchar(30) DEFAULT NULL COMMENT '专业班级',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='学生表';
-
--- ----------------------------
--- Records of tb_student
--- ----------------------------
-BEGIN;
-INSERT INTO `tb_student` VALUES ('201841054085', '林一丹', '111111', 1, '35062520000707101X', '中软国际互联网学院', '软件工程', '软件1893');
-COMMIT;
 
 -- ----------------------------
 -- Table structure for tb_teacher
