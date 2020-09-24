@@ -3,6 +3,7 @@ package cn.cy.course.mapper;
 import cn.cy.course.pojo.Selection;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @create 2020/9/24 12:30 下午
  */
 @SpringBootTest
+@AutoConfigureTestDatabase
 class SelectionMapperTest {
 
     @Autowired(required = false)
