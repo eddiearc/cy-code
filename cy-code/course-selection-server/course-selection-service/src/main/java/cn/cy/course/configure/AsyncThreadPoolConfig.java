@@ -30,8 +30,8 @@ public class AsyncThreadPoolConfig implements AsyncConfigurer {
         return new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE,
                 // 高峰期使空闲线程，存活时间长一些
                 30, TimeUnit.MINUTES,
-                // 队列最大容量 Integer.MAX_VALUE
-                new LinkedBlockingQueue<>(),
+                // 队列最大容量 30
+                new ArrayBlockingQueue<>(30),
                 // 线程工厂
                 new AsyncThreadFactory(),
                 // 拒绝策略：提交任务者 自己运行
