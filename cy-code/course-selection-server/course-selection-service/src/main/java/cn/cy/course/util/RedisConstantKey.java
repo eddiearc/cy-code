@@ -11,6 +11,8 @@ public enum RedisConstantKey {
     SELECTION_SET,
     // 秒杀队列，用于存储每个用户的ID，与其对应的选课ID
     SECKILL_QUEUE,
+    // 存储一个List对象，里面包含这次选课的所有ID
+    COURSE_IDS,
     // 课程的信息，在选课时间段期间，库存信息不可靠
     COURSE_MSG_HASH,
     // 借助Redis存储每个课程的库存数量，由于Redis是单线程操作，且操作为原子性，能保证库存数量的准确性

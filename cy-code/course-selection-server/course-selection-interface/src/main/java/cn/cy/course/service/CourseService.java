@@ -34,4 +34,9 @@ public interface CourseService {
 
 
     public void delete(String id);
+
+    /**
+     * 实时获取课程的库存数量
+     */
+    public List<Course> getCourseStockRealTime();
 }

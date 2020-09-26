@@ -3,6 +3,7 @@ import cn.cy.course.entity.PageResult;
 import cn.cy.course.mapper.CourseMapper;
 import cn.cy.course.pojo.Course;
 import cn.cy.course.service.CourseService;
+import cn.cy.course.task.DB2RedisTimer;
 import cn.cy.course.util.RedisConstantKey;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -108,6 +110,31 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void delete(String id) {
         courseMapper.deleteByPrimaryKey(id);
+    }
+
+
+    @Autowired
+    private DB2RedisTimer db2RedisTimer;
+
+    /**
+     * 实时获取课程库存数量列表
+     *
+     * @return
+     */
+    @Override
+    public List<Course> getCourseStockRealTime() {
+        // 获取id列表
+        List<String> ids = (List<String>) redisTemplate.boundValueOps(RedisConstantKey.COURSE_IDS.toString()).get();
+        List<Course> ans = new ArrayList<>(ids.size());
+        for (String id : ids) {
+            // stock 获取库存信息
+            Integer stock = (Integer) redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).get(id);
+            Course course = new Course();
+            course.setId(id);
+            course.setStock(stock);
+            ans.add(course);
+        }
+        return ans;
     }
 
     /**

@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,8 +57,10 @@ public class DB2RedisTimer {
         // delete msg
         redisTemplate.delete(RedisConstantKey.COURSE_STOCK_HASH.toString());
         // 将所有的Course信息存入Redis
+        List<String> ids = new ArrayList<>(courseList.size());
         for (Course course : courseList) {
             String courseId = course.getId();
+            ids.add(courseId);
             // 将课程信息存放到hash中
             redisTemplate.boundHashOps(RedisConstantKey.COURSE_MSG_HASH.toString()).put(courseId, course);
 
@@ -68,6 +71,8 @@ public class DB2RedisTimer {
             }
             redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).increment(courseId, course.getStock());
         }
+        // IDS
+        redisTemplate.boundValueOps(RedisConstantKey.COURSE_IDS.toString()).set(ids);
     }
 
     /**
