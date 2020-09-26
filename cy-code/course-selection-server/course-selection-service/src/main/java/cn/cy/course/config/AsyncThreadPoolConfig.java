@@ -1,4 +1,4 @@
-package cn.cy.course.configure;
+package cn.cy.course.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;

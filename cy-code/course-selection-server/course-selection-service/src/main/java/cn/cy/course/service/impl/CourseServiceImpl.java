@@ -1,4 +1,5 @@
 package cn.cy.course.service.impl;
+
 import cn.cy.course.entity.PageResult;
 import cn.cy.course.mapper.CourseMapper;
 import cn.cy.course.pojo.Course;
@@ -112,9 +113,28 @@ public class CourseServiceImpl implements CourseService {
         courseMapper.deleteByPrimaryKey(id);
     }
 
-
     @Autowired
     private DB2RedisTimer db2RedisTimer;
+
+    /**
+     * 获取本学期的课程列表
+     *
+     * @return
+     */
+    @Override
+    public List<Course> getCourseListThisTerm() {
+        // 获取本次选课的id列表
+        List<String> ids = (List<String>) redisTemplate.boundValueOps(RedisConstantKey.COURSE_IDS.toString()).get();
+        List<Course> ans = new ArrayList<>(ids.size());
+        for (String id : ids) {
+            // course 获取课程信息
+            Course course = (Course) redisTemplate.boundHashOps(RedisConstantKey.COURSE_MSG_HASH.toString()).get(id);
+            // 库存信息不准确，去掉
+            course.setStock(null);
+            ans.add(course);
+        }
+        return ans;
+    }
 
     /**
      * 实时获取课程库存数量列表
@@ -123,7 +143,7 @@ public class CourseServiceImpl implements CourseService {
      */
     @Override
     public List<Course> getCourseStockRealTime() {
-        // 获取id列表
+        // 获取本次选课的id列表
         List<String> ids = (List<String>) redisTemplate.boundValueOps(RedisConstantKey.COURSE_IDS.toString()).get();
         List<Course> ans = new ArrayList<>(ids.size());
         for (String id : ids) {
