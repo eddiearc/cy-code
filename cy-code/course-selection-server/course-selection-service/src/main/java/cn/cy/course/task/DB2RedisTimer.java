@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -54,6 +56,8 @@ public class DB2RedisTimer {
         }
         searchCourse.setTerm(term);
         final List<Course> courseList = courseMapper.select(searchCourse);
+        // 先根据id长度排序，再根据id的字符串排列排序
+        Collections.sort(courseList, Comparator.comparingInt((Course o) -> o.getId().length()).thenComparing(Course::getId));
         // delete msg
         redisTemplate.delete(RedisConstantKey.COURSE_STOCK_HASH.toString());
         // 将所有的Course信息存入Redis
