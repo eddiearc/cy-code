@@ -106,7 +106,7 @@
 										<th>学分</th>
 										<th>学时</th>
 										<th>上课时间地点</th>
-										<th>剩余人数</th>
+										<th>剩余可选人数</th>
 										<th>总人数</th>
 										<th>操作</th>
                                     </tr>
@@ -120,10 +120,10 @@
                                         <td th:text="${course.getCredit()}"></td>
                                         <td th:text="${course.getCredit()}"></td>
                                         <td th:text="${course.getTime() + ' ' + course.getPlace()}"></td>
-                                        <td th:text="${course.getStock()}"></td>
+                                        <td th:id="${course.getId() + 'stock'}"></td>
                                         <td th:text="${course.getTotal()}"></td>
                                         <td>
-                                            <a>选课</a>
+                                            <a onclick="chooseCourse()">选课</a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -144,5 +144,37 @@
 
 
 </body>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<script>
+    $.ajax
+    ({
+        cache: false,
+        async: false,
+        type: 'get',
+        url: "/seckill/course/stock",
+        success: function (data){
+            for (var i = 0; i < data.length; i++) {
+                $("#" + data[i].id + "stock").html(data[i].stock);
+            }
+        }
+    });
+
+    function chooseCourse(courseId) {
+        $.ajax
+        ({
+            cache: false,
+            async: false,
+            type: 'get',
+            url: "/seckill/add?courseId=" + courseId,
+            success: function (data) {
+                if (data.code == 0) {
+                    alert("抢课请求已经提交，请到选课情况界面查看");
+                } else {
+                    alert("该课程已经被选完");
+                }
+            }
+        });
+    }
+</script>
 
 </html>

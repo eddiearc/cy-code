@@ -148,10 +148,10 @@ public class CourseServiceImpl implements CourseService {
         List<Course> ans = new ArrayList<>(ids.size());
         for (String id : ids) {
             // stock 获取库存信息
-            Integer stock = (Integer) redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).get(id);
+            Long stock = redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).increment(id, 0);
             Course course = new Course();
             course.setId(id);
-            course.setStock(stock);
+            course.setStock(stock.intValue());
             ans.add(course);
         }
         return ans;

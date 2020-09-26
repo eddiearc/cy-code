@@ -3,6 +3,7 @@ package cn.cy.course.controller;
 import cn.cy.course.entity.Result;
 import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Pack;
+import cn.cy.course.service.CourseService;
 import cn.cy.course.service.SeckillService;
 import cn.cy.course.service.SelectionService;
 import org.apache.dubbo.config.annotation.Reference;
@@ -38,7 +39,9 @@ public class SeckillController {
     public Result add(String courseId, String stuId) {
         String studentId = stuId;
         //1. 通过Sercurity获取学号
-        // String studentId = "201841054085";
+        if (studentId == null) {
+            studentId = "201841054085";
+        }
 
         //2. 课程选课包
         Pack pack = new Pack();
@@ -107,5 +110,18 @@ public class SeckillController {
         });
 
         return res;
+    }
+
+    @Reference
+    private CourseService courseService;
+
+    /**
+     * 获取课程库存
+     *
+     * @return
+     */
+    @GetMapping("/course/stock")
+    public List<Course> stockRealTime() {
+        return courseService.getCourseStockRealTime();
     }
 }
