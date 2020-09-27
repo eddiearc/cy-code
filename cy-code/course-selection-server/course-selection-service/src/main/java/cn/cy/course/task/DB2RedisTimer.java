@@ -11,10 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * 将MySQL中的数据更新到Redis中
@@ -90,6 +87,10 @@ public class DB2RedisTimer {
             initTerm();
         }
         final List<Selection> list = selectionMapper.select(searchSelection);
+
+        // 先清空Set
+        Set keys = redisTemplate.keys(RedisConstantKey.SELECTION_SET.toString() + "*");
+        redisTemplate.delete(keys);
 
         // set
         for (Selection selection : list) {

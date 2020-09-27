@@ -18,7 +18,7 @@ public class AsyncThreadPoolConfig implements AsyncConfigurer {
     /**
      * 线程池中一直存活的线程数
      */
-    private int CORE_POOL_SIZE = 5;
+    private int CORE_POOL_SIZE = 10;
 
     /**
      * 最大允许的线程数
@@ -31,7 +31,7 @@ public class AsyncThreadPoolConfig implements AsyncConfigurer {
                 // 高峰期使空闲线程，存活时间长一些
                 30, TimeUnit.MINUTES,
                 // 队列最大容量 30
-                new ArrayBlockingQueue<>(30),
+                new ArrayBlockingQueue<>(300),
                 // 线程工厂
                 new AsyncThreadFactory(),
                 // 拒绝策略：提交任务者 自己运行
@@ -51,7 +51,7 @@ public class AsyncThreadPoolConfig implements AsyncConfigurer {
             SecurityManager s = System.getSecurityManager();
             group = (s != null) ? s.getThreadGroup() :
                     Thread.currentThread().getThreadGroup();
-            namePrefix = "Selection-Async-Task-Thread-";
+            namePrefix = "Create-Selection-Thread-";
         }
 
         @Override

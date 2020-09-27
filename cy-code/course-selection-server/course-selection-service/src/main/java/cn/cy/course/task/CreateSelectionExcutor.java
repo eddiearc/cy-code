@@ -7,9 +7,12 @@ import cn.cy.course.service.CourseService;
 import cn.cy.course.service.SelectionService;
 import cn.cy.course.util.RedisConstantKey;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  * @author eddieVim
@@ -68,19 +71,26 @@ public class CreateSelectionExcutor {
         Long stock = redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).increment(courseId, -1);
         System.out.println("剩余库存：" + stock);
 
-        // 4. 选课信息入库
+        // 4. 选课信息入Redis
+        redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET.toString() + pack.getStudentId()).add(pack.getCourseId());
+
+
+        // 5. 选课信息入MySQL
         Selection selection = new Selection();
         selection.setStudentId(pack.getStudentId());
         selection.setCourseId(courseId);
         selection.setCreateTime(pack.getCreateTime());
-        int add = selectionService.add(selection);
-
-        // 5. 回调前端
-        if (add <= 0) {
-            System.out.println("FAIL!");
-        } else {
-            System.out.println("SUCCESS!");
+        try {
+            selectionService.add(selection);
+        } catch (DuplicateKeyException e) {
+            // 插入异常，进行回滚操作，即已经选过该课程
+            System.out.println("---学号：" + pack.getStudentId() + "已经选过该课了---");
+            redisStockRollBack(courseId);
+        } catch (Exception e) {
+            System.out.println("预料之外的错误：" + e);
         }
+
+
         System.out.println("-----抢课Pack处理-OVER-----");
     }
 
@@ -94,7 +104,18 @@ public class CreateSelectionExcutor {
         Course course = new Course();
         course.setId(courseId);
         course.setStock(stock);
-        // DB
+        // DB update
         courseService.update(course);
+    }
+
+    /**
+     * 已经选过该课程，回滚Redis中的库存
+     *
+     * @param courseId 课程ID
+     */
+    private void redisStockRollBack(String courseId) {
+        // 库存数回滚
+        redisTemplate.boundListOps(RedisConstantKey.COURSE_STOCK_QUEUE.toString()).leftPush(courseId);
+        redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).increment(courseId, 1);
     }
 }
