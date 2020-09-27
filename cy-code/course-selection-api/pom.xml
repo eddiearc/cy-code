@@ -32,11 +32,11 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <!--security与thymmeleaf整合-->
-        <dependency>
-            <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-            <version>3.0.4.RELEASE</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.thymeleaf.extras</groupId>-->
+<!--            <artifactId>thymeleaf-extras-springsecurity5</artifactId>-->
+<!--            <version>3.0.4.RELEASE</version>-->
+<!--        </dependency>-->
         <!--cas 单点登陆-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.security</groupId>-->
