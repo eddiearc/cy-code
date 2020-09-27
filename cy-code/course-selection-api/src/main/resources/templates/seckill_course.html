@@ -123,7 +123,7 @@
                                         <td th:id="${course.getId() + 'stock'}"></td>
                                         <td th:text="${course.getTotal()}"></td>
                                         <td>
-                                            <a onclick="chooseCourse()">选课</a>
+                                            <a th:data-toggle="${course.getId()}" th:onclick="chooseCourse(this.getAttribute('data-toggle'))">选课</a>
                                         </td>
                                     </tr>
                                 </tbody>
