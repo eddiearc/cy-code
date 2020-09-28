@@ -14,9 +14,6 @@ public class User implements Serializable {
 	@Id
 	private String id;//学生ID、老师ID、管理员ID
 
-
-	
-
 	private String password;//密码
 
 	private Integer role;//角色 0:管理员 1:学生 2:老师
