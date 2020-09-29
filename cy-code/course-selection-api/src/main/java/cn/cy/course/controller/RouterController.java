@@ -29,8 +29,19 @@ public class RouterController {
         return "views/seckill_selection";
     }
 
-    @RequestMapping("/toLogin")
+    @RequestMapping("/login")
     public String toLogin(){
-        return "views/login";
+        return "/views/login";
+    }
+
+
+    @RequestMapping("/loginSuccess")
+    public String loginSuccess(){
+        return "/views/seckill_selection";
+    }
+
+    @RequestMapping("/loginError")
+    public String loginError(){
+        return "/views/loginError";
     }
 }
