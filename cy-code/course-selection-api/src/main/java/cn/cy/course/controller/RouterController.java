@@ -21,16 +21,16 @@ public class RouterController {
         // 获取本次选课的列表
         List<Course> courseList = courseService.getCourseListThisTerm();
         model.addAttribute(courseList);
-        return "/views/seckill_course";
+        return "views/seckill_course";
     }
 
     @GetMapping("/page/selection")
     public String seckillSelection() {
-        return "/views/seckill_selection";
+        return "views/seckill_selection";
     }
 
     @RequestMapping("/toLogin")
     public String toLogin(){
-        return "/views/login";
+        return "views/login";
     }
 }
