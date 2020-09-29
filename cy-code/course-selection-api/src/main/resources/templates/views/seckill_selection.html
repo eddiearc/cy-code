@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-    <title>cy-code选课系统｜选课情况</title>
+    <title>cy-code选课系统｜我的选课情况</title>
      <link rel="icon" href="/img/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/css/all.css" />
     <link rel="stylesheet" type="text/css" href="/css/pages-seckillOrder.css" />
@@ -82,10 +82,10 @@
                 <div class="yui3-u-5-6">
                     <div class="body userAddress">
                         <div class="address-title">
-                            <span class="title">选课列表</span>
+                            <span class="title">我的选课情况</span>
                             <span class="clearfix"></span>
                         </div>
-                        <div class="address-detail">
+                        <div class="my-selection">
                             <table class="sui-table table-bordered">
                                 <thead>
                                     <tr>
@@ -96,7 +96,6 @@
 										<th>学分</th>
 										<th>学时</th>
 										<th>上课时间地点</th>
-										<th>操作</th>
                                     </tr>
                                 </thead>
                                 <tbody id="selection_body">
@@ -137,9 +136,6 @@
                     '<td>' + data[i].credit + '</td>\n' +
                     '<td>' + (data[i].durationEnd - data[i].durationStart) + '</td>\n' +
                     '<td>' + data[i].time + ' ' + data[i].place + '</td>\n' +
-                    '<td>\n' +
-                    '    <a>取消选课</a>\n' +
-                    '</td>' +
                     '</tr>';
                 $("#selection_body").append($tr);
             }

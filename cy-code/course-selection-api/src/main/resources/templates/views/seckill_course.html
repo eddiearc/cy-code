@@ -85,7 +85,7 @@
                             <span class="title">选课列表</span>
                             <span class="clearfix"></span>
                         </div>
-                        <div class="address-detail">
+                        <div class="course-list">
                             <table class="sui-table table-bordered">
                                 <thead>
                                     <tr>
@@ -134,34 +134,51 @@
 </body>
 <script src="/js/jquery3.4.1.min.js"></script>
 <script>
-    $.ajax
-    ({
-        cache: false,
-        async: false,
-        type: 'get',
-        url: "/seckill/course/stock",
-        success: function (data){
-            for (var i = 0; i < data.length; i++) {
-                $("#" + data[i].id + "stock").html(data[i].stock);
-            }
-        }
-    });
+    // 页面加载完毕即加载库存
+    $(document).ready(updateStock());
 
-    function chooseCourse(courseId) {
+    /**
+     * 加载更新库存
+     */
+    function updateStock() {
         $.ajax
         ({
             cache: false,
             async: false,
             type: 'get',
-            url: "/seckill/add?courseId=" + courseId,
-            success: function (data) {
-                if (data.code == 0) {
-                    alert("抢课请求已经提交，请到选课情况界面查看");
-                } else {
-                    alert(data.message);
+            url: "/seckill/course/stock",
+            success: function (data){
+                for (var i = 0; i < data.length; i++) {
+                    $("#" + data[i].id + "stock").html(data[i].stock);
                 }
             }
         });
+    }
+
+    /**
+     * 选课接口
+     *
+     * @param courseId 课程ID
+     */
+    function chooseCourse(courseId) {
+        // 确定弹框
+        if(window.confirm("选课后将不可更改，确定吗？")) {
+            $.ajax
+            ({
+                cache: false,
+                async: false,
+                type: 'get',
+                url: "/seckill/add?courseId=" + courseId,
+                success: function (data) {
+                    if (data.code == 0) {
+                        alert(data.message);
+                        updateStock();
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        }
     }
 </script>
 

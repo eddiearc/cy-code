@@ -52,7 +52,17 @@ public class SeckillController {
         //3. 处理Pack任务
         seckillService.add(pack);
 
-        return new Result(0, "选课排队中！");
+        return new Result(0, "您的选课信息正在排队中，请稍后到我的选课情况界面查看！");
+    }
+
+    public Result remove(String courseId, String stuId) {
+        String studentId = stuId;
+        //1. 通过Sercurity获取学号
+        if (studentId == null) {
+            studentId = "201841054085";
+        }
+
+        return new Result(0, "已经移除您的选课信息！");
     }
 
     /**
