@@ -1,4 +1,8 @@
 spring:
+  jackson:
+    #return json data non null
+    default-property-inclusion: non_null
+
   thymeleaf:
     #缓冲的配置
     cache: false
@@ -10,6 +14,8 @@ spring:
     mode: HTML5
     prefix: classpath:/templates/
     suffix: .html
+    #今天目标
+    dest-path: ~/deploy3H
 
   profiles:
     active: dubbo

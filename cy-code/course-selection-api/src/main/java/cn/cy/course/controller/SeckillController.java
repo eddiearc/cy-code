@@ -1,12 +1,14 @@
 package cn.cy.course.controller;
 
 import cn.cy.course.entity.Result;
+import cn.cy.course.entity.UserInfo;
 import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Pack;
 import cn.cy.course.service.CourseService;
 import cn.cy.course.service.SeckillService;
 import cn.cy.course.service.SelectionService;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,11 +38,10 @@ public class SeckillController {
      * @return
      */
     @GetMapping("/add")
-    public Result add(String courseId, String stuId) {
-        String studentId = stuId;
+    public Result add(String courseId, String studentId, @AuthenticationPrincipal UserInfo userInfo) {
         //1. 通过Sercurity获取学号
         if (studentId == null) {
-            studentId = "201841054085";
+            studentId = userInfo.getId();
         }
 
         //2. 课程选课包
@@ -55,11 +56,10 @@ public class SeckillController {
         return new Result(0, "您的选课信息正在排队中，请稍后到我的选课情况界面查看！");
     }
 
-    public Result remove(String courseId, String stuId) {
-        String studentId = stuId;
+    public Result remove(String courseId, String studentId, @AuthenticationPrincipal UserInfo userInfo) {
         //1. 通过Sercurity获取学号
         if (studentId == null) {
-            studentId = "201841054085";
+            studentId = userInfo.getId();
         }
 
         return new Result(0, "已经移除您的选课信息！");
@@ -71,9 +71,9 @@ public class SeckillController {
      * @return
      */
     @GetMapping("/query/history")
-    public List<Course> queryHistory() {
+    public List<Course> queryHistory(@AuthenticationPrincipal UserInfo userInfo) {
         //1. 通过Sercurity获取学号
-        String studentId = "201841054085";
+        String studentId = userInfo.getId();
 
         //2. 获取对应的选课信息
         List<Course> res = selectionService.historySelection(studentId);

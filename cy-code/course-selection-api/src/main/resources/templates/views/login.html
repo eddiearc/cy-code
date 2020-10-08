@@ -14,25 +14,48 @@
 </head>
 
 <body>
-<form  class="form-signin" action="/login/form" method="post">
-	<h2 class="form-signin-heading">用户登录</h2>
-	<table>
-		<tr>
-			<td>用户名:</td>
-			<td><input type="text" name="username"  class="form-control"  placeholder="请输入学号"/></td>
-		</tr>
-		<tr>
-			<td>密码:</td>
-			<td><input type="password" name="password"  class="form-control" placeholder="请输入密码" /></td>
-		</tr>
-		<tr>
+	<div class="loginmanage">
+		<div class="py-container">
+			<h4 class="manage-title">cy-code选课系统登录</h4>
+			<div class="loginform">
 
-			<td colspan="2">
-				<button type="submit"  class="btn btn-lg btn-primary btn-block" >登录</button>
-			</td>
-		</tr>
-	</table>
-</form>
+				<ul class="sui-nav nav-tabs tab-wraped">
+							<h3>账户登录</h3>
+				</ul>
+				<div class="tab-content tab-wraped">
+					<div id="index" class="tab-pane">
+						<p>二维码登录，暂为官网二维码</p>
+						<img src="/img/wx_cz.jpg" />
+					</div>
+					<div id="profile" class="tab-pane  active">
+						<form class="sui-form">
+							<div class="input-prepend"><span class="add-on loginname"></span>
+								<input id="prependedInput" name="id" type="text" placeholder="邮箱/用户名/手机号" class="span2 input-xfat">
+							</div>
+							<div class="input-prepend"><span class="add-on loginpwd"></span>
+								<input id="prependedInput" name="password" type="password" placeholder="请输入密码" class="span2 input-xfat">
+							</div>
+							<div class="logined">
+								<a class="sui-btn btn-block btn-xlarge btn-danger" type="submit">登&nbsp;&nbsp;录</a>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	</div>
+
+	<!--foot-->
+	<div class="py-container copyright">
+		<div class="address">地址：厦门市集美区 集美大学诚毅学院</div>
+		<div class="beian">
+		</div>
+	</div>
+	</div>
+	
 
 
 </body>

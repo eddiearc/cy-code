@@ -1,30 +1,28 @@
-package cn.cy.course.service;
+package cn.cy.course.config.security;
 
 import cn.cy.course.entity.UserInfo;
 import cn.cy.course.pojo.Student;
 import cn.cy.course.pojo.User;
 import cn.cy.course.service.StudentService;
+import cn.cy.course.service.UserService;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-@Component
-public class MyUserDetailsService implements UserDetailsService {
+@Component("myUserDetailsServiceImpl")
+public class MyUserDetailsServiceImpl implements UserDetailsService {
+
     @Reference
     private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        UserInfo userInfo = null;
         User user = userService.findById(s);
-        System.out.println(user);
-        if(user != null){
-            userInfo = new UserInfo(user.getId(),user.getPassword(),user.getRole(),true,true,true,true);
-            System.out.println(userInfo);
+        if (user == null) {
+            return null;
         }
-        System.out.println("userInfo密码:"+userInfo.getPassword());
-        return userInfo;
+        return new UserInfo(user);
     }
 }
