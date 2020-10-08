@@ -1,9 +1,11 @@
 package cn.cy.course.config.security.filter;
 
-import cn.cy.course.util.JwtTokenUtils;
+import cn.cy.course.service.TokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -17,30 +19,41 @@ import java.util.Collections;
  * @author eddieVim
  * @微信公众号 埃迪的Code日记 / PositiveEddie
  * @blog https://blog.csdn.net/weixin_44129784
- * @create 2020/10/6 12:33 下午
+ * @create 2020/10/8 3:08 下午
  */
-public class JwtAuthorizationFilter extends OncePerRequestFilter {
+@Component
+public class JwtStatusCheckoutFilter extends OncePerRequestFilter {
+
+    @Autowired
+    private TokenService tokenService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
         // 到请求头中获取token（含Bearer字段）
-        String tokenHeader = request.getHeader(JwtTokenUtils.TOKEN_HEADER);
+        String tokenHeader = request.getHeader(tokenService.TOKEN_HEADER);
 
         // 如果请求头中没有Authorization信息则直接放行了
         if (tokenHeader == null ||
-                !tokenHeader.startsWith(JwtTokenUtils.TOKEN_PREFIX)) {
+                !tokenHeader.startsWith(tokenService.TOKEN_PREFIX)) {
             chain.doFilter(request, response);
             System.out.println("请求头中无token!");
             return;
         }
 
         // 纯token字符串
-        String token = tokenHeader.replace(JwtTokenUtils.TOKEN_PREFIX, "");
+        String token = tokenHeader.replace(tokenService.TOKEN_PREFIX, "");
+
+        // 未登录
+        if (!tokenService.isLogin(token)) {
+            chain.doFilter(request, response);
+            System.out.println("用户登录状态已失效!");
+            return;
+        }
 
         // 检查token是否过期，过期：直接放行
-        if (JwtTokenUtils.isExpiration(token)) {
+        if (tokenService.isExpiration(token)) {
             chain.doFilter(request, response);
             System.out.println("token已过期!");
             return;
@@ -53,10 +66,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     /**
      * 这里从token中获取用户信息并新建一个token认证对象
-      */
+     */
     private UsernamePasswordAuthenticationToken getAuthentication(String token) {
-        String username = JwtTokenUtils.getUsername(token);
-        String role = JwtTokenUtils.getUserRole(token);
+        String username = tokenService.getUsername(token);
+        String role = tokenService.getUserRole(token);
         System.out.println("role: " + role);
         if (username != null){
             return new UsernamePasswordAuthenticationToken(username, null,
@@ -67,4 +80,3 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     }
 
 }
-

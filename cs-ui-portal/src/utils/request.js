@@ -45,8 +45,8 @@ service.interceptors.response.use(
   response => {
     const res = response.data
 
-    // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 200) {
+    // 如果返回值有code的话 且 不为200，则请求异常
+    if (res.code && res.code !== 200) {
       Message({
         message: res.message || 'Error',
         type: 'error',

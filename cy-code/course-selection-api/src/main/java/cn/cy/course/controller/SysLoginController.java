@@ -2,15 +2,10 @@ package cn.cy.course.controller;
 
 import cn.cy.course.entity.AjaxResult;
 import cn.cy.course.entity.LoginUser;
-import cn.cy.course.service.LoginService;
+import cn.cy.course.service.SysLoginService;
 import cn.cy.course.util.JwtTokenUtils;
-import io.jsonwebtoken.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -22,15 +17,15 @@ import java.util.ArrayList;
  * @create 2020/10/6 10:30 下午
  */
 @RestController
-public class UserController {
+public class SysLoginController {
 
     @Autowired
-    private LoginService loginService;
+    private SysLoginService sysLoginService;
 
     @PostMapping("login")
     public AjaxResult login(@RequestBody LoginUser loginUser) {
         AjaxResult ajaxResult = AjaxResult.success("登录成功！");
-        String token = loginService.login(loginUser.getUsername(), loginUser.getPassword());
+        String token = sysLoginService.login(loginUser.getUsername(), loginUser.getPassword());
         ajaxResult.put("token", token);
         return ajaxResult;
     }

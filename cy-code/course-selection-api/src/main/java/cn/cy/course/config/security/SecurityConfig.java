@@ -1,9 +1,12 @@
 package cn.cy.course.config.security;
 
 import cn.cy.course.config.security.filter.JwtAuthorizationFilter;
+import cn.cy.course.config.security.filter.JwtStatusCheckoutFilter;
+import cn.cy.course.config.security.handler.LogoutSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -30,10 +33,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomizeAuthenticationEntryPoint authenticationEntryPoint;
 
-    @Bean
-    public JwtAuthorizationFilter authorizationFilterFilterBean() {
-        return new JwtAuthorizationFilter();
-    }
+    @Autowired
+    private LogoutSuccessHandlerImpl logoutSuccessHandler;
+
+    @Autowired
+    private JwtStatusCheckoutFilter jwtStatusCheckoutFilter;
+
+//    @Bean
+//    public JwtAuthorizationFilter authorizationFilterFilterBean() {
+//        return new JwtAuthorizationFilter();
+//    }
 
     // 加密密码用的
     @Bean
@@ -68,15 +77,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 不需要session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                // 测试用资源，需要验证了的用户才能访问
-                .antMatchers("/seckill/query/history").authenticated()
-                // 其他都放行了
-                .anyRequest().permitAll().and()
+                .antMatchers("/login").permitAll()
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/*.html",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js"
+                ).permitAll()
+                .antMatchers().permitAll()
+                // 除上面外的所有请求全部需要鉴权认证
+                .anyRequest().authenticated().and()
                 // 添加token验证
-                .addFilterBefore(authorizationFilterFilterBean(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtStatusCheckoutFilter, UsernamePasswordAuthenticationFilter.class)
+                //.addFilterBefore(authorizationFilterFilterBean(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 //匿名用户访问无权限资源时的异常处理
                 .authenticationEntryPoint(authenticationEntryPoint);
+
+        http.logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler);
     }
 
     public static void main(String[] args) {
