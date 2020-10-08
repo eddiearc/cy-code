@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 27/09/2020 20:43:16
+ Date: 08/10/2020 09:35:17
 */
 
 SET NAMES utf8mb4;
@@ -199,7 +199,9 @@ CREATE TABLE `tb_selection` (
 -- Records of tb_selection
 -- ----------------------------
 BEGIN;
-INSERT INTO `tb_selection` VALUES ('201841054085', '1', 0, '2020-09-27 18:53:14.2');
+INSERT INTO `tb_selection` VALUES ('201841054085', '1', 0, '2020-09-29 21:09:36.3');
+INSERT INTO `tb_selection` VALUES ('201841054085', '5', 0, '2020-09-29 21:10:18.4');
+INSERT INTO `tb_selection` VALUES ('201841054085', '6', 0, '2020-09-29 21:10:22.2');
 COMMIT;
 
 -- ----------------------------
@@ -240,10 +242,17 @@ CREATE TABLE `tb_teacher` (
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_user`;
 CREATE TABLE `tb_user` (
-  `id` varchar(15) NOT NULL COMMENT '学生ID、老师ID、管理员ID',
-  `password` varchar(20) NOT NULL COMMENT '密码',
-  `role` int(1) NOT NULL COMMENT '角色 0:管理员 1:学生 2:老师',
+  `id` varchar(16) NOT NULL COMMENT '学生ID、老师ID、管理员ID',
+  `password` varchar(64) NOT NULL COMMENT '密码',
+  `role` int(2) NOT NULL COMMENT '角色 0:管理员 1:学生 2:老师',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of tb_user
+-- ----------------------------
+BEGIN;
+INSERT INTO `tb_user` VALUES ('201841054085', '$2a$10$knsZf8BvaEnMrj.QREuH2egjGogvZdwSgZ1Kb6sxptcgCNnisSOVC', 1);
+COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
