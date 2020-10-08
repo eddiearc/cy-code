@@ -20,7 +20,9 @@ router.beforeEach(async(to, from, next) => {
   // determine whether the user has logged in
   const hasToken = getToken()
 
+  // 如果获取到token了
   if (hasToken) {
+    // 并且是路由向/login目标去的
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
@@ -38,6 +40,8 @@ router.beforeEach(async(to, from, next) => {
 
           // generate accessible routes map based on roles
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+
+          console.log(accessRoutes)
 
           // dynamically add accessible routes
           router.addRoutes(accessRoutes)

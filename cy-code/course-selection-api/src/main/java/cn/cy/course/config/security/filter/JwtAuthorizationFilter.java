@@ -29,23 +29,36 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
-
+        // 到请求头中获取token（含Bearer字段）
         String tokenHeader = request.getHeader(JwtTokenUtils.TOKEN_HEADER);
+
         // 如果请求头中没有Authorization信息则直接放行了
-        if (tokenHeader == null || !tokenHeader.startsWith(JwtTokenUtils.TOKEN_PREFIX)) {
+        if (tokenHeader == null ||
+                !tokenHeader.startsWith(JwtTokenUtils.TOKEN_PREFIX)) {
             chain.doFilter(request, response);
-            System.out.println("请求头中无token");
+            System.out.println("请求头中无token!");
             return;
         }
+
+        // 纯token字符串
+        String token = tokenHeader.replace(JwtTokenUtils.TOKEN_PREFIX, "");
+
+        // 检查token是否过期，过期：直接放行
+        if (JwtTokenUtils.isExpiration(token)) {
+            chain.doFilter(request, response);
+            System.out.println("token已过期!");
+            return;
+        }
+
         // 如果请求头中有token，则进行解析，并且设置认证信息
-        SecurityContextHolder.getContext().setAuthentication(getAuthentication(tokenHeader));
-        System.out.println("token: " + tokenHeader);
+        SecurityContextHolder.getContext().setAuthentication(getAuthentication(token));
         chain.doFilter(request, response);
     }
 
-    // 这里从token中获取用户信息并新建一个token
-    private UsernamePasswordAuthenticationToken getAuthentication(String tokenHeader) {
-        String token = tokenHeader.replace(JwtTokenUtils.TOKEN_PREFIX, "");
+    /**
+     * 这里从token中获取用户信息并新建一个token认证对象
+      */
+    private UsernamePasswordAuthenticationToken getAuthentication(String token) {
         String username = JwtTokenUtils.getUsername(token);
         String role = JwtTokenUtils.getUserRole(token);
         System.out.println("role: " + role);

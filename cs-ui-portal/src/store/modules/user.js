@@ -37,7 +37,6 @@ const actions = {
         const token = response.token
         commit('SET_TOKEN', token)
         setToken(token)
-        console.log(token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -48,25 +47,21 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const { data } = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
+      getInfo(state.token).then(res => {
+        if (res.code !== 200) {
+          reject(res.message)
         }
 
-        const { roles, name, avatar, introduction } = data
+        const { roles, name } = res
 
-        // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
+        // 名字不能为空
+        if (!name) {
+          reject('getInfo: name not be null')
         }
 
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
-        resolve(data)
+        resolve(res)
       }).catch(error => {
         reject(error)
       })

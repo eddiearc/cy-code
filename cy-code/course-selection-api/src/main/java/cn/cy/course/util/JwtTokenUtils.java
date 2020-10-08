@@ -49,6 +49,7 @@ public class JwtTokenUtils {
         return getTokenBody(token).getSubject();
     }
 
+    // 从token中获取角色
     public static String getUserRole(String token) {
         return (String) getTokenBody(token).get(ROLE_CLAIMS);
     }
