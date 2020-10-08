@@ -1,5 +1,7 @@
 package cn.cy.course.entity;
 
+import cn.cy.course.util.HttpStatus;
+
 import java.util.HashMap;
 
 /**
@@ -8,8 +10,8 @@ import java.util.HashMap;
  * @blog https://blog.csdn.net/weixin_44129784
  * @create 2020/10/7 9:10 上午
  */
-public class AjaxResult extends HashMap<String, Object>
-{
+public class AjaxResult extends HashMap<String, Object> {
+
     private static final long serialVersionUID = 1L;
 
     /** 状态码 */
@@ -97,7 +99,7 @@ public class AjaxResult extends HashMap<String, Object>
      */
     public static AjaxResult success(String msg, Object data)
     {
-        return new AjaxResult(200, msg, data);
+        return new AjaxResult(HttpStatus.SUCCESS, msg, data);
     }
 
     /**
@@ -130,7 +132,7 @@ public class AjaxResult extends HashMap<String, Object>
      */
     public static AjaxResult error(String msg, Object data)
     {
-        return new AjaxResult(500, msg, data);
+        return new AjaxResult(HttpStatus.ERROR, msg, data);
     }
 
     /**

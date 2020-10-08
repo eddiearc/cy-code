@@ -1,8 +1,7 @@
 package cn.cy.course.config.security;
 
-import cn.cy.course.entity.Result;
+import cn.cy.course.entity.AjaxResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.dubbo.common.json.JSON;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -22,8 +21,8 @@ import java.io.IOException;
 public class CustomizeAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        Result result = new Result(1, "匿名用户无权限访问该资源");
+        AjaxResult ajaxResult = AjaxResult.error("匿名用户无权限访问该资源");
         httpServletResponse.setContentType("text/json;charset=utf-8");
-        new ObjectMapper().writeValue(httpServletResponse.getWriter(), result);
+        new ObjectMapper().writeValue(httpServletResponse.getWriter(), ajaxResult);
     }
 }
