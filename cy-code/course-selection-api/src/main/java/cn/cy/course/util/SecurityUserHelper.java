@@ -21,7 +21,7 @@ public class SecurityUserHelper {
     }
 
     /**
-     * 获取当前用户
+     * 获取当前用户用户名
      *
      * @return
      */

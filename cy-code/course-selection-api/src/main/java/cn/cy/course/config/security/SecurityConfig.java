@@ -85,7 +85,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js"
                 ).permitAll()
-                .antMatchers().permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated().and()
                 // 添加token验证
