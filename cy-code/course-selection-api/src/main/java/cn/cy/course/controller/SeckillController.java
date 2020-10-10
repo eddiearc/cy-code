@@ -1,12 +1,12 @@
 package cn.cy.course.controller;
 
-import cn.cy.course.entity.Result;
-import cn.cy.course.entity.UserInfo;
+import cn.cy.course.entity.AjaxResult;
 import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Pack;
 import cn.cy.course.service.CourseService;
 import cn.cy.course.service.SeckillService;
 import cn.cy.course.service.SelectionService;
+import cn.cy.course.util.SecurityUserHelper;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,10 +38,10 @@ public class SeckillController {
      * @return
      */
     @GetMapping("/add")
-    public Result add(String courseId, String studentId, @AuthenticationPrincipal UserInfo userInfo) {
+    public AjaxResult add(String courseId, String studentId) {
         //1. 通过Sercurity获取学号
         if (studentId == null) {
-            studentId = userInfo.getId();
+            studentId = (String) SecurityUserHelper.getCurrentPrincipal();
         }
 
         //2. 课程选课包
@@ -53,16 +53,16 @@ public class SeckillController {
         //3. 处理Pack任务
         seckillService.add(pack);
 
-        return new Result(0, "您的选课信息正在排队中，请稍后到我的选课情况界面查看！");
+        return AjaxResult.success("您的选课信息正在排队中，请稍后到我的选课情况界面查看！");
     }
 
-    public Result remove(String courseId, String studentId, @AuthenticationPrincipal UserInfo userInfo) {
+    public AjaxResult remove(String courseId, String studentId) {
         //1. 通过Sercurity获取学号
         if (studentId == null) {
-            studentId = userInfo.getId();
+            studentId  = (String) SecurityUserHelper.getCurrentPrincipal();
         }
 
-        return new Result(0, "已经移除您的选课信息！");
+        return AjaxResult.success("已经移除您的选课信息！");
     }
 
     /**
@@ -71,9 +71,9 @@ public class SeckillController {
      * @return
      */
     @GetMapping("/query/history")
-    public List<Course> queryHistory(@AuthenticationPrincipal UserInfo userInfo) {
+    public List<Course> queryHistory() {
         //1. 通过Sercurity获取学号
-        String studentId = userInfo.getId();
+        String studentId = (String) SecurityUserHelper.getCurrentPrincipal();
 
         //2. 获取对应的选课信息
         List<Course> res = selectionService.historySelection(studentId);
@@ -102,7 +102,7 @@ public class SeckillController {
     @GetMapping("/query/curr")
     public List<Course> queryCurrTerm() {
         //1. 通过Sercurity获取学号
-        String studentId = "201841054085";
+        String studentId = (String) SecurityUserHelper.getCurrentPrincipal();
 
         //2. 获取对应的选课信息
         List<Course> res = selectionService.currTermSelection(studentId);
