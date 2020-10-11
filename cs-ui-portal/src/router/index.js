@@ -6,11 +6,11 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 
-/* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
+// /* Router Modules */
+// import componentsRouter from './modules/components'
+// import chartsRouter from './modules/charts'
+// import tableRouter from './modules/table'
+// import nestedRouter from './modules/nested'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -132,13 +132,28 @@ export const asyncRoutes = [
   {
     path: '/seckill_selection',
     component: Layout,
+    meta: {
+      title: '个人选课情况',
+      icon: 'list',
+      roles: ['ROLE_ADMIN', 'ROLE_STUDENT']
+    },
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/seckill_selection/index'),
-        name: 'SeckillSelection',
+        path: 'parsent',
+        component: () => import('@/views/seckill_selection/parsentSelect'),
+        name: 'parsentSelect',
         meta: {
-          title: '个人选课情况',
+          title: '本学期选课情况',
+          icon: 'el-icon-date',
+          roles: ['ROLE_ADMIN', 'ROLE_STUDENT']
+        }
+      },
+      {
+        path: 'past',
+        component: () => import('@/views/seckill_selection/pastSelect'),
+        name: 'pastSelection',
+        meta: {
+          title: '历史选课情况',
           icon: 'list',
           roles: ['ROLE_ADMIN', 'ROLE_STUDENT']
         }
