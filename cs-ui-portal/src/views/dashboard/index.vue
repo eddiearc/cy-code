@@ -23,7 +23,7 @@ export default {
     ])
   },
   created() {
-    if (!this.roles.includes('ROLE_STUDENT') || !this.roles.includes('ROLE_ADMIN') || !this.roles.includes('ROLE_TEACHER')) {
+    if (!this.roles.includes('ROLE_STUDENT') && !this.roles.includes('ROLE_ADMIN') && !this.roles.includes('ROLE_TEACHER')) {
       this.currentRole = 'editorDashboard'
     }
   }

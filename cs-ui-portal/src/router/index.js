@@ -174,18 +174,8 @@ export const asyncRoutes = [
         component: () => import('@/views/manager/course'),
         name: 'manager_course',
         meta: {
-          title: '课程管理',
+          title: '课程信息管理',
           icon: 'el-icon-notebook-2',
-          roles: ['ROLE_ADMIN']
-        }
-      },
-      {
-        path: 'curr_term',
-        component: () => import('@/views/manager/curr-term'),
-        name: 'manager_currTerm',
-        meta: {
-          title: '当前学期',
-          icon: 'el-icon-date',
           roles: ['ROLE_ADMIN']
         }
       },
@@ -194,7 +184,7 @@ export const asyncRoutes = [
         component: () => import('@/views/manager/student'),
         name: 'manager_student',
         meta: {
-          title: '学生管理',
+          title: '学生信息管理',
           icon: 'peoples',
           roles: ['ROLE_ADMIN']
         }
