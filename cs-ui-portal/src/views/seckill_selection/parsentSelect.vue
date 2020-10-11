@@ -9,9 +9,8 @@
       fit
       highlight-current-row
       style="width: 100%;"
-      @sort-change="sortChange"
     >
-      <el-table-column label="序号" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
+      <el-table-column label="序号" prop="id" align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
@@ -51,14 +50,12 @@
           <span>{{ row.total }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="选课" class-name="status-col" width="170px">
+      <el-table-column label="取消选课" class-name="status-col" width="170px">
         <template slot-scope="{row}">
-          <el-button type="primary" @click="select(row.id)">点击选课</el-button>
+          <el-button type="primary" @click="select(row.id)">点击取消</el-button>
         </template>
       </el-table-column>
     </el-table>
-
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
@@ -108,10 +105,9 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle, seckillAdd } from '@/api/seckill_course'
+import { getParsentList, fetchPv, createArticle, updateArticle } from '@/api/seckill_selection'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -128,7 +124,6 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
 
 export default {
   name: 'ComplexTable',
-  components: { Pagination },
   directives: { waves },
   filters: {
     statusFilter(status) {
@@ -149,17 +144,8 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
-      listQuery: {
-        page: 1,
-        size: 20,
-        importance: undefined,
-        title: undefined,
-        type: undefined,
-        sort: '+id'
-      },
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
-      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
@@ -193,9 +179,8 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.rows
-        this.total = response.total
+      getParsentList().then(response => {
+        this.list = response
 
         // Just to simulate the time of the request
         setTimeout(() => {
@@ -203,13 +188,7 @@ export default {
         }, 1 * 1000)
       })
     },
-    select(id) {
-      seckillAdd(id).then(response => {
-
-      })
-    },
     handleFilter() {
-      this.listQuery.page = 1
       this.getList()
     },
     handleModifyStatus(row, status) {
@@ -218,20 +197,6 @@ export default {
         type: 'success'
       })
       row.status = status
-    },
-    sortChange(data) {
-      const { prop, order } = data
-      if (prop === 'id') {
-        this.sortByID(order)
-      }
-    },
-    sortByID(order) {
-      if (order === 'ascending') {
-        this.listQuery.sort = '+id'
-      } else {
-        this.listQuery.sort = '-id'
-      }
-      this.handleFilter()
     },
     resetTemp() {
       this.temp = {
@@ -335,10 +300,6 @@ export default {
           return v[j]
         }
       }))
-    },
-    getSortClass: function(key) {
-      const sort = this.listQuery.sort
-      return sort === `+${key}` ? 'ascending' : 'descending'
     }
   }
 }
