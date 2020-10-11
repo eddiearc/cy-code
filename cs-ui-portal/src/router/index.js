@@ -23,7 +23,7 @@ import Layout from '@/layout'
  * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
  * name:'router-name'             the name is used by <keep-alive> (must set!!!)
  * meta : {
-    roles: ['ROLE_ADMIN','editor']    control the page roles (you can set multiple roles)
+    roles: ['ROLE_ADMIN', 'ROLE_DEV','editor']    control the page roles (you can set multiple roles)
     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
     icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
     noCache: true                if set true, the page will no be cached(default is false)
@@ -109,7 +109,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/documentation/index'),
         name: 'Documentation',
-        meta: { title: '开发者文档', icon: 'documentation', roles: ['ROLE_ADMIN'] }
+        meta: { title: '开发者文档', icon: 'documentation', roles: ['ROLE_DEV'] }
       }
     ]
   },
@@ -124,7 +124,7 @@ export const asyncRoutes = [
         meta: {
           title: '选课列表',
           icon: 'education',
-          roles: ['ROLE_ADMIN', 'ROLE_STUDENT']
+          roles: ['ROLE_DEV', 'ROLE_STUDENT']
         }
       }
     ]
@@ -135,7 +135,7 @@ export const asyncRoutes = [
     meta: {
       title: '个人选课情况',
       icon: 'list',
-      roles: ['ROLE_ADMIN', 'ROLE_STUDENT']
+      roles: ['ROLE_DEV', 'ROLE_STUDENT']
     },
     children: [
       {
@@ -145,7 +145,7 @@ export const asyncRoutes = [
         meta: {
           title: '本学期选课情况',
           icon: 'el-icon-date',
-          roles: ['ROLE_ADMIN', 'ROLE_STUDENT']
+          roles: ['ROLE_DEV', 'ROLE_STUDENT']
         }
       },
       {
@@ -155,7 +155,7 @@ export const asyncRoutes = [
         meta: {
           title: '历史选课情况',
           icon: 'list',
-          roles: ['ROLE_ADMIN', 'ROLE_STUDENT']
+          roles: ['ROLE_DEV', 'ROLE_STUDENT']
         }
       }
     ]
@@ -166,7 +166,7 @@ export const asyncRoutes = [
     meta: {
       title: '后台管理',
       icon: 'el-icon-s-tools',
-      roles: ['ROLE_ADMIN']
+      roles: ['ROLE_ADMIN', 'ROLE_DEV']
     },
     children: [
       {
@@ -176,7 +176,7 @@ export const asyncRoutes = [
         meta: {
           title: '课程信息管理',
           icon: 'el-icon-notebook-2',
-          roles: ['ROLE_ADMIN']
+          roles: ['ROLE_ADMIN', 'ROLE_DEV']
         }
       },
       {
@@ -186,7 +186,7 @@ export const asyncRoutes = [
         meta: {
           title: '学生信息管理',
           icon: 'peoples',
-          roles: ['ROLE_ADMIN']
+          roles: ['ROLE_ADMIN', 'ROLE_DEV']
         }
       },
       {
@@ -196,7 +196,7 @@ export const asyncRoutes = [
         meta: {
           title: '登录用户管理',
           icon: 'el-icon-s-custom',
-          roles: ['ROLE_ADMIN']
+          roles: ['ROLE_ADMIN', 'ROLE_DEV']
         }
       }
     ]
@@ -210,7 +210,7 @@ export const asyncRoutes = [
   //   meta: {
   //     title: 'Permission',
   //     icon: 'lock',
-  //     roles: ['ROLE_ADMIN'] // you can set roles in root nav
+  //     roles: ['ROLE_ADMIN', 'ROLE_DEV'] // you can set roles in root nav
   //   },
   //   children: [
   //     {
@@ -219,7 +219,7 @@ export const asyncRoutes = [
   //       name: 'PagePermission',
   //       meta: {
   //         title: 'Page Permission',
-  //         roles: ['ROLE_ADMIN'] // or you can only set roles in sub nav
+  //         roles: ['ROLE_ADMIN', 'ROLE_DEV'] // or you can only set roles in sub nav
   //       }
   //     },
   //     {
@@ -237,7 +237,7 @@ export const asyncRoutes = [
   //       name: 'RolePermission',
   //       meta: {
   //         title: 'Role Permission',
-  //         roles: ['ROLE_ADMIN']
+  //         roles: ['ROLE_ADMIN', 'ROLE_DEV']
   //       }
   //     }
   //   ]
