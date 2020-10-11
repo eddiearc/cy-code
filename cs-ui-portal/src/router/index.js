@@ -450,7 +450,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'http://chengyi.jmu.edu.cn/',
-        meta: { title: '集美大学诚毅学院官网', icon: 'link' }
+        meta: { title: '集美大学诚毅学院', icon: 'link' }
       }
     ]
   },
