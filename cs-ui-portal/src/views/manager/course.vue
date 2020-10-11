@@ -40,32 +40,32 @@
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="课程名称" align="center" width="100" >
+      <el-table-column label="课程名称" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="学分" align="center" width="100" >
+      <el-table-column label="学分" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.credit }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="上课周数时间地点" align="center" width="500px" >
+      <el-table-column label="上课周数时间地点" align="center" width="500px">
         <template slot-scope="{row}">
           <span>{{ '【' + row.duration_start + '~' + row.duration_end + '】' + row.time + ' ' + row.place }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="任课教师" align="center" width="100" >
+      <el-table-column label="任课教师" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.teacher_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="课程类别" align="center" width="100" >
+      <el-table-column label="课程类别" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.category_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="课程总人数" align="center" width="100" >
+      <el-table-column label="课程总人数" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.credit }}</span>
         </template>
@@ -76,37 +76,33 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="Type" prop="type">
-          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
-          </el-select>
+        <el-form-item label="课程序号" prop="id">
+          <el-input v-model="temp.id" placeholder="Please enter" />
         </el-form-item>
-        <el-form-item label="Date" prop="timestamp">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
+        <el-form-item label="课程名称" prop="name">
+          <el-input v-model="temp.name" placeholder="Please enter" />
         </el-form-item>
-        <el-form-item label="Title" prop="title">
-          <el-input v-model="temp.title" />
+        <el-form-item label="上课时间" prop="time">
+          <el-date-picker v-model="temp.time" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
-        <el-form-item label="Status">
-          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
-          </el-select>
+        <el-form-item label="上课地点" prop="place">
+          <el-input v-model="temp.place" />
         </el-form-item>
-        <el-form-item label="Imp">
-          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />
+        <el-form-item label="授课老师" prop="teacherName">
+          <el-input v-model="temp.teacherName" placeholder="Please enter" />
         </el-form-item>
-        <el-form-item label="Remark">
-          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
+        <el-form-item label="总人数" prop="total">
+          <el-input v-model="temp.total" placeholder="Please enter" />
         </el-form-item>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">
+            Cancel
+          </el-button>
+          <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+            Confirm
+          </el-button>
+        </div>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">
-          Cancel
-        </el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
-          Confirm
-        </el-button>
-      </div>
     </el-dialog>
 
     <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
@@ -176,13 +172,12 @@ export default {
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
+        id: null,
+        name: '',
+        time: new Date(),
+        place: '',
+        teacherName: '',
+        total: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
