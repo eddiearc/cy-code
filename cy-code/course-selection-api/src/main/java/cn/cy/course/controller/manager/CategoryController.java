@@ -1,4 +1,4 @@
-package cn.cy.course.controller;
+package cn.cy.course.controller.manager;
 
 import cn.cy.course.entity.PageResult;
 import cn.cy.course.entity.Result;

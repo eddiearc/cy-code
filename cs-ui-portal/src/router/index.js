@@ -114,6 +114,22 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/myTeachCourse',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/myTeachCourse/index'),
+        name: 'myCourse',
+        meta: {
+          title: '我的课程',
+          icon: 'education',
+          roles: ['ROLE_DEV', 'ROLE_TEACHER']
+        }
+      }
+    ]
+  },
+  {
     path: '/seckill_course',
     component: Layout,
     children: [

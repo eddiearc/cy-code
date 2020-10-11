@@ -1,4 +1,4 @@
-package cn.cy.course.controller;
+package cn.cy.course.controller.stu;
 
 import cn.cy.course.entity.AjaxResult;
 import cn.cy.course.pojo.Course;
