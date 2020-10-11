@@ -62,12 +62,12 @@
       </el-table-column>
       <el-table-column label="课程类别" align="center" width="100" >
         <template slot-scope="{row}">
-          <span>{{ row.category_name }}</span>
+          <span>{{ row.category_id }}</span>
         </template>
       </el-table-column>
       <el-table-column label="课程总人数" align="center" width="100" >
         <template slot-scope="{row}">
-          <span>{{ row.credit }}</span>
+          <span>{{ row.total }}</span>
         </template>
       </el-table-column>
     </el-table>
