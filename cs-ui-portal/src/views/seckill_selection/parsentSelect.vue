@@ -40,11 +40,6 @@
           <span>{{ row.teacherName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="剩余选课" width="80px">
-        <template slot-scope="{row}">
-          <span>{{ row.stock }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="总人数" width="80px">
         <template slot-scope="{row}">
           <span>{{ row.total }}</span>
