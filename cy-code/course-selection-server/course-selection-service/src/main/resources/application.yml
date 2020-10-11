@@ -9,7 +9,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
-    password: rootqwer
+    password: 123456
     url: jdbc:mysql://localhost:3306/course_selection?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
 #  rabbitmq:
 #    username: guest

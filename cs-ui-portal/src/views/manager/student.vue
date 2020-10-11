@@ -9,7 +9,7 @@
         新增
       </el-button>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        导入Excel
+        导出Excel
       </el-button>
     </div>
 
@@ -40,7 +40,7 @@
       </el-table-column>
       <el-table-column label="身份证号码" align="center" width="200px">
         <template slot-scope="{row}">
-          <span>{{row.idNumber}}</span>
+          <span>{{ row.idNumber }}</span>
         </template>
       </el-table-column>
       <el-table-column label="学院 / 系" align="center" width="200px">
@@ -317,13 +317,13 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+        const tHeader = ['学号', '姓名', '性别', '身份证号码', '学院/系', '专业', '专业班级']
+        const filterVal = ['id', 'name', 'sex', 'idNumber', 'college', 'major', 'clazz']
         const data = this.formatJson(filterVal)
         excel.export_json_to_excel({
           header: tHeader,
           data,
-          filename: 'table-list'
+          filename: '学生信息表'
         })
         this.downloadLoading = false
       })
@@ -332,6 +332,8 @@ export default {
       return this.list.map(v => filterVal.map(j => {
         if (j === 'timestamp') {
           return parseTime(v[j])
+        } else if (j === 'sex') {
+          return v[j] === 0 ? '女' : '男'
         } else {
           return v[j]
         }

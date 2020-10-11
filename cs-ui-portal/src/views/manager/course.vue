@@ -57,12 +57,12 @@
       </el-table-column>
       <el-table-column label="任课教师" align="center" width="100">
         <template slot-scope="{row}">
-          <span>{{ row.teacher_name }}</span>
+          <span>{{ row.teacherName }}</span>
         </template>
       </el-table-column>
       <el-table-column label="课程类别" align="center" width="100">
         <template slot-scope="{row}">
-          <span>{{ row.category_id }}</span>
+          <span>{{ row.categoryId }}</span>
         </template>
       </el-table-column>
       <el-table-column label="课程总人数" align="center" width="100">
@@ -326,13 +326,13 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+        const tHeader = ['课程序号', '课程名称', '学分', '上课周数时间地点', '任课教师', '课程类别', '课程总人数']
+        const filterVal = ['id', 'name', 'credit', 'timeplace', 'teacherName', 'categoryId', 'total']
         const data = this.formatJson(filterVal)
         excel.export_json_to_excel({
           header: tHeader,
           data,
-          filename: 'table-list'
+          filename: '课程信息'
         })
         this.downloadLoading = false
       })
@@ -341,6 +341,8 @@ export default {
       return this.list.map(v => filterVal.map(j => {
         if (j === 'timestamp') {
           return parseTime(v[j])
+        } else if (j === 'timeplace') {
+          return '【' + this.list.duration_start + '~' + this.list.duration_end + '】' + this.list.time + ' ' + this.list.place
         } else {
           return v[j]
         }
