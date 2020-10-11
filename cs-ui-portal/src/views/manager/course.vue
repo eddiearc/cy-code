@@ -50,7 +50,7 @@
           <span>{{ row.credit }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="上课周数时间地点" align="center" width="500px">
+      <el-table-column label="上课周数时间地点" align="center" width="350px">
         <template slot-scope="{row}">
           <span>{{ '【' + row.duration_start + '~' + row.duration_end + '】' + row.time + ' ' + row.place }}</span>
         </template>
@@ -68,6 +68,13 @@
       <el-table-column label="课程总人数" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.total }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="{row}">
+          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-edit" @click="edit(row.id)">
+            编辑
+          </el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -43,7 +43,7 @@
           <span>{{row.idNumber}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="学院 / 系" align="center">
+      <el-table-column label="学院 / 系" align="center" width="200px">
         <template slot-scope="{row}">
           <span>{{ row.college }}</span>
         </template>
@@ -56,6 +56,13 @@
       <el-table-column label="专业班级" align="center">
         <template slot-scope="{row}">
           <span>{{ row.clazz }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="{row}">
+          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-edit" @click="edit(row.id)">
+            编辑
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
