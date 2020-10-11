@@ -45,17 +45,17 @@ public class JwtStatusCheckoutFilter extends OncePerRequestFilter {
         // 纯token字符串
         String token = tokenHeader.replace(tokenService.TOKEN_PREFIX, "");
 
-        // 未登录
-        if (!tokenService.isLogin(token)) {
-            chain.doFilter(request, response);
-            System.out.println("用户登录状态已失效!");
-            return;
-        }
-
         // 检查token是否过期，过期：直接放行
         if (tokenService.isExpiration(token)) {
             chain.doFilter(request, response);
             System.out.println("token已过期!");
+            return;
+        }
+
+        // 未登录
+        if (!tokenService.isLogin(token)) {
+            chain.doFilter(request, response);
+            System.out.println("用户登录状态已失效!");
             return;
         }
 
