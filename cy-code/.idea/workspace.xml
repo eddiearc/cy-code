@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7ea0a920-4ed6-4a39-91c8-100d00b8e0bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="7ea0a920-4ed6-4a39-91c8-100d00b8e0bd" name="Default Changelist" comment="前端选课情况页面显示">
+      <change afterPath="$PROJECT_DIR$/course-selection-api/src/main/java/cn/cy/course/service/ThymeleafService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-selection-api/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/course-selection-api/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-selection-api/src/main/resources/templates/views/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/course-selection-api/src/main/resources/templates/views/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-selection-server/course-selection-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/course-selection-server/course-selection-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,20 +32,41 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Interface" />
+        <option value="Enum" />
+        <option value="JUnit5 Test Class" />
+        <option value="HTML File" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="JsFlowSettings">
     <service-enabled>true</service-enabled>
     <exe-path />
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="vmOptionsForImporter" value="-Xms1024m -Xmx2048m" />
+      </MavenImportingSettings>
+    </option>
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
@@ -53,8 +77,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
@@ -64,29 +92,48 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/course-selection-server/course-selection-interface/src/main/java/cn/cy/course/service" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
       <recent name="cn.cy.course.mapper" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="cn.cy.course" />
+      <recent name="cn.cy.course.service" />
+      <recent name="cn.cy.course.task" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/course-selection-server/course-selection-interface/src/main/java/cn/cy/course/entity" />
-      <recent name="$PROJECT_DIR$/course-selection-api/src/main/java/cn/cy/course" />
-      <recent name="$PROJECT_DIR$/course-selection-api/src/main/java/cn/cy/course/controller" />
-      <recent name="$PROJECT_DIR$/course-selection-server/course-selection-interface/src/main/java/cn/cy/course/service" />
-      <recent name="$PROJECT_DIR$/course-selection-api/src/main/resources" />
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="cn.cy.course.mapper" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/course-selection-server/course-selection-interface/src/main/java/cn/cy/course/service" />
+      <recent name="$PROJECT_DIR$/course-selection-server/course-selection-service/src/main/java/cn/cy/course/service/impl" />
+      <recent name="$PROJECT_DIR$/course-selection-server/course-selection-service/src/main/java/cn/cy/course/mapper" />
+      <recent name="$PROJECT_DIR$/course-selection-server/course-selection-interface/src/main/java/cn/cy/course/pojo" />
+      <recent name="$PROJECT_DIR$/course-selection-api/src/main/resources/templates/views" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cn.cy.course.controller" />
+      <recent name="cn.cy.course" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/course-selection-api/src/main/resources/templates/views" />
+      <recent name="$PROJECT_DIR$/course-selection-api/src/main/resources/templates" />
+      <recent name="$PROJECT_DIR$/course-selection-api/src/main/resources" />
+      <recent name="$PROJECT_DIR$/course-selection-api/src/main/resources/view" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
   </component>
   <component name="RunManager" selected="Spring Boot.CourseApiConsumer">
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -98,10 +145,10 @@
     <configuration name="CourseServiceProvider" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="cn.cy.course.CourseServiceProvider" />
       <module name="course-selection-service" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" value="-XX:+UseG1GC" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="cn.cy.course.*" />
+          <option name="PATTERN" value="cn.cy.course.util.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -115,7 +162,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CourseMapperTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SelectionMapperTest.fun" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="course-selection-service" />
       <extension name="coverage">
         <pattern>
@@ -124,24 +171,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="cn.cy.course.mapper" />
-      <option name="MAIN_CLASS_NAME" value="cn.cy.course.mapper.CourseMapperTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CourseMapperTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="course-selection-service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cn.cy.course.mapper.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="cn.cy.course.mapper" />
-      <option name="MAIN_CLASS_NAME" value="cn.cy.course.mapper.CourseMapperTest" />
-      <option name="METHOD_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="cn.cy.course.mapper.SelectionMapperTest" />
+      <option name="METHOD_NAME" value="fun" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
@@ -159,11 +190,22 @@
       <module name="course-selection-api" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="cn.cy.course.*" />
+          <option name="PATTERN" value="cn.cy.course.util.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="SPRING_BOOT_MAIN_CLASS" value="cn.cy.course.CourseApiConsumer" />
+      <option name="VM_PARAMETERS" value="-XX:+UseG1GC" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CourseServiceProvider" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="course-selection-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.cy.course.CourseServiceProvider" />
+      <option name="VM_PARAMETERS" value="-XX:+UseG1GC -Xms3072m -Xmx3072m" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -186,12 +228,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.CourseServiceProvider" />
+      <item itemvalue="JUnit.SelectionMapperTest.fun" />
+      <item itemvalue="Spring Boot.CourseServiceProvider" />
+      <item itemvalue="Spring Boot.CourseApiConsumer" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.CourseApiConsumer" />
         <item itemvalue="Application.CourseServiceProvider" />
-        <item itemvalue="JUnit.CourseMapperTest" />
-        <item itemvalue="JUnit.CourseMapperTest.test" />
+        <item itemvalue="JUnit.SelectionMapperTest.fun" />
       </list>
     </recent_temporary>
   </component>
@@ -200,7 +247,17 @@
       <list>
         <serviceView>
           <treeState>
-            <expand />
+            <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Spring Boot" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Spring Boot" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="Finished" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+            </expand>
             <select />
           </treeState>
         </serviceView>
@@ -225,101 +282,500 @@
       <workItem from="1599966547870" duration="2216000" />
       <workItem from="1599970229136" duration="173000" />
       <workItem from="1599970444476" duration="122000" />
-      <workItem from="1599970592573" duration="411000" />
+      <workItem from="1599970592573" duration="1288000" />
+      <workItem from="1600323156610" duration="5387000" />
+      <workItem from="1600349130920" duration="44211000" />
+      <workItem from="1600656011528" duration="45365000" />
+      <workItem from="1600834085082" duration="23290000" />
+      <workItem from="1601019023038" duration="12304000" />
+      <workItem from="1601101729345" duration="8836000" />
+      <workItem from="1601120527573" duration="5720000" />
+      <workItem from="1601182606964" duration="20482000" />
+      <workItem from="1601266114424" duration="4427000" />
+      <workItem from="1601302289647" duration="1147000" />
+      <workItem from="1601303612064" duration="508000" />
+      <workItem from="1601304508158" duration="12364000" />
     </task>
+    <task id="LOCAL-00001" summary="Update ServiceImpl and Something about Seckill">
+      <created>1600529040839</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1600529040840</updated>
+    </task>
+    <task id="LOCAL-00002" summary="CAS 单点登录 注释">
+      <created>1600565118219</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1600565118219</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update readme.md.">
+      <created>1600570228783</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1600570228783</updated>
+    </task>
+    <task id="LOCAL-00004" summary="update function of 'selection'">
+      <created>1600581754926</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1600581754926</updated>
+    </task>
+    <task id="LOCAL-00005" summary="多线程处理Pack">
+      <created>1600611466045</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1600611466045</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Async异步任务线程池">
+      <created>1600665103970</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1600665103970</updated>
+    </task>
+    <task id="LOCAL-00007" summary="限制选课只能有一个">
+      <created>1600668334461</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1600668334461</updated>
+    </task>
+    <task id="LOCAL-00008" summary="测试，选课add接口，并修复相应bug">
+      <created>1600693376744</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1600693376744</updated>
+    </task>
+    <task id="LOCAL-00009" summary="使得async线程池私有">
+      <created>1600693865119</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1600693865119</updated>
+    </task>
+    <task id="LOCAL-00010" summary="选课Pack处理异步任务">
+      <created>1600700505939</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1600700505939</updated>
+    </task>
+    <task id="LOCAL-00011" summary="fix 选课系统异步任务 BUG">
+      <created>1600738313263</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1600738313263</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Course-Selection-Core update">
+      <created>1600759974319</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1600759974319</updated>
+    </task>
+    <task id="LOCAL-00013" summary="选课查重">
+      <created>1600769472672</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1600769472672</updated>
+    </task>
+    <task id="LOCAL-00014" summary="选课查重">
+      <created>1600770963554</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1600770963554</updated>
+    </task>
+    <task id="LOCAL-00015" summary="新增当前学期表，用于标示当前学期">
+      <created>1600774078404</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1600774078404</updated>
+    </task>
+    <task id="LOCAL-00016" summary="新增接口：&#10;1. 查询历史选课记录&#10;2. 查询当前学期选课记录">
+      <created>1600831973596</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1600831973596</updated>
+    </task>
+    <task id="LOCAL-00017" summary="从MySQL中查询对应学生历史选课情况">
+      <created>1600833160176</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1600833160176</updated>
+    </task>
+    <task id="LOCAL-00018" summary="新增RedisContantKey枚举类，用于存放REDIS-KEYS">
+      <created>1600833630413</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1600833630413</updated>
+    </task>
+    <task id="LOCAL-00019" summary="fix bug of interface /seckill/selection/query/curr">
+      <created>1600834563702</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1600834563702</updated>
+    </task>
+    <task id="LOCAL-00020" summary="将redis-key集中成一个Enum类中，方便使用">
+      <created>1600835049115</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1600835049115</updated>
+    </task>
+    <task id="LOCAL-00021" summary="RedisContantKey新增注解">
+      <created>1600849459974</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1600849459974</updated>
+    </task>
+    <task id="LOCAL-00022" summary="rename SeckillController &amp; SeckillService">
+      <created>1600849922604</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1600849922604</updated>
+    </task>
+    <task id="LOCAL-00023" summary="当课程被抢购完后，更新数据库中的库存信息">
+      <created>1600866687905</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1600866687905</updated>
+    </task>
+    <task id="LOCAL-00024" summary="让enum RedisContantKey -&gt; java.lang.String，使得可以在rdm可视化工具上查看">
+      <created>1600868894142</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1600868894142</updated>
+    </task>
+    <task id="LOCAL-00025" summary="selection新增属性CreateTime，选课时间">
+      <created>1600922060934</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1600922060934</updated>
+    </task>
+    <task id="LOCAL-00026" summary="selection新增属性CreateTime，选课时间">
+      <created>1600941587310</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1600941587310</updated>
+    </task>
+    <task id="LOCAL-00027" summary="项目打包">
+      <created>1600950499619</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1600950499619</updated>
+    </task>
+    <task id="LOCAL-00028" summary="更改线程池配置：无界等待队列-&gt;有界等待队列（Capacity）">
+      <created>1601011266424</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1601011266424</updated>
+    </task>
+    <task id="LOCAL-00029" summary="将课程id列表添加到redis中，并新增实时返回库存的接口">
+      <created>1601090761899</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1601090761899</updated>
+    </task>
+    <task id="LOCAL-00030" summary="rename package name">
+      <created>1601100739612</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1601100739612</updated>
+    </task>
+    <task id="LOCAL-00031" summary="新增Thymeleaf渲染模版，新增查询本次选课的课程信息接口，课程库存信息接口">
+      <created>1601116498892</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1601116498892</updated>
+    </task>
+    <task id="LOCAL-00032" summary="update">
+      <created>1601138554703</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1601138554703</updated>
+    </task>
+    <task id="LOCAL-00033" summary="1.更改线程池配置&#10;2.新增选课异步任务插入异常的回滚操作&#10;3.新增学生选课情况时，同时加入Redis-Set中&#10;4.在app启动时，先删除redis数据中的学生选课情况Set">
+      <created>1601198962178</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1601198962178</updated>
+    </task>
+    <task id="LOCAL-00034" summary="选课界面，点击选课事件更新">
+      <created>1601204059278</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1601204059278</updated>
+    </task>
+    <task id="LOCAL-00035" summary="update">
+      <created>1601212156496</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1601212156496</updated>
+    </task>
+    <task id="LOCAL-00036" summary="update">
+      <created>1601212185961</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1601212185961</updated>
+    </task>
+    <task id="LOCAL-00037" summary="update">
+      <created>1601298829280</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1601298829280</updated>
+    </task>
+    <task id="LOCAL-00038" summary="前端选课情况页面显示">
+      <created>1601305824428</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1601305824428</updated>
+    </task>
+    <task id="LOCAL-00039" summary="将jquery3.4.1.min.js文件移到本地">
+      <created>1601346104488</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1601346104488</updated>
+    </task>
+    <task id="LOCAL-00040" summary="交互界面优化，新增对外接口：移除选课">
+      <created>1601355224249</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1601355224249</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="新增当前学期表，用于标示当前学期" />
+    <MESSAGE value="新增接口：&#10;1. 查询历史选课记录&#10;2. 查询当前学期选课记录" />
+    <MESSAGE value="从MySQL中查询对应学生历史选课情况" />
+    <MESSAGE value="新增RedisContantKey枚举类，用于存放REDIS-KEYS" />
+    <MESSAGE value="fix bug of interface /seckill/selection/query/curr" />
+    <MESSAGE value="将redis-key集中成一个Enum类中，方便使用" />
+    <MESSAGE value="RedisContantKey新增注解" />
+    <MESSAGE value="rename SeckillController &amp; SeckillService" />
+    <MESSAGE value="当课程被抢购完后，更新数据库中的库存信息" />
+    <MESSAGE value="让enum RedisContantKey -&gt; java.lang.String，使得可以在rdm可视化工具上查看" />
+    <MESSAGE value="selection新增属性CreateTime，选课时间" />
+    <MESSAGE value="项目打包" />
+    <MESSAGE value="更改线程池配置：无界等待队列-&gt;有界等待队列（Capacity）" />
+    <MESSAGE value="将课程列表添加到redis中" />
+    <MESSAGE value="将课程id列表添加到redis中，并新增实时返回库存的接口" />
+    <MESSAGE value="rename package name" />
+    <MESSAGE value="新增Thymeleaf渲染模版，新增查询本次选课的课程信息接口，课程库存信息接口" />
+    <MESSAGE value="防" />
+    <MESSAGE value="1.更改线程池配置&#10;2.新增选课异步任务插入异常的回滚操作&#10;3.新增学生选课情况时，同时加入Redis-Set中&#10;4.在app启动时，先删除redis数据中的学生选课情况Set" />
+    <MESSAGE value="选课系统界面更新，点击事件更新" />
+    <MESSAGE value="选课界面，点击选课事件更新" />
+    <MESSAGE value="update" />
+    <MESSAGE value="前端选课情况页面显示" />
+    <MESSAGE value="将jquery3.4.1.min.js文件移到本地" />
+    <MESSAGE value="交互界面优化，新增对外接口：移除选课" />
+    <option name="LAST_COMMIT_MESSAGE" value="交互界面优化，新增对外接口：移除选课" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="440" y="203" key="#Project_Structure" timestamp="1599902153670">
+    <state x="440" y="203" key="#Deployment" timestamp="1600767937540">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="440" y="203" key="#Project_Structure/0.23.1680.1027@0.23.1680.1027" timestamp="1599902153670" />
-    <state x="653" y="249" key="#com.intellij.ide.util.MemberChooser" timestamp="1599960721749">
+    <state x="440" y="203" key="#Deployment/0.23.1680.1027@0.23.1680.1027" timestamp="1600767937540" />
+    <state x="304" y="232" key="#HTTP_Proxy" timestamp="1601187437796">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="653" y="249" key="#com.intellij.ide.util.MemberChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1599960721749" />
+    <state x="304" y="232" key="#HTTP_Proxy/0.23.1680.1027@0.23.1680.1027" timestamp="1601187437796" />
+    <state x="440" y="203" key="#Project_Structure" timestamp="1600945453963">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="440" y="203" key="#Project_Structure/0.23.1680.1027@0.23.1680.1027" timestamp="1600945453963" />
+    <state x="212" y="211" key="#Updates" timestamp="1601303780089">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="212" y="211" key="#Updates/0.23.1680.1027@0.23.1680.1027" timestamp="1601303780089" />
+    <state x="304" y="200" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601195989803">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="304" y="200" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1601195989803" />
+    <state x="653" y="249" key="#com.intellij.ide.util.MemberChooser" timestamp="1601213043860">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="653" y="249" key="#com.intellij.ide.util.MemberChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1601213043860" />
     <state x="407" y="467" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1599882065000">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="407" y="467" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1599882065000" />
-    <state x="504" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1599888045282">
+    <state x="469" y="402" width="742" height="273" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1601210950986">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="504" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1599888045282" />
-    <state width="1638" height="378" key="GridCell.Tab.0.bottom" timestamp="1599965104488">
+    <state x="469" y="402" width="742" height="273" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.23.1680.1027@0.23.1680.1027" timestamp="1601210950986" />
+    <state x="94" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1600849876793">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="94" y="23" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1600849876793" />
+    <state x="301" y="142" key="CommitChangelistDialog2" timestamp="1601355224110">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="301" y="142" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1601355224110" />
+    <state x="196" y="120" key="DiffContextDialog" timestamp="1601346057904">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="196" y="120" key="DiffContextDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1601346057904" />
+    <state width="1126" height="338" key="GridCell.Tab.0.bottom" timestamp="1601369732836">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="1638" height="317" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1599899865164" />
-    <state width="1638" height="378" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1599965104488" />
-    <state width="1638" height="378" key="GridCell.Tab.0.center" timestamp="1599965104488">
+    <state width="1126" height="338" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1601369732836" />
+    <state width="1126" height="338" key="GridCell.Tab.0.center" timestamp="1601369732835">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="1638" height="317" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1599899865163" />
-    <state width="1638" height="378" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1599965104488" />
-    <state width="1638" height="378" key="GridCell.Tab.0.left" timestamp="1599965104487">
+    <state width="1126" height="338" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1601369732835" />
+    <state width="1126" height="338" key="GridCell.Tab.0.left" timestamp="1601369732834">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="1638" height="317" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1599899865161" />
-    <state width="1638" height="378" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1599965104487" />
-    <state width="1638" height="378" key="GridCell.Tab.0.right" timestamp="1599965104488">
+    <state width="1126" height="338" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1601369732834" />
+    <state width="1126" height="338" key="GridCell.Tab.0.right" timestamp="1601369732835">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="1638" height="317" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1599899865163" />
-    <state width="1638" height="378" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1599965104488" />
-    <state width="1638" height="378" key="GridCell.Tab.1.bottom" timestamp="1599965104489">
+    <state width="1126" height="338" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1601369732835" />
+    <state width="1126" height="338" key="GridCell.Tab.1.bottom" timestamp="1601369732837">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="1638" height="317" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1599899533998" />
-    <state width="1638" height="378" key="GridCell.Tab.1.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1599965104489" />
-    <state width="1638" height="378" key="GridCell.Tab.1.center" timestamp="1599965104489">
+    <state width="1126" height="338" key="GridCell.Tab.1.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1601369732837" />
+    <state width="1126" height="338" key="GridCell.Tab.1.center" timestamp="1601369732836">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="1638" height="317" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1599899533997" />
-    <state width="1638" height="378" key="GridCell.Tab.1.center/0.23.1680.1027@0.23.1680.1027" timestamp="1599965104489" />
-    <state width="1638" height="378" key="GridCell.Tab.1.left" timestamp="1599965104489">
+    <state width="1126" height="338" key="GridCell.Tab.1.center/0.23.1680.1027@0.23.1680.1027" timestamp="1601369732836" />
+    <state width="1126" height="338" key="GridCell.Tab.1.left" timestamp="1601369732836">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="1638" height="317" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1599899533996" />
-    <state width="1638" height="378" key="GridCell.Tab.1.left/0.23.1680.1027@0.23.1680.1027" timestamp="1599965104489" />
-    <state width="1638" height="378" key="GridCell.Tab.1.right" timestamp="1599965104489">
+    <state width="1126" height="338" key="GridCell.Tab.1.left/0.23.1680.1027@0.23.1680.1027" timestamp="1601369732836" />
+    <state width="1126" height="338" key="GridCell.Tab.1.right" timestamp="1601369732837">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="1638" height="317" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1599899533998" />
-    <state width="1638" height="378" key="GridCell.Tab.1.right/0.23.1680.1027@0.23.1680.1027" timestamp="1599965104489" />
-    <state width="1638" height="438" key="GridCell.Tab.2.bottom" timestamp="1599914743666">
+    <state width="1126" height="338" key="GridCell.Tab.1.right/0.23.1680.1027@0.23.1680.1027" timestamp="1601369732837" />
+    <state width="1126" height="338" key="GridCell.Tab.2.bottom" timestamp="1601202410849">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="438" key="GridCell.Tab.2.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1599914743666" />
-    <state width="1638" height="438" key="GridCell.Tab.2.center" timestamp="1599914743665">
+    <state width="1126" height="338" key="GridCell.Tab.2.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1601202410849" />
+    <state width="1126" height="338" key="GridCell.Tab.2.center" timestamp="1601202410849">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="438" key="GridCell.Tab.2.center/0.23.1680.1027@0.23.1680.1027" timestamp="1599914743665" />
-    <state width="1638" height="438" key="GridCell.Tab.2.left" timestamp="1599914743665">
+    <state width="1126" height="338" key="GridCell.Tab.2.center/0.23.1680.1027@0.23.1680.1027" timestamp="1601202410849" />
+    <state width="1126" height="338" key="GridCell.Tab.2.left" timestamp="1601202410849">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="438" key="GridCell.Tab.2.left/0.23.1680.1027@0.23.1680.1027" timestamp="1599914743665" />
-    <state width="1638" height="438" key="GridCell.Tab.2.right" timestamp="1599914743665">
+    <state width="1126" height="338" key="GridCell.Tab.2.left/0.23.1680.1027@0.23.1680.1027" timestamp="1601202410849" />
+    <state width="1126" height="338" key="GridCell.Tab.2.right" timestamp="1601202410849">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="438" key="GridCell.Tab.2.right/0.23.1680.1027@0.23.1680.1027" timestamp="1599914743665" />
-    <state x="328" y="119" key="SettingsEditor" timestamp="1599970568134">
+    <state width="1126" height="338" key="GridCell.Tab.2.right/0.23.1680.1027@0.23.1680.1027" timestamp="1601202410849" />
+    <state width="239" height="498" key="HiddenNamespacesPopup" timestamp="1601187739771">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="328" y="119" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1599970568134" />
-    <state x="619" y="275" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1599899620472">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="239" height="498" key="HiddenNamespacesPopup/0.23.1680.1027@0.23.1680.1027" timestamp="1601187739771" />
+    <state x="168" y="115" key="MergeDialog" timestamp="1601211806082">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="168" y="115" key="MergeDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1601211806082" />
+    <state x="551" y="260" key="MultipleFileMergeDialog" timestamp="1601211812684">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="551" y="260" key="MultipleFileMergeDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1601211812684" />
+    <state x="658" y="254" key="RollbackChangesDialog" timestamp="1601182743034">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="658" y="254" key="RollbackChangesDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1601182743034" />
+    <state x="328" y="119" key="SettingsEditor" timestamp="1600925059126">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="328" y="119" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1600925059126" />
+    <state x="440" y="278" key="Vcs.Push.Dialog.v2" timestamp="1601355226317">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="440" y="278" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1601355226317" />
+    <state x="501" y="205" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1600663828882">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="501" y="205" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1600663828882" />
+    <state x="623" y="461" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1601380506587">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="623" y="461" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1680.1027@0.23.1680.1027" timestamp="1601380506587" />
+    <state x="619" y="292" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1600921846756">
+      <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="619" y="275" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1599899620472" />
-    <state x="495" y="300" width="689" height="472" key="find.popup" timestamp="1599970077741">
+    <state x="619" y="292" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1600921846756" />
+    <state x="387" y="281" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1601202350435">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="495" y="300" width="689" height="472" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1599970077741" />
+    <state x="387" y="281" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.1680.1027@0.23.1680.1027" timestamp="1601202350435" />
+    <state x="495" y="300" width="832" height="472" key="find.popup" timestamp="1601367665759">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="495" y="300" width="832" height="472" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1601367665759" />
     <state x="217" y="236" key="new project wizard" timestamp="1599880213624">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="217" y="236" key="new project wizard/0.23.1680.1027@0.23.1680.1027" timestamp="1599880213624" />
+    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1601367373748">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1601367373748" />
   </component>
 </project>
