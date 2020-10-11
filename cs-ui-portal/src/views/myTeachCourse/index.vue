@@ -53,6 +53,11 @@
           <span>计算机选修</span>
         </template>
       </el-table-column>
+      <el-table-column label="选课学生人数" align="center" width="100">
+        <template>
+          <span>{{ row.total }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="课程总人数" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.total }}</span>
@@ -61,7 +66,7 @@
       <el-table-column label="操作" align="center">
         <template slot-scope="{row}">
           <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-edit" @click="edit(row.id)">
-            编辑
+            查看学生名单
           </el-button>
         </template>
       </el-table-column>
@@ -113,7 +118,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/manager/course.js'
+import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/teach.js'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -196,7 +201,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
+      fetchList().then(response => {
         this.list = response.rows
         this.total = response.total
 
@@ -315,7 +320,7 @@ export default {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
         const tHeader = ['课程序号', '课程名称', '学分', '上课周数时间地点', '任课教师', '课程类别', '课程总人数']
-        const filterVal = ['id', 'name', 'credit', 'time_place', 'teacherName', 'categoryId', 'total']
+        const filterVal = ['id', 'name', 'credit', 'time_place', 'teacherName', 'category', 'total']
         const data = this.formatJson(filterVal)
         excel.export_json_to_excel({
           header: tHeader,
@@ -331,7 +336,7 @@ export default {
           return parseTime(v[j])
         } else if (j === 'time_place') {
           return ' [ ' + v['durationStart'] + ' ~ ' + v['durationEnd'] + ' ]  ' + v['time'] + '  ' + v['place']
-        } else if (j === '课程类别') {
+        } else if (j === 'category') {
           return '计算机选修'
         } else {
           return v[j]

@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             目前在线人数
           </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="512" :duration="3600" class="card-panel-num" />
         </div>
       </div>
     </el-col>

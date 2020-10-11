@@ -8,9 +8,6 @@
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         新增
       </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        导出Excel
-      </el-button>
     </div>
 
     <el-table
@@ -23,45 +20,23 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <el-table-column label="ID" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
+      <el-table-column label="登录名" prop="id" sortable="custom" align="center" :class-name="getSortClass('id')">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="课程名称" align="center" width="100">
+      <el-table-column label="角色" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="学分" align="center" width="100">
-        <template slot-scope="{row}">
-          <span>{{ row.credit }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="上课周数时间地点" align="center" width="350px">
-        <template slot-scope="{row}">
-          <span>{{ ' [ ' + row.durationStart + ' ~ ' + row.durationEnd + ' ]  ' + row.time + '  ' + row.place }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="任课教师" align="center" width="100">
-        <template slot-scope="{row}">
-          <span>{{ row.teacherName }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="课程类别" align="center" width="100">
-        <template>
-          <span>计算机选修</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="课程总人数" align="center" width="100">
-        <template slot-scope="{row}">
-          <span>{{ row.total }}</span>
+          <span>{{ row.role === 0 ? '管理员' : row.role === 1 ? '学生' : '教师' }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="{row}">
           <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-edit" @click="edit(row.id)">
             编辑
+          </el-button>
+          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-setting" @click="updatePwd(row.id)">
+            更改密码
           </el-button>
         </template>
       </el-table-column>
@@ -71,33 +46,37 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="课程序号" prop="id">
-          <el-input v-model="temp.id" placeholder="Please enter" />
+        <el-form-item label="Type" prop="type">
+          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+          </el-select>
         </el-form-item>
-        <el-form-item label="课程名称" prop="name">
-          <el-input v-model="temp.name" placeholder="Please enter" />
+        <el-form-item label="Date" prop="timestamp">
+          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
-        <el-form-item label="上课时间" prop="time">
-          <el-date-picker v-model="temp.time" type="datetime" placeholder="Please pick a date" />
+        <el-form-item label="Title" prop="title">
+          <el-input v-model="temp.title" />
         </el-form-item>
-        <el-form-item label="上课地点" prop="place">
-          <el-input v-model="temp.place" />
+        <el-form-item label="Status">
+          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
+          </el-select>
         </el-form-item>
-        <el-form-item label="授课老师" prop="teacherName">
-          <el-input v-model="temp.teacherName" placeholder="Please enter" />
+        <el-form-item label="Imp">
+          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />
         </el-form-item>
-        <el-form-item label="总人数" prop="total">
-          <el-input v-model="temp.total" placeholder="Please enter" />
+        <el-form-item label="Remark">
+          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
         </el-form-item>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">
-            Cancel
-          </el-button>
-          <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
-            Confirm
-          </el-button>
-        </div>
       </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">
+          Cancel
+        </el-button>
+        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+          Confirm
+        </el-button>
+      </div>
     </el-dialog>
 
     <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
@@ -113,7 +92,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/manager/course.js'
+import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/manager/user.js'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -157,9 +136,7 @@ export default {
       listQuery: {
         page: 1,
         size: 20,
-        importance: undefined,
-        title: undefined,
-        type: undefined
+        key: undefined
       },
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
@@ -167,12 +144,13 @@ export default {
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
-        id: null,
-        name: '',
-        time: new Date(),
-        place: '',
-        teacherName: '',
-        total: ''
+        id: undefined,
+        importance: 1,
+        remark: '',
+        timestamp: new Date(),
+        title: '',
+        type: '',
+        status: 'published'
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -194,6 +172,12 @@ export default {
     this.getList()
   },
   methods: {
+    edit(id) {
+      console.log(id)
+    },
+    updatePwd(id) {
+      console.log(id)
+    },
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
@@ -314,13 +298,13 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['课程序号', '课程名称', '学分', '上课周数时间地点', '任课教师', '课程类别', '课程总人数']
-        const filterVal = ['id', 'name', 'credit', 'time_place', 'teacherName', 'category', 'total']
+        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
+        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
         const data = this.formatJson(filterVal)
         excel.export_json_to_excel({
           header: tHeader,
           data,
-          filename: '课程信息'
+          filename: 'table-list'
         })
         this.downloadLoading = false
       })
@@ -329,10 +313,6 @@ export default {
       return this.list.map(v => filterVal.map(j => {
         if (j === 'timestamp') {
           return parseTime(v[j])
-        } else if (j === 'time_place') {
-          return ' [ ' + v['durationStart'] + ' ~ ' + v['durationEnd'] + ' ]  ' + v['time'] + '  ' + v['place']
-        } else if (j === 'category') {
-          return '计算机选修'
         } else {
           return v[j]
         }

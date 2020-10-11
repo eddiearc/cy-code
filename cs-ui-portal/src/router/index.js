@@ -124,13 +124,13 @@ export const asyncRoutes = [
         meta: {
           title: '我的课程',
           icon: 'education',
-          roles: ['ROLE_DEV', 'ROLE_TEACHER']
+          roles: ['ROLE_TEACHER']
         }
       }
     ]
   },
   {
-    path: '/seckill_course',
+    path: '/seckillCourse',
     component: Layout,
     children: [
       {
@@ -140,28 +140,28 @@ export const asyncRoutes = [
         meta: {
           title: '选课列表',
           icon: 'education',
-          roles: ['ROLE_DEV', 'ROLE_STUDENT']
+          roles: ['ROLE_STUDENT']
         }
       }
     ]
   },
   {
-    path: '/seckill_selection',
+    path: '/seckillSelection',
     component: Layout,
     meta: {
       title: '个人选课情况',
       icon: 'list',
-      roles: ['ROLE_DEV', 'ROLE_STUDENT']
+      roles: ['ROLE_STUDENT']
     },
     children: [
       {
-        path: 'parsent',
-        component: () => import('@/views/seckill_selection/parsentSelect'),
-        name: 'parsentSelect',
+        path: 'present',
+        component: () => import('@/views/seckill_selection/presentSelect'),
+        name: 'presentSelection',
         meta: {
           title: '本学期选课情况',
           icon: 'el-icon-date',
-          roles: ['ROLE_DEV', 'ROLE_STUDENT']
+          roles: ['ROLE_STUDENT']
         }
       },
       {
@@ -171,7 +171,7 @@ export const asyncRoutes = [
         meta: {
           title: '历史选课情况',
           icon: 'list',
-          roles: ['ROLE_DEV', 'ROLE_STUDENT']
+          roles: ['ROLE_STUDENT']
         }
       }
     ]
@@ -212,6 +212,26 @@ export const asyncRoutes = [
         meta: {
           title: '登录用户管理',
           icon: 'el-icon-s-custom',
+          roles: ['ROLE_ADMIN', 'ROLE_DEV']
+        }
+      },
+      {
+        path: 'teacher',
+        component: () => import('@/views/manager/teacher'),
+        name: 'manager_teacher',
+        meta: {
+          title: '教师信息管理',
+          icon: 'peoples',
+          roles: ['ROLE_ADMIN', 'ROLE_DEV']
+        }
+      },
+      {
+        path: 'category',
+        component: () => import('@/views/manager/category'),
+        name: 'manager_category',
+        meta: {
+          title: '课程分类信息管理',
+          icon: 'list',
           roles: ['ROLE_ADMIN', 'ROLE_DEV']
         }
       }
