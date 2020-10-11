@@ -8,7 +8,6 @@ import cn.cy.course.service.SeckillService;
 import cn.cy.course.service.SelectionService;
 import cn.cy.course.util.SecurityUserHelper;
 import org.apache.dubbo.config.annotation.Reference;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +16,7 @@ import java.util.*;
 
 /**
  * @author eddieVim
- * @微信公众号 埃迪的Code日记 / PositiveEddie
+ * @微信公众号 艾迪威姆 / PositiveEddie
  * @blog https://blog.csdn.net/weixin_44129784
  * @create 2020/9/17 10:33 下午
  */

@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * @author eddieVim
- * @微信公众号 埃迪的Code日记 / PositiveEddie
+ * @微信公众号 艾迪威姆 / PositiveEddie
  * @blog https://blog.csdn.net/weixin_44129784
  * @create 2020/9/12 8:57 下午
  */

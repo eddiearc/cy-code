@@ -82,18 +82,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/documentation',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: '项目相关文档', icon: 'documentation' }
-      }
-    ]
-  },
-  {
     path: '/profile',
     component: Layout,
     redirect: '/profile/index',
@@ -113,6 +101,18 @@ export const constantRoutes = [
  * 基于角色的不同动态加载路由
  */
 export const asyncRoutes = [
+  {
+    path: '/documentation',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/documentation/index'),
+        name: 'Documentation',
+        meta: { title: '开发者文档', icon: 'documentation', roles: ['ROLE_ADMIN'] }
+      }
+    ]
+  },
   {
     path: '/seckill_course',
     component: Layout,

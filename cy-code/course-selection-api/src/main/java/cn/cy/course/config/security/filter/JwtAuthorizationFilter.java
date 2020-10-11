@@ -15,7 +15,7 @@ import java.util.Collections;
 
 /**
  * @author eddieVim
- * @微信公众号 埃迪的Code日记 / PositiveEddie
+ * @微信公众号 艾迪威姆 / PositiveEddie
  * @blog https://blog.csdn.net/weixin_44129784
  * @create 2020/10/6 12:33 下午
  */
