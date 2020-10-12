@@ -54,7 +54,7 @@
         </template>
       </el-table-column>
       <el-table-column label="选课学生人数" align="center" width="100">
-        <template>
+        <template slot-scope="{row}">
           <span>{{ row.total }}</span>
         </template>
       </el-table-column>
@@ -71,8 +71,6 @@
         </template>
       </el-table-column>
     </el-table>
-
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
@@ -160,8 +158,6 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
-        page: 1,
-        size: 20,
         importance: undefined,
         title: undefined,
         type: undefined
@@ -202,8 +198,8 @@ export default {
     getList() {
       this.listLoading = true
       fetchList().then(response => {
-        this.list = response.rows
-        this.total = response.total
+        this.list = response
+        this.total = response.length
 
         // Just to simulate the time of the request
         setTimeout(() => {
