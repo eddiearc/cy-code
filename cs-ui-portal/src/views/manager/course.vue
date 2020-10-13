@@ -23,12 +23,12 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <el-table-column label="ID" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
+      <el-table-column label="课程编号" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="课程名称" align="center" width="100">
+      <el-table-column label="课程名称" align="center" width="200px">
         <template slot-scope="{row}">
           <span>{{ row.name }}</span>
         </template>

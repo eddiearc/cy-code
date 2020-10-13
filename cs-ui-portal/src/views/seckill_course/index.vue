@@ -11,47 +11,47 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <el-table-column label="序号" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
+      <el-table-column label="课程编号" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="课程名称" width="300px" align="center">
+      <el-table-column label="课程名称" align="center" width="200px">
         <template slot-scope="{row}">
           <span>{{ row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="学时" min-width="110px">
-        <template slot-scope="{row}">
-          <span>{{ row.term }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="学分" width="110px" align="center">
+      <el-table-column label="学分" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.credit }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="上课地点" width="150px" align="center">
+      <el-table-column label="上课周数时间地点" align="center" width="350px">
         <template slot-scope="{row}">
-          <span>{{ row.place }}</span>
+          <span>{{ ' [ ' + row.durationStart + ' ~ ' + row.durationEnd + ' ]  ' + row.time + '  ' + row.place }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="授课老师" align="center" width="95px">
+      <el-table-column label="任课教师" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.teacherName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="剩余选课" width="80px">
+      <el-table-column label="课程类别" align="center" width="100">
+        <template>
+          <span>计算机选修</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="库存" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.stock }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="总人数" width="80px">
+      <el-table-column label="课程总人数" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.total }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="选课" class-name="status-col" width="170px">
+      <el-table-column label="操作" class-name="status-col">
         <template slot-scope="{row}">
           <el-button type="primary" @click="select(row.id)">点击选课</el-button>
         </template>
@@ -108,7 +108,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle, seckillAdd } from '@/api/seckill_course'
+import { fetchList, fetchPv, createArticle, updateArticle, seckillAdd, fetchStock } from '@/api/seckill_course'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -189,6 +189,7 @@ export default {
   },
   created() {
     this.getList()
+    this.getStock()
   },
   methods: {
     getList() {
@@ -203,9 +204,24 @@ export default {
         }, 1 * 1000)
       })
     },
+    getStock() {
+      // 设置页面加载状态
+      this.listLoading = true
+      fetchStock(this.listQuery).then(m => {
+        // eslint-disable-next-line no-undef
+        for (let j = 0, len = this.list.length; j < len; j++) {
+          // eslint-disable-next-line no-undef
+          const obj = this.list[j]
+          // eslint-disable-next-line no-undef
+          obj['stock'] = m[obj['id']]
+        }
+        // 取消页面加载状态
+        this.listLoading = false
+      })
+    },
     select(id) {
       seckillAdd(id).then(response => {
-
+        // 弹窗
       })
     },
     handleFilter() {

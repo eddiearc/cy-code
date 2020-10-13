@@ -1,6 +1,9 @@
 import request from '@/utils/request'
 
-/* 获取选课全部信息*/
+/**
+ * 获取选课全部信息
+ * @param {*} query
+ */
 export function fetchList(query) {
   return request({
     url: '/course/findPage',
@@ -9,7 +12,21 @@ export function fetchList(query) {
   })
 }
 
-/* 点击选课后减少库存*/
+/**
+ * 获取选课的列表
+ */
+export function fetchStock(query) {
+  return request({
+    url: '/seckill/course/stock',
+    method: 'get',
+    params: query
+  })
+}
+
+/**
+ * 点击选课后减少库存
+ * @param {*} id
+ */
 export function seckillAdd(id) {
   return request({
     url: '/seckill/add',

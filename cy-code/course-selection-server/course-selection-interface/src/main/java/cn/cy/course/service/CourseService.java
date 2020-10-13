@@ -1,5 +1,6 @@
 package cn.cy.course.service;
 
+import cn.cy.course.entity.AjaxResult;
 import cn.cy.course.entity.PageResult;
 import cn.cy.course.pojo.Course;
 
@@ -43,5 +44,5 @@ public interface CourseService {
     /**
      * 实时获取课程的库存数量
      */
-    public List<Course> getCourseStockRealTime();
+    public AjaxResult getCourseStockRealTime();
 }

@@ -1,5 +1,6 @@
 package cn.cy.course.service.impl;
 
+import cn.cy.course.entity.AjaxResult;
 import cn.cy.course.entity.PageResult;
 import cn.cy.course.mapper.CourseMapper;
 import cn.cy.course.pojo.Course;
@@ -142,19 +143,17 @@ public class CourseServiceImpl implements CourseService {
      * @return
      */
     @Override
-    public List<Course> getCourseStockRealTime() {
+    public AjaxResult getCourseStockRealTime() {
         // 获取本次选课的id列表
         List<String> ids = (List<String>) redisTemplate.boundValueOps(RedisConstantKey.COURSE_IDS.toString()).get();
-        List<Course> ans = new ArrayList<>(ids.size());
+        AjaxResult ajaxResult = AjaxResult.success();
+        assert ids != null;
         for (String id : ids) {
             // stock 获取库存信息
             Long stock = redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).increment(id, 0);
-            Course course = new Course();
-            course.setId(id);
-            course.setStock(stock.intValue());
-            ans.add(course);
+            ajaxResult.put(id, stock.intValue());
         }
-        return ans;
+        return ajaxResult;
     }
 
     /**

@@ -130,7 +130,7 @@ public class SeckillController {
      * @return
      */
     @GetMapping("/course/stock")
-    public List<Course> stockRealTime() {
+    public AjaxResult stockRealTime() {
         return courseService.getCourseStockRealTime();
     }
 }
