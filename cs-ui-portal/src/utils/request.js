@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
@@ -44,7 +44,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-
+    console.log(res)
     // 如果返回值有code的话 且 不为200，则请求异常
     if (res.code && res.code !== 200) {
       Message({
