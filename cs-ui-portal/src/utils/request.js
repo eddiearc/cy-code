@@ -14,7 +14,6 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -44,7 +43,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    console.log(res)
+
     // 如果返回值有code的话 且 不为200，则请求异常
     if (res.code && res.code !== 200) {
       Message({
