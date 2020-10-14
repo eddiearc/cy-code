@@ -222,6 +222,7 @@ export default {
     select(id) {
       seckillAdd(id).then(response => {
         // 弹窗
+        this.$message(response['message'])
       })
     },
     handleFilter() {

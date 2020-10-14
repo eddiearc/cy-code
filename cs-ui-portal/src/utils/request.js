@@ -81,7 +81,6 @@ error => {
     duration: 5 * 1000
   })
   return Promise.reject(error)
-}
-)
+})
 
 export default service

@@ -2,8 +2,10 @@ package cn.cy.course.controller;
 
 import cn.cy.course.entity.AjaxResult;
 import cn.cy.course.entity.LoginUser;
+import cn.cy.course.service.SelectionService;
 import cn.cy.course.service.SysLoginService;
 import cn.cy.course.util.JwtTokenUtils;
+import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,23 +32,18 @@ public class SysLoginController {
         return ajaxResult;
     }
 
+    @Reference
+    private SelectionService selectionService;
+
+    private String ROLE_STUDENT = "ROLE_STUDENT";
+
     @GetMapping("getInfo")
     public AjaxResult getInfo(HttpServletRequest request) {
         // 获取
         String tokenHeader = request.getHeader(JwtTokenUtils.TOKEN_HEADER);
 
-        // 如果请求头中没有Authorization信息则返回对应信息
-        if (tokenHeader == null ||
-                !tokenHeader.startsWith(JwtTokenUtils.TOKEN_PREFIX)) {
-            System.out.println("请求头中无token或已过期！");
-            return AjaxResult.error("认证失效！");
-        }
-
         // 检查是否过期
         String token = tokenHeader.replace(JwtTokenUtils.TOKEN_PREFIX, "");
-        if (JwtTokenUtils.isExpiration(token)) {
-            return AjaxResult.error("认证过期！");
-        }
 
         // 获取对应的信息
         String username = JwtTokenUtils.getUsername(token);
@@ -59,6 +56,10 @@ public class SysLoginController {
 
         res.put("name", username);
         res.put("roles", roles);
+
+        if (ROLE_STUDENT.equals(role)) {
+            res.put("selections", selectionService.currTermSelection(username));
+        }
 
         return res;
     }

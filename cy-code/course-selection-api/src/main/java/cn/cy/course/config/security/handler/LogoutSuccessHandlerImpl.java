@@ -34,8 +34,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
      * @return
      */
     @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-            throws IOException, ServletException {
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
             // get token
             String tokenHeader = request.getHeader(tokenService.TOKEN_HEADER);
             String token = tokenHeader.startsWith(tokenService.TOKEN_PREFIX) ?

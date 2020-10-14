@@ -25,6 +25,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_SELECTION: (state, selections) => {
+    state.selections = selections
   }
 }
 
@@ -52,7 +55,7 @@ const actions = {
           reject(res.message)
         }
 
-        const { roles, name } = res
+        const { roles, name, selections } = res
 
         // 名字不能为空
         if (!name) {
@@ -61,6 +64,7 @@ const actions = {
 
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
+        commit('SET_SELECRIONS', selections)
         resolve(res)
       }).catch(error => {
         reject(error)
