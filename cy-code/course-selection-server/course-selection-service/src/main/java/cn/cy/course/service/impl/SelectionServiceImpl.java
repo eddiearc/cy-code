@@ -15,10 +15,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author eddieVim
@@ -167,10 +164,10 @@ public class SelectionServiceImpl implements SelectionService {
      * 选课期间获取当前学期的选课情况，选课信息实时更新
      *
      * @param studentId
-     * @return
+     * @return id -> Course
      */
     @Override
-    public List<Course> currTermSelection(String studentId) {
+    public Map<String, Course> currTermSelection(String studentId) {
         // 获取本学期标记数
         Integer term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM.toString()).get();
         if (term == null) {
@@ -178,12 +175,12 @@ public class SelectionServiceImpl implements SelectionService {
             term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM.toString()).get();
         }
         Set<String> ids = redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET.toString() + studentId).members();
-        List<Course> ans = new ArrayList<>(ids.size());
+        Map<String, Course> ans = new HashMap<>(ids.size());
 
         for (String courseId : ids) {
             // redis中的课程信息
             Course course = (Course) redisTemplate.boundHashOps(RedisConstantKey.COURSE_MSG_HASH.toString()).get(courseId);
-            ans.add(course);
+            ans.put(courseId, course);
         }
         return ans;
     }

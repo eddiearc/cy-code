@@ -44,5 +44,5 @@ public interface CourseService {
     /**
      * 实时获取课程的库存数量
      */
-    public AjaxResult getCourseStockRealTime();
+    public Map<String, Integer> getCourseStockRealTime();
 }

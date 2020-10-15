@@ -99,26 +99,14 @@ public class SeckillController {
      * @return
      */
     @GetMapping("/query/curr")
-    public List<Course> queryCurrTerm() {
+    public AjaxResult queryCurrTerm() {
         //1. 通过Sercurity获取学号
         String studentId = (String) SecurityUserHelper.getCurrentPrincipal();
 
         //2. 获取对应的选课信息
-        List<Course> res = selectionService.currTermSelection(studentId);
+        Map<String, Course> stringCourseMap = selectionService.currTermSelection(studentId);
 
-
-        //3. 根据学分排序
-        res.sort(new Comparator<Course>() {
-            @Override
-            public int compare(Course o1, Course o2) {
-                if (o1.getCredit() == null || o2.getCredit() == null) {
-                    return -1;
-                }
-                return o2.getCredit() - o1.getCredit();
-            }
-        });
-
-        return res;
+        return AjaxResult.success(stringCourseMap);
     }
 
     @Reference
@@ -131,6 +119,8 @@ public class SeckillController {
      */
     @GetMapping("/course/stock")
     public AjaxResult stockRealTime() {
-        return courseService.getCourseStockRealTime();
+        Map<String, Integer> courseStockRealTime = courseService.getCourseStockRealTime();
+
+        return AjaxResult.success(courseStockRealTime);
     }
 }

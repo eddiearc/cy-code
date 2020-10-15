@@ -53,7 +53,8 @@
       </el-table-column>
       <el-table-column label="操作" class-name="status-col">
         <template slot-scope="{row}">
-          <el-button type="primary" @click="select(row.id)">点击选课</el-button>
+          <el-button v-if="row.selected" type="danger" disabled>已选</el-button>
+          <el-button v-else type="primary" @click="select(row)">点击选课</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -188,41 +189,43 @@ export default {
     }
   },
   created() {
+    // 设置页面加载状态
+    this.listLoading = true
     this.getList()
-    this.getStock()
+    // 取消页面加载状态
+    this.listLoading = false
   },
   methods: {
     getList() {
-      this.listLoading = true
       fetchList(this.listQuery).then(response => {
         this.list = response.rows
         this.total = response.total
-
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1 * 1000)
+        this.getStock()
+        this.getSelections()
       })
     },
     getStock() {
-      // 设置页面加载状态
-      this.listLoading = true
-      fetchStock(this.listQuery).then(m => {
-        // eslint-disable-next-line no-undef
+      fetchStock().then(response => {
+        const m = response.data
         for (let j = 0, len = this.list.length; j < len; j++) {
-          // eslint-disable-next-line no-undef
-          const obj = this.list[j]
-          // eslint-disable-next-line no-undef
-          obj['stock'] = m[obj['id']]
+          this.list[j].stock = m[this.list[j].id]
         }
-        // 取消页面加载状态
-        this.listLoading = false
       })
     },
-    select(id) {
-      seckillAdd(id).then(response => {
+    getSelections() {
+      const selections = this.$store.getters.selections
+      for (let i = 0, len = this.list.length; i < len; i++) {
+        const courseId = this.list[i].id
+        // 根据有没有该选课记录判断是否成功选过该课
+        this.list[i].selected = selections[courseId] != null
+      }
+      console.log(this.list)
+    },
+    select(row) {
+      seckillAdd(row.id).then(response => {
         // 弹窗
-        this.$message(response['message'])
+        this.$message(response.message)
+        row.selected = true
       })
     },
     handleFilter() {

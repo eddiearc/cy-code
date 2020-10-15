@@ -15,6 +15,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -143,17 +144,19 @@ public class CourseServiceImpl implements CourseService {
      * @return
      */
     @Override
-    public AjaxResult getCourseStockRealTime() {
+    public Map<String, Integer> getCourseStockRealTime() {
         // 获取本次选课的id列表
         List<String> ids = (List<String>) redisTemplate.boundValueOps(RedisConstantKey.COURSE_IDS.toString()).get();
-        AjaxResult ajaxResult = AjaxResult.success();
+
         assert ids != null;
+        Map<String, Integer> ans = new HashMap<>(ids.size());
+
         for (String id : ids) {
             // stock 获取库存信息
             Long stock = redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).increment(id, 0);
-            ajaxResult.put(id, stock.intValue());
+            ans.put(id, stock.intValue());
         }
-        return ajaxResult;
+        return ans;
     }
 
     /**
