@@ -181,7 +181,6 @@ export default {
         for (const key in map) {
           this.list.push(map[key])
         }
-        this.$store
         this.listLoading = false
       })
     },
