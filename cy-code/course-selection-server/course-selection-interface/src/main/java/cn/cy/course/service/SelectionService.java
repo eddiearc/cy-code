@@ -104,5 +104,5 @@ public interface SelectionService {
      * @param studentId
      * @return id -> Course
      */
-    public Map<String, Course> currTermSelection(String studentId);
+    public Map<String, Course> currentTermSelection(String studentId);
 }

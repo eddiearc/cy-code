@@ -39,7 +39,7 @@ public interface CourseService {
     /**
      * 获取本学期的课程信息
      */
-    public List<Course> getCourseListThisTerm();
+    public PageResult<Course> getCourseListThisTerm(int page, int size);
 
     /**
      * 实时获取课程的库存数量

@@ -6,7 +6,7 @@ import request from '@/utils/request'
  */
 export function fetchList(query) {
   return request({
-    url: '/course/findPage',
+    url: '/stu/course/fetchListThisTerm',
     method: 'get',
     params: query
   })
@@ -17,7 +17,7 @@ export function fetchList(query) {
  */
 export function fetchStock(query) {
   return request({
-    url: '/seckill/course/stock',
+    url: '/stu/course/stock',
     method: 'get',
     params: query
   })

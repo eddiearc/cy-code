@@ -167,7 +167,7 @@ public class SelectionServiceImpl implements SelectionService {
      * @return id -> Course
      */
     @Override
-    public Map<String, Course> currTermSelection(String studentId) {
+    public Map<String, Course> currentTermSelection(String studentId) {
         // 获取本学期标记数
         Integer term = (Integer) redisTemplate.boundValueOps(RedisConstantKey.CURR_TERM.toString()).get();
         if (term == null) {

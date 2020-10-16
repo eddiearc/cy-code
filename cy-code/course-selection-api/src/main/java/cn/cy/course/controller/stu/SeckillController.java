@@ -21,14 +21,11 @@ import java.util.*;
  * @create 2020/9/17 10:33 下午
  */
 @RestController
-@RequestMapping("/seckill")
+@RequestMapping("/stu/sk")
 public class SeckillController {
 
     @Reference
     private SeckillService seckillService;
-
-    @Reference
-    private SelectionService selectionService;
 
     /**
      * 添加选课请求
@@ -55,72 +52,15 @@ public class SeckillController {
         return AjaxResult.success("您的选课信息正在排队中，请稍后到我的选课情况界面查看！");
     }
 
+    @GetMapping("/rm")
     public AjaxResult remove(String courseId, String studentId) {
         //1. 通过Sercurity获取学号
         if (studentId == null) {
             studentId  = (String) SecurityUserHelper.getCurrentPrincipal();
         }
 
+
+
         return AjaxResult.success("已经移除您的选课信息！");
-    }
-
-    /**
-     * 查询历史选课情况
-     *
-     * @return
-     */
-    @GetMapping("/query/history")
-    public List<Course> queryHistory() {
-        //1. 通过Sercurity获取学号
-        String studentId = (String) SecurityUserHelper.getCurrentPrincipal();
-
-        //2. 获取对应的选课信息
-        List<Course> res = selectionService.historySelection(studentId);
-        //3. 根据学期排序；同学期，根据学分排序
-        Collections.sort(res, new Comparator<Course>() {
-            @Override
-            public int compare(Course o1, Course o2) {
-                if (o1.getTerm() == null ||
-                        o2.getTerm() == null ||
-                        o1.getTerm().equals(o2.getTerm())
-                ) {
-                    return o2.getCredit() - o1.getCredit();
-                }
-                return o2.getTerm() - o1.getTerm();
-            }
-        });
-
-        return res;
-    }
-
-    /**
-     * 查询本学期选课情况
-     *
-     * @return
-     */
-    @GetMapping("/query/curr")
-    public AjaxResult queryCurrTerm() {
-        //1. 通过Sercurity获取学号
-        String studentId = (String) SecurityUserHelper.getCurrentPrincipal();
-
-        //2. 获取对应的选课信息
-        Map<String, Course> stringCourseMap = selectionService.currTermSelection(studentId);
-
-        return AjaxResult.success(stringCourseMap);
-    }
-
-    @Reference
-    private CourseService courseService;
-
-    /**
-     * 获取课程库存
-     *
-     * @return
-     */
-    @GetMapping("/course/stock")
-    public AjaxResult stockRealTime() {
-        Map<String, Integer> courseStockRealTime = courseService.getCourseStockRealTime();
-
-        return AjaxResult.success(courseStockRealTime);
     }
 }

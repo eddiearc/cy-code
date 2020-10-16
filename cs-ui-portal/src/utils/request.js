@@ -43,9 +43,8 @@ service.interceptors.response.use(response => {
       confirmButtonText: '重新登录',
       cancelButtonText: '取消',
       type: 'warning'
-    }
-    ).then(() => {
-      store.dispatch('LogOut').then(() => {
+    }).then(() => {
+      store.dispatch('logout').then(() => {
         location.href = '/index'
       })
     })

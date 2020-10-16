@@ -58,7 +58,7 @@ public class SysLoginController {
         res.put("roles", roles);
 
         if (ROLE_STUDENT.equals(role)) {
-            res.put("selections", selectionService.currTermSelection(username));
+            res.put("selections", selectionService.currentTermSelection(username));
         }
 
         return res;
