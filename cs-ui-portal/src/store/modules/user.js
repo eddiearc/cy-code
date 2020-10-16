@@ -73,6 +73,10 @@ const actions = {
     })
   },
 
+  setSelections({ commit }, selections) {
+    commit('SET_SELECTIONS', selections)
+  },
+
   // user logout
   logout({ commit, state, dispatch }) {
     return new Promise((resolve, reject) => {

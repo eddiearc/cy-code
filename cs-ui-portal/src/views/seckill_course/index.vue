@@ -52,9 +52,10 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" class-name="status-col">
-        <template slot-scope="{row}">
-          <el-button v-if="row.selected" type="danger" disabled>已选</el-button>
-          <el-button v-else type="primary" @click="select(row)">点击选课</el-button>
+        <template slot-scope="{row, column, $index}">
+          <el-button v-show="row.selected === 1" type="danger" disabled>已选</el-button>
+          <el-button v-show="row.selected === -1" type="info" @click="routerLinkSelections()">查看选课情况</el-button>
+          <el-button v-show="row.selected === 0" type="primary" @click="select($index)">点击选课</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -217,16 +218,20 @@ export default {
       for (let i = 0, len = this.list.length; i < len; i++) {
         const courseId = this.list[i].id
         // 根据有没有该选课记录判断是否成功选过该课
-        this.list[i].selected = selections[courseId] != null
+        this.list[i].selected = selections[courseId] != null ? 1 : 0
       }
       console.log(this.list)
     },
-    select(row) {
-      seckillAdd(row.id).then(response => {
+    select(index) {
+      const id = this.list[index].id
+      seckillAdd(id).then(response => {
+        this.$set(this.list[index], 'selected', -1)
         // 弹窗
         this.$message(response.message)
-        row.selected = true
       })
+    },
+    routerLinkSelections() {
+      this.$router.push({ path: '/seckillSelection/present' })
     },
     handleFilter() {
       this.listQuery.page = 1

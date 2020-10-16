@@ -175,11 +175,11 @@ export default {
     getList() {
       this.listLoading = true
       getCurrList().then(response => {
-        const map = response.data
-
+        const selections = response.data
+        this.$store.dispatch('user/setSelections', selections)
         this.list = []
-        for (const key in map) {
-          this.list.push(map[key])
+        for (const key in selections) {
+          this.list.push(selections[key])
         }
         this.listLoading = false
       })
