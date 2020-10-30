@@ -52,9 +52,9 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" class-name="status-col">
-        <template slot-scope="{row, column, $index}">
-          <el-button v-show="row.selected === 1" type="danger" disabled>已选</el-button>
-          <el-button v-show="row.selected === -1" type="info" @click="routerLinkSelections()">查看选课情况</el-button>
+        <template slot-scope="{row, $index}">
+          <el-button v-show="row.selected === 1" type="success" disabled>已选</el-button>
+          <el-button v-show="row.selected === -1" type="warning" @click="routerLinkSelections()">查看选课情况</el-button>
           <el-button v-show="row.selected === 0" type="primary" @click="select($index)">点击选课</el-button>
         </template>
       </el-table-column>

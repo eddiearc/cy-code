@@ -29,7 +29,7 @@ export function fetchStock(query) {
  */
 export function seckillAdd(id) {
   return request({
-    url: '/seckill/add',
+    url: '/stu/sk/add',
     method: 'get',
     params: {
       'courseId': id

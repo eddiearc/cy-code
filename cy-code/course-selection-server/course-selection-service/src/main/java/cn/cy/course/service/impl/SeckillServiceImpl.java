@@ -45,4 +45,12 @@ public class SeckillServiceImpl implements SeckillService {
         //4. 异步处理任务Pack
         createSelectionExcutor.createSelection();
     }
+
+    @Override
+    public void remove(Pack pack) {
+        boolean included = redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET.toString() + pack.getStudentId()).isMember(pack.getCourseId());
+        if (!included) {
+            throw new RuntimeException("该选课记录已经被移除！");
+        }
+    }
 }

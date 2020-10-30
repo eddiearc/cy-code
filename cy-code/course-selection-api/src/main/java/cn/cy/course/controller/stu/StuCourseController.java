@@ -1,6 +1,7 @@
 package cn.cy.course.controller.stu;
 
 import cn.cy.course.entity.AjaxResult;
+import cn.cy.course.entity.PageResult;
 import cn.cy.course.pojo.Course;
 import cn.cy.course.service.CourseService;
 import org.apache.dubbo.config.annotation.Reference;
@@ -26,9 +27,8 @@ public class StuCourseController {
     private CourseService courseService;
 
     @GetMapping("/fetchListThisTerm")
-    public AjaxResult fetchCourseList() {
-        List<Course> courseList = courseService.getCourseListThisTerm();
-        return AjaxResult.success(courseList);
+    public PageResult<Course> fetchCourseList(int page, int size) {
+        return courseService.getCourseListThisTerm(page, size);
     }
 
     /**

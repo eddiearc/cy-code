@@ -138,7 +138,7 @@ public class CourseServiceImpl implements CourseService {
         int end = Math.min(total, begin + size);
 
         // initialCapacity
-        List<Course> list = new ArrayList<>(begin - end);
+        List<Course> list = new ArrayList<>(end - begin);
 
         for (int index = begin; index < end; index++) {
             // course 获取课程信息

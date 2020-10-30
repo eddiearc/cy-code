@@ -1,11 +1,8 @@
 package cn.cy.course.controller.stu;
 
 import cn.cy.course.entity.AjaxResult;
-import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Pack;
-import cn.cy.course.service.CourseService;
 import cn.cy.course.service.SeckillService;
-import cn.cy.course.service.SelectionService;
 import cn.cy.course.util.SecurityUserHelper;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -45,9 +45,9 @@
           <span>{{ row.total }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="取消选课" class-name="status-col" width="170px">
+      <el-table-column label="操作" class-name="status-col" width="170px">
         <template slot-scope="{row}">
-          <el-button type="primary" @click="select(row.id)">点击取消</el-button>
+          <el-button type="danger" @click="seckillRemove(row.id)">取消选课</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import { getCurrList } from '@/api/seckill_selection'
+import { getCurrentList, seckillRemove } from '@/api/seckill_selection'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 
@@ -174,7 +174,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      getCurrList().then(response => {
+      getCurrentList().then(response => {
         const selections = response.data
         this.$store.dispatch('user/setSelections', selections)
         this.list = []
@@ -182,6 +182,13 @@ export default {
           this.list.push(selections[key])
         }
         this.listLoading = false
+      })
+    },
+    seckillRemove() {
+      seckillRemove().then(response => {
+        // 弹窗
+        this.$message(response.message)
+        this.getList()
       })
     },
     handleFilter() {

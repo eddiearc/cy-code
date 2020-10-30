@@ -19,8 +19,8 @@ public class RouterController {
     @GetMapping("/page/course")
     public String seckillCourse(Model model) {
         // 获取本次选课的列表
-        List<Course> courseList = courseService.getCourseListThisTerm();
-        model.addAttribute(courseList);
+        // List<Course> courseList = courseService.getCourseListThisTerm();
+        // model.addAttribute(courseList);
         return "views/seckill_course";
     }
 
@@ -28,7 +28,6 @@ public class RouterController {
     public String seckillSelection() {
         return "views/seckill_selection";
     }
-
 
     @RequestMapping("/loginSuccess")
     public String loginSuccess(){

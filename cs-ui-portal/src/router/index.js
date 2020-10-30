@@ -156,7 +156,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'present',
-        component: () => import('@/views/seckill_selection/presentSelect'),
+        component: () => import('@/views/seckill_selection/presentSelection'),
         name: 'presentSelection',
         meta: {
           title: '本学期选课情况',
@@ -166,7 +166,7 @@ export const asyncRoutes = [
       },
       {
         path: 'past',
-        component: () => import('@/views/seckill_selection/pastSelect'),
+        component: () => import('@/views/seckill_selection/pastSelection'),
         name: 'pastSelection',
         meta: {
           title: '历史选课情况',

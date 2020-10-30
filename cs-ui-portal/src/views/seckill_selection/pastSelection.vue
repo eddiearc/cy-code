@@ -45,11 +45,6 @@
           <span>{{ row.total }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="取消选课" class-name="status-col" width="170px">
-        <template slot-scope="{row}">
-          <el-button type="primary" @click="select(row.id)">点击取消</el-button>
-        </template>
-      </el-table-column>
     </el-table>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">

@@ -16,4 +16,15 @@ public interface SeckillService {
      * @return
      */
     public void add(Pack pack);
+
+    /**
+     * 移除学生的选课信息
+     * 1. 数据库中移除
+     * 2. 库存回滚
+     * 3. redis
+     *
+     * @param pack 选课信息
+     * @return
+     */
+    public void remove(Pack pack);
 }
