@@ -17,6 +17,12 @@ spring:
     #静态文件目标
     dest-path: ~/deploy3H
 
+  redis:
+    host: 127.0.0.1
+    database: 1
+    port: 6379
+    password:
+
   profiles:
     active: dubbo
   application:

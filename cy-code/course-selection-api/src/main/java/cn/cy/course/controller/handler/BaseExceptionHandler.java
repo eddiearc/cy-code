@@ -1,4 +1,4 @@
-package cn.cy.course.controller;
+package cn.cy.course.controller.handler;
 
 import cn.cy.course.entity.AjaxResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;

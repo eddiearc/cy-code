@@ -30,7 +30,7 @@
       <option name="IGNORE_JAVADOC_PERIOD" value="true" />
       <option name="IGNORE_DUPLICATED_THROWS" value="false" />
       <option name="IGNORE_POINT_TO_ITSELF" value="false" />
-      <option name="myAdditionalJavadocTags" value="date,微信公众号,blog,create" />
+      <option name="myAdditionalJavadocTags" value="date,微信公众号,blog,create,Author,Blog,Create,Discription" />
     </inspection_tool>
   </profile>
 </component>

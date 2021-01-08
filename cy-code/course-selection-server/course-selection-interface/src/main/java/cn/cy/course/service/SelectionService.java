@@ -102,7 +102,7 @@ public interface SelectionService {
      * 根据studentId查询历史的term
      *
      * @param studentId
-     * @return
+     * @return id -> Course
      */
-    public List<Course> currTermSelection(String studentId);
+    public Map<String, Course> currentTermSelection(String studentId);
 }

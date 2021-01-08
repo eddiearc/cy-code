@@ -1,19 +1,21 @@
 package cn.cy.course.config.security;
 
-import cn.cy.course.config.security.filter.JwtAuthorizationFilter;
+import cn.cy.course.config.security.filter.JwtStatusCheckoutFilter;
+import cn.cy.course.config.security.handler.LogoutSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -28,12 +30,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private CustomizeAuthenticationEntryPoint authenticationEntryPoint;
+    private LogoutSuccessHandlerImpl logoutSuccessHandler;
 
-    @Bean
-    public JwtAuthorizationFilter authorizationFilterFilterBean() {
-        return new JwtAuthorizationFilter();
-    }
+    @Autowired
+    private JwtStatusCheckoutFilter jwtStatusCheckoutFilter;
+
+    @Autowired
+    private AuthenticationEntryPoint unauthorizedHandler;
+
+//    @Bean
+//    public JwtAuthorizationFilter authorizationFilterFilterBean() {
+//        return new JwtAuthorizationFilter();
+//    }
 
     // 加密密码用的
     @Bean
@@ -54,29 +62,51 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
+    /**
+     * anyRequest          |   匹配所有请求路径
+     * access              |   SpringEl表达式结果为true时可以访问
+     * anonymous           |   匿名可以访问
+     * denyAll             |   用户不能访问
+     * fullyAuthenticated  |   用户完全认证可以访问（非remember-me下自动登录）
+     * hasAnyAuthority     |   如果有参数，参数表示权限，则其中任何一个权限可以访问
+     * hasAnyRole          |   如果有参数，参数表示角色，则其中任何一个角色可以访问
+     * hasAuthority        |   如果有参数，参数表示权限，则其权限可以访问
+     * hasIpAddress        |   如果有参数，参数表示IP地址，如果用户IP和参数匹配，则可以访问
+     * hasRole             |   如果有参数，参数表示角色，则其角色可以访问
+     * permitAll           |   用户可以任意访问
+     * rememberMe          |   允许通过remember-me登录的用户访问
+     * authenticated       |   用户登录后可访问
+     */
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        //这个是用来忽略一些url地址，对其不进行校验，通常用在一些静态文件中
-        web.ignoring().antMatchers("/js/**","/css/**","/images/**");
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .cors().and().
-                csrf().disable()
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .cors().and()
+                // CSRF禁用，因为不使用session
+                .csrf().disable()
+                // 认证失败处理类
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 // 不需要session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                // 测试用资源，需要验证了的用户才能访问
-                .antMatchers("/seckill/query/history").authenticated()
-                // 其他都放行了
-                .anyRequest().permitAll().and()
+                .antMatchers("/login").permitAll()
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/*.html",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js",
+                        "/swagger-ui.html",
+                        "/v2/**",
+                        "/swagger-resources/**"
+                ).permitAll()
+                // 除上面外的所有请求全部需要鉴权认证
+                .anyRequest().authenticated().and()
                 // 添加token验证
-                .addFilterBefore(authorizationFilterFilterBean(), UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling()
-                //匿名用户访问无权限资源时的异常处理
-                .authenticationEntryPoint(authenticationEntryPoint);
+                .addFilterBefore(jwtStatusCheckoutFilter, UsernamePasswordAuthenticationFilter.class)
+                //.addFilterBefore(authorizationFilterFilterBean(), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling();
+
+        httpSecurity.logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler);
     }
 
     public static void main(String[] args) {

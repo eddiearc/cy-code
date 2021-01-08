@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * @author eddieVim
- * @微信公众号 埃迪的Code日记 / PositiveEddie
+ * @微信公众号 艾迪威姆 / PositiveEddie
  * @blog https://blog.csdn.net/weixin_44129784
  * @create 2020/9/17 10:36 下午
  */
@@ -44,5 +44,13 @@ public class SeckillServiceImpl implements SeckillService {
 
         //4. 异步处理任务Pack
         createSelectionExcutor.createSelection();
+    }
+
+    @Override
+    public void remove(Pack pack) {
+        boolean included = redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET.toString() + pack.getStudentId()).isMember(pack.getCourseId());
+        if (!included) {
+            throw new RuntimeException("该选课记录已经被移除！");
+        }
     }
 }

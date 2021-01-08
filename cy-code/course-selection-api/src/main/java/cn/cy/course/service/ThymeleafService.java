@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 
 /**
  * @author eddieVim
- * @微信公众号 埃迪的Code日记 / PositiveEddie
+ * @微信公众号 艾迪威姆 / PositiveEddie
  * @blog https://blog.csdn.net/weixin_44129784
  * @create 2020/9/29 4:41 下午
  */

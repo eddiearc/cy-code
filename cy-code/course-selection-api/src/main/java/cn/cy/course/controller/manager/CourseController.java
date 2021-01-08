@@ -1,4 +1,4 @@
-package cn.cy.course.controller;
+package cn.cy.course.controller.manager;
 
 
 import cn.cy.course.entity.PageResult;
@@ -33,7 +33,8 @@ public class CourseController {
     }
 
     @PostMapping("/findPage")
-    public PageResult<Course> findPage(@RequestBody Map<String,Object> searchMap,int page, int size){
+    public PageResult<Course> findPage(@RequestBody(required = false) Map<String,Object> searchMap,int page, int size){
+        System.out.println(page + "  " + size);
         return  courseService.findPage(searchMap,page,size);
     }
 

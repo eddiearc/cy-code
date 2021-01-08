@@ -7,7 +7,8 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  selections: {}
 }
 
 const mutations = {
@@ -25,6 +26,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_SELECTIONS: (state, selections) => {
+    state.selections = selections
   }
 }
 
@@ -52,7 +56,7 @@ const actions = {
           reject(res.message)
         }
 
-        const { roles, name } = res
+        const { roles, name, selections } = res
 
         // 名字不能为空
         if (!name) {
@@ -61,11 +65,16 @@ const actions = {
 
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
+        commit('SET_SELECTIONS', selections)
         resolve(res)
       }).catch(error => {
         reject(error)
       })
     })
+  },
+
+  setSelections({ commit }, selections) {
+    commit('SET_SELECTIONS', selections)
   },
 
   // user logout

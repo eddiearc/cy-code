@@ -3,6 +3,8 @@ package cn.cy.course.service;
 import cn.cy.course.entity.LoginUser;
 import cn.cy.course.entity.UserInfo;
 import cn.cy.course.util.JwtTokenUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,12 +17,15 @@ import java.util.Collection;
 
 /**
  * @author eddieVim
- * @微信公众号 埃迪的Code日记 / PositiveEddie
+ * @微信公众号 艾迪威姆 / PositiveEddie
  * @blog https://blog.csdn.net/weixin_44129784
  * @create 2020/10/6 10:29 下午
  */
-@Component
-public class LoginService {
+@Service
+public class SysLoginService {
+
+    @Autowired
+    private TokenService tokenService;
 
     @Resource
     private AuthenticationManager authenticationManager;
@@ -37,6 +42,6 @@ public class LoginService {
             role = authority.getAuthority();
         }
 
-        return JwtTokenUtils.createToken(userInfo.getUsername(), role,true);
+        return tokenService.createToken(userInfo.getUsername(), role,false);
     }
 }

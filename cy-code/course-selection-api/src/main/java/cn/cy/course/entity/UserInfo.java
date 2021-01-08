@@ -31,17 +31,7 @@ public class UserInfo implements UserDetails, Serializable {
     public UserInfo(User user) {
         this.id = user.getId();
         this.password = user.getPassword();
-        this.role = user.getRole() == 0 ? "ROLE_ADMIN" : (user.getRole() == 1 ? "ROLE_STUDENT" : "ROLE_TEACHER");
-    }
-
-    public UserInfo(String id, String password, Integer role, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled) {
-        this.id = id;
-        this.password = password;
-        this.role = role == 0 ? "ROLE_ADMIN" : (role == 1 ? "ROLE_STUDENT" : "ROLE_TEACHER");
-        this.accountNonExpired = accountNonExpired;
-        this.accountNonLocked = accountNonLocked;
-        this.credentialsNonExpired = credentialsNonExpired;
-        this.enabled = enabled;
+        this.role = user.getRole() == -1 ? "ROLE_DEV" : (user.getRole() == 0 ? "ROLE_ADMIN" : (user.getRole() == 1 ? "ROLE_STUDENT" : "ROLE_TEACHER"));
     }
 
     //这是权限

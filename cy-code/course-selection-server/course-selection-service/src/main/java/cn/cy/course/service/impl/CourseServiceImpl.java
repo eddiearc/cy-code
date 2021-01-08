@@ -1,5 +1,6 @@
 package cn.cy.course.service.impl;
 
+import cn.cy.course.entity.AjaxResult;
 import cn.cy.course.entity.PageResult;
 import cn.cy.course.mapper.CourseMapper;
 import cn.cy.course.pojo.Course;
@@ -14,6 +15,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -122,17 +124,35 @@ public class CourseServiceImpl implements CourseService {
      * @return
      */
     @Override
-    public List<Course> getCourseListThisTerm() {
+    public PageResult<Course> getCourseListThisTerm(int page, int size) {
         // 获取本次选课的id列表
         List<String> ids = (List<String>) redisTemplate.boundValueOps(RedisConstantKey.COURSE_IDS.toString()).get();
-        List<Course> ans = new ArrayList<>(ids.size());
-        for (String id : ids) {
+
+        // paging list from redis
+        int total = ids.size();
+
+        int maxPage = total / size + 1;
+        page = page <= 0 ? 1 : Math.min(page, maxPage);
+
+        int begin = (page - 1) * size;
+        int end = Math.min(total, begin + size);
+
+        // initialCapacity
+        List<Course> list = new ArrayList<>(end - begin);
+
+        for (int index = begin; index < end; index++) {
             // course 获取课程信息
-            Course course = (Course) redisTemplate.boundHashOps(RedisConstantKey.COURSE_MSG_HASH.toString()).get(id);
-            // 库存信息不准确，去掉
-            course.setStock(null);
-            ans.add(course);
+            Course course = (Course) redisTemplate.boundHashOps(RedisConstantKey.COURSE_MSG_HASH.toString()).get(ids.get(index));
+            // stock 获取库存信息
+            Long stock = redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).increment(ids.get(index), 0);
+            course.setStock(stock.intValue());
+            list.add(course);
         }
+
+        PageResult<Course> ans = new PageResult<>();
+        ans.setRows(list);
+        ans.setTotal((long) total);
+
         return ans;
     }
 
@@ -142,17 +162,17 @@ public class CourseServiceImpl implements CourseService {
      * @return
      */
     @Override
-    public List<Course> getCourseStockRealTime() {
+    public Map<String, Integer> getCourseStockRealTime() {
         // 获取本次选课的id列表
         List<String> ids = (List<String>) redisTemplate.boundValueOps(RedisConstantKey.COURSE_IDS.toString()).get();
-        List<Course> ans = new ArrayList<>(ids.size());
+
+        assert ids != null;
+        Map<String, Integer> ans = new HashMap<>(ids.size());
+
         for (String id : ids) {
             // stock 获取库存信息
             Long stock = redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).increment(id, 0);
-            Course course = new Course();
-            course.setId(id);
-            course.setStock(stock.intValue());
-            ans.add(course);
+            ans.put(id, stock.intValue());
         }
         return ans;
     }
