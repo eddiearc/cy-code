@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7ea0a920-4ed6-4a39-91c8-100d00b8e0bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-    </list>
+    <list default="true" id="7ea0a920-4ed6-4a39-91c8-100d00b8e0bd" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -186,6 +184,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.CourseServiceProvider" />
+      <item itemvalue="JUnit.CourseMapperTest" />
+      <item itemvalue="JUnit.CourseMapperTest.test" />
+      <item itemvalue="Spring Boot.CourseApiConsumer" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.CourseApiConsumer" />
@@ -200,7 +204,12 @@
       <list>
         <serviceView>
           <treeState>
-            <expand />
+            <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Spring Boot" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+            </expand>
             <select />
           </treeState>
         </serviceView>
