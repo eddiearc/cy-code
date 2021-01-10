@@ -82,7 +82,7 @@
           <el-input v-model="temp.credit" placeholder="Please enter" />
         </el-form-item>
         <el-form-item label="上课时间" prop="time">
-          <el-date-picker v-model="temp.time" type="datetime" placeholder="Please pick a date" />
+          <el-input v-model="temp.time" placeholder="Please enter" />
         </el-form-item>
         <el-form-item label="开始周数" prop="durationStart">
           <el-input v-model="temp.durationStart" placeholder="Please enter" />

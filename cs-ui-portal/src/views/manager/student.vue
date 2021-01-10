@@ -78,8 +78,8 @@
           <el-input v-model="temp.name" placeholder="Please enter" />
         </el-form-item>
         <el-form-item label="性别" prop="sex">
-          <el-radio v-model="temp.sex" label="1" checked="true">男</el-radio>
-          <el-radio v-model="temp.sex" label="0">女</el-radio>
+          <el-radio v-model="temp.sex" :label="1">男</el-radio>
+          <el-radio v-model="temp.sex" :label="0">女</el-radio>
         </el-form-item>
         <el-form-item label="身份证号" prop="idNumber">
           <el-input v-model="temp.idNumber" placeholder="Please enter" />
@@ -176,6 +176,7 @@ export default {
         title: '',
         type: '',
         status: 'published',
+        sex: '1'
       },
       dialogFormVisible: false,
       dialogStatus: '',
