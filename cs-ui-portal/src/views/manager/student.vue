@@ -60,7 +60,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="{row}">
-          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-edit" @click="edit(row.id)">
+          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-edit" @click="handleUpdate(row.id)">
             编辑
           </el-button>
         </template>
@@ -78,13 +78,13 @@
           <el-input v-model="temp.name" placeholder="Please enter" />
         </el-form-item>
         <el-form-item label="性别" prop="sex">
-          <el-radio v-model="temp.sex" label="1">男</el-radio>
+          <el-radio v-model="temp.sex" label="1" checked="true">男</el-radio>
           <el-radio v-model="temp.sex" label="0">女</el-radio>
         </el-form-item>
         <el-form-item label="身份证号" prop="idNumber">
           <el-input v-model="temp.idNumber" placeholder="Please enter" />
         </el-form-item>
-        <el-form-item label="院系" prop="college">
+        <el-form-item label="学院/系" prop="college">
           <el-input v-model="temp.college" placeholder="Please enter" />
         </el-form-item>
         <el-form-item label="专业" prop="major">
@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/manager/student.js'
+import { fetchList, fetchPv, createArticle, updateArticle,getStudentInfo } from '@/api/manager/student.js'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -175,7 +175,7 @@ export default {
         timestamp: new Date(),
         title: '',
         type: '',
-        status: 'published'
+        status: 'published',
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -271,9 +271,12 @@ export default {
         }
       })
     },
-    handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
+    handleUpdate(id) {
+      getStudentInfo(id).then(response => {
+        this.temp = response
+      })
+      //this.temp = Object.assign({}, row) // copy obj
+      //this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -283,15 +286,15 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateArticle(tempData).then(() => {
+          //const tempData = Object.assign({}, this.temp)
+          //tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          updateArticle(this.temp).then(() => {
             const index = this.list.findIndex(v => v.id === this.temp.id)
             this.list.splice(index, 1, this.temp)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
-              message: 'Update Successfully',
+              message: '修改学生信息成功',
               type: 'success',
               duration: 2000
             })
