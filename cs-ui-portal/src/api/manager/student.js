@@ -23,10 +23,10 @@ export function fetchPv(pv) {
     params: { pv }
   })
 }
-
+//新增学生信息
 export function createArticle(data) {
   return request({
-    url: '/vue-element-admin/article/create',
+    url: '/student/add',
     method: 'post',
     data
   })
