@@ -23,19 +23,34 @@ export function fetchPv(pv) {
     params: { pv }
   })
 }
-
+//添加user
 export function createArticle(data) {
   return request({
-    url: '/vue-element-admin/article/create',
+    url: '/user/add',
     method: 'post',
-    data
+    data: data
   })
 }
 
 export function updateArticle(data) {
   return request({
-    url: '/vue-element-admin/article/update',
+    url: '/user/update',
     method: 'post',
-    data
+    data: data
+  })
+}
+//根据id查询user信息
+export function getUserInfo(id) {
+  return request({
+    url: '/user/findById?id='+id,
+    method: 'get',
+  })
+}
+
+//删除user
+export function deleteUserInfo(id) {
+  return request({
+    url: '/user/delete?id='+id,
+    method: 'get',
   })
 }
