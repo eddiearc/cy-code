@@ -59,6 +59,7 @@ public class UserController {
 
     @PostMapping("/update")
     public Result update(@RequestBody User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.update(user);
         return new Result();
     }
