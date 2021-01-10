@@ -299,6 +299,8 @@
       <workItem from="1606623299499" duration="181000" />
       <workItem from="1610073190777" duration="1386000" />
       <workItem from="1610075775988" duration="252000" />
+      <workItem from="1610159255125" duration="1319000" />
+      <workItem from="1610260580105" duration="277000" />
     </task>
     <task id="LOCAL-00001" summary="Update ServiceImpl and Something about Seckill">
       <created>1600529040839</created>
@@ -629,7 +631,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604039206839</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="remove thymeleaf template method.">
+      <created>1610091263351</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1610091263351</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -649,7 +658,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="RedisContantKey新增注解" />
     <MESSAGE value="rename SeckillController &amp; SeckillService" />
     <MESSAGE value="当课程被抢购完后，更新数据库中的库存信息" />
     <MESSAGE value="让enum RedisContantKey -&gt; java.lang.String，使得可以在rdm可视化工具上查看" />
@@ -674,17 +682,18 @@
     <MESSAGE value="1.更新接口url&#10;2.更新选课接口数据来源从MySQL更改至Redis，并加上分页功能，以解决大量访问时耗费资源问题" />
     <MESSAGE value="update" />
     <MESSAGE value="Import Swagger Interface Doc" />
-    <option name="LAST_COMMIT_MESSAGE" value="Import Swagger Interface Doc" />
+    <MESSAGE value="remove thymeleaf template method." />
+    <option name="LAST_COMMIT_MESSAGE" value="remove thymeleaf template method." />
   </component>
   <component name="WindowStateProjectService">
     <state x="653" y="249" key="#com.intellij.ide.util.MemberChooser" timestamp="1602835002122">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="653" y="249" key="#com.intellij.ide.util.MemberChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1602835002122" />
-    <state x="382" y="115" key="CommitChangelistDialog2" timestamp="1604039206618">
+    <state x="382" y="115" key="CommitChangelistDialog2" timestamp="1610091263140">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="382" y="115" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1604039206618" />
+    <state x="382" y="115" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1610091263140" />
     <state x="196" y="120" key="DiffContextDialog" timestamp="1602829112153">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -745,10 +754,14 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state width="533" height="445" key="SwitcherDM/0.23.1680.1027@0.23.1680.1027" timestamp="1602666367206" />
-    <state x="440" y="278" key="Vcs.Push.Dialog.v2" timestamp="1604039212557">
+    <state x="440" y="278" key="Vcs.Push.Dialog.v2" timestamp="1610091267579">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="440" y="278" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1604039212557" />
+    <state x="440" y="278" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1610091267579" />
+    <state x="623" y="461" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1610260683672">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="623" y="461" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1680.1027@0.23.1680.1027" timestamp="1610260683672" />
     <state x="495" y="300" width="845" height="538" key="find.popup" timestamp="1602836212947">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
