@@ -7,8 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="course-selection-interface" />
-        <module name="course-selection-service" />
         <module name="course-selection-api" />
+        <module name="course-selection-service" />
       </profile>
     </annotationProcessing>
   </component>

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="7ea0a920-4ed6-4a39-91c8-100d00b8e0bd" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +73,6 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
     <option name="sortByType" value="true" />
   </component>
@@ -136,7 +138,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.CourseApiConsumer">
+  <component name="RunManager" selected="Spring Boot.CourseServiceProvider">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
@@ -231,13 +233,8 @@
     </configuration>
     <list>
       <item itemvalue="Application.CourseServiceProvider" />
-<<<<<<< HEAD
-      <item itemvalue="JUnit.CourseMapperTest" />
-      <item itemvalue="JUnit.CourseMapperTest.test" />
-=======
       <item itemvalue="JUnit.SelectionMapperTest.fun" />
       <item itemvalue="Spring Boot.CourseServiceProvider" />
->>>>>>> dev
       <item itemvalue="Spring Boot.CourseApiConsumer" />
     </list>
     <recent_temporary>
@@ -248,23 +245,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="Spring Boot" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              </path>
-            </expand>
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -645,13 +626,12 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="RedisContantKey新增注解" />
