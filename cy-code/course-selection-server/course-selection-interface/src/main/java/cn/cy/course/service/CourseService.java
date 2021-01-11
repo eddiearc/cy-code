@@ -47,4 +47,6 @@ public interface CourseService {
     public Map<String, Integer> getCourseStockRealTime();
 
     List<Course> getInfoByTeacherId(String teacherId);
+
+    List<Course> teachCourse(String teacherId);
 }

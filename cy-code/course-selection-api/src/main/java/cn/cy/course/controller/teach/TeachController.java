@@ -30,8 +30,6 @@ public class TeachController {
     @GetMapping("/course")
     public List<Course> teachCourse() {
         String teacherId = (String) SecurityUserHelper.getCurrentPrincipal();
-        Map<String, Object> searchMap = new HashMap<>();
-        searchMap.put("teacherId", teacherId);
-        return courseService.findList(searchMap);
+        return courseService.teachCourse(teacherId);
     }
 }

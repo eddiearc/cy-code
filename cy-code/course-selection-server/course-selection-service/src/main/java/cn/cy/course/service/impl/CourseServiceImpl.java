@@ -189,6 +189,13 @@ public class CourseServiceImpl implements CourseService {
         return courseMapper.select(searchObj);
     }
 
+    @Override
+    public List<Course> teachCourse(String teacherId) {
+        Course course = new Course();
+        course.setTeacherId(teacherId);
+        return courseMapper.select(course);
+    }
+
     /**
      * 构建查询条件
      * @param searchMap
