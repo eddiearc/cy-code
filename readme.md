@@ -1,36 +1,26 @@
-# cy-code
-
+# cy-code 
 
 
 ## CODE结构
 
-- 前端模块`cs-ui`
+- 前端模块`cs-ui-portal`
 
-- 数据库模块及其接口文档
+- 数据库模块及其接口文档`sql_doc`
 
 - 后端模块`cy-code`
 
-    - `course-selection-api`
-
-        为前端提供`api`，`dubbo`服务消费者
+    - `course-selection-api`: 为前端提供`api`，`dubbo`服务消费者
 
     - `course-selection-server`
 
-        - `course-selection-interface`
+        - `course-selection-interface`: `pojo`实体类与服务接口定义
 
-            `pojo`实体类与服务接口定义
-
-        - `course-selection-service`
-
-            主要用于编写服务实现类及`Dao`接口，`dubbo`服务生产者
+        - `course-selection-service`: 主要用于编写服务实现类及`Dao`接口，`dubbo`服务生产者
 
 
 
 
-
-## 选课系统
-
-### 技术选型
+## 技术选型
 
 `SpringBoot` + `Dubbo`  + `Redis` + `MySQL` + `Nginx`  + `RabbitMQ` + `Thymeleaf` + `Vue.js`
 
@@ -45,26 +35,11 @@
 - Thymeleaf：生成静态页面，减少渲染速度
 - Vue.js
 
+## 设计文档
+- [架构设计](https://gitee.com/eddievim/cy-code/wikis/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1)
+- [数据库设计](https://gitee.com/eddievim/cy-code/wikis/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1)
+- [系统权限设计](https://gitee.com/eddievim/cy-code/wikis/%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90%E8%AE%BE%E8%AE%A1)
+- [高并发选课流程设计](https://gitee.com/eddievim/cy-code/wikis/%E9%AB%98%E5%B9%B6%E5%8F%91%E9%80%89%E8%AF%BE%E6%B5%81%E7%A8%8B%E8%AE%BE%E8%AE%A1)
 
-
-### 重难点
-
-#### 多线程处理
-
-使用线程池，进行压力测试
-
-
-
-#### 集群部署与环境
-
-业务服务利用`Dubbo` + `zookeeper`部署，`MySQL`、`Redis`、`Nginx`部署
-
-结合`Docker`自动化部署？
-
-
-
-#### 用户权限管理
-
-`SpringSecurity`or`Shiro`？
-
-如何设计？
+## 系统部署
+[环境部署文档](https://gitee.com/eddievim/cy-code/wikis/Course-Selection%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2)
