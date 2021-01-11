@@ -261,10 +261,10 @@ export default {
             this.temp.role = 0
           }else if(this.temp.role ==='学生'){
             this.temp.role = 1
-          }else if(his.temp.role ==='老师'){
+          }else if(this.temp.role ==='老师'){
             this.temp.role = 2
           }
-          createArticle(this.temp).then(() => {
+          createArticle(this.temp).then(response => {
             this.list.unshift(this.temp)
             this.dialogFormVisible = false
             this.$notify({
