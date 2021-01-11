@@ -57,7 +57,6 @@ public class SeckillController {
         }
 
 
-
         return AjaxResult.success("已经移除您的选课信息！");
     }
 }

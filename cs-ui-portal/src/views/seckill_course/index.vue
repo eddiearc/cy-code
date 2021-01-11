@@ -41,7 +41,7 @@
           <span>计算机选修</span>
         </template>
       </el-table-column>
-      <el-table-column label="库存" align="center" width="100">
+      <el-table-column label="剩余" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.stock }}</span>
         </template>
