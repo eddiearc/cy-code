@@ -1,7 +1,9 @@
 package cn.cy.course.service.impl;
 
 import cn.cy.course.pojo.Pack;
+import cn.cy.course.pojo.Selection;
 import cn.cy.course.service.SeckillService;
+import cn.cy.course.service.SelectionService;
 import cn.cy.course.task.CreateSelectionExcutor;
 import cn.cy.course.util.RedisConstantKey;
 import org.apache.dubbo.config.annotation.Service;
@@ -22,6 +24,9 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Autowired
     private CreateSelectionExcutor createSelectionExcutor;
+
+    @Autowired
+    private SelectionService selectionService;
 
 
     @Override
@@ -48,9 +53,19 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Override
     public void remove(Pack pack) {
-        boolean included = redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET.toString() + pack.getStudentId()).isMember(pack.getCourseId());
-        if (!included) {
+        System.out.println(pack.getCourseId() + " " + pack.getStudentId());
+        Boolean included = redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET.toString() + pack.getStudentId()).isMember(pack.getCourseId());
+        if (included == null || !included) {
             throw new RuntimeException("该选课记录已经被移除！");
         }
+
+        //1. mysql移除选课纪录
+        selectionService.delete(pack.getStudentId(), pack.getCourseId());
+
+        //2. redis选课记录移除
+        redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET.toString() + pack.getStudentId()).remove(pack.getCourseId());
+
+        //3. redis课程库存回滚
+        createSelectionExcutor.redisStockRollBack(pack.getCourseId());
     }
 }

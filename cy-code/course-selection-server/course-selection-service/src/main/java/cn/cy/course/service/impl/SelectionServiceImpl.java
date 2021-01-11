@@ -132,6 +132,9 @@ public class SelectionServiceImpl implements SelectionService {
      */
     @Override
     public void delete(String studentId, String courseId) {
+        if (studentId == null || courseId == null || "".equals(studentId) || "".equals(courseId)) {
+            throw new RuntimeException("Remove a Selection must determine studentId and courseId.");
+        }
         Selection selection = new Selection();
         selectionMapper.delete(selection);
     }

@@ -113,7 +113,7 @@ public class CreateSelectionExcutor {
      *
      * @param courseId 课程ID
      */
-    private void redisStockRollBack(String courseId) {
+    public void redisStockRollBack(String courseId) {
         // 库存数回滚
         redisTemplate.boundListOps(RedisConstantKey.COURSE_STOCK_QUEUE.toString()).leftPush(courseId);
         redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).increment(courseId, 1);

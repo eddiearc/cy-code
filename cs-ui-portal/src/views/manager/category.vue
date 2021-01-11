@@ -317,7 +317,7 @@ export default {
                 message: '取消删除',
                 type: 'info',
                 duration: 2000
-          });          
+          });
         });
     },
     formatJson(filterVal) {

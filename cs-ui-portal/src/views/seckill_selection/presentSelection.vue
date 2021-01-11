@@ -184,8 +184,9 @@ export default {
         this.listLoading = false
       })
     },
-    seckillRemove() {
-      seckillRemove().then(response => {
+    seckillRemove(id) {
+      seckillRemove(id).then(response => {
+        // 访问取消选课接口
         // 弹窗
         this.$message(response.message)
         this.getList()
