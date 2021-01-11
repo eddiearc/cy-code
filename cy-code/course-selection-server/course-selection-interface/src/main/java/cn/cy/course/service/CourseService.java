@@ -45,4 +45,6 @@ public interface CourseService {
      * 实时获取课程的库存数量
      */
     public Map<String, Integer> getCourseStockRealTime();
+
+    List<Course> getInfoByTeacherId(String teacherId);
 }

@@ -7,6 +7,14 @@ export function fetchList(query) {
     params: query
   })
 }
+
+//获取课程分类列表 categoryInfo
+export function categoryInfo() {
+  return request({
+    url: '/category/findAll',
+    method: 'get'
+  })
+}
 //根据课程id查询课程信息
 export function getCourseInfo(id) {
   return request({

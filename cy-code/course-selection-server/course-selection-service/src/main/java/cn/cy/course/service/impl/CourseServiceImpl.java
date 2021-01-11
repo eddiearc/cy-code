@@ -178,6 +178,18 @@ public class CourseServiceImpl implements CourseService {
     }
 
     /**
+     * 根据教师id查询授课信息
+     * @param teacherId
+     * @return
+     */
+    @Override
+    public List<Course> getInfoByTeacherId(String teacherId) {
+        Course searchObj = new Course();
+        searchObj.setTeacherId(teacherId);
+        return courseMapper.select(searchObj);
+    }
+
+    /**
      * 构建查询条件
      * @param searchMap
      * @return

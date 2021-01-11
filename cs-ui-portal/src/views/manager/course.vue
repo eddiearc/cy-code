@@ -73,7 +73,7 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="课程序号" prop="id">
-          <el-input v-model="temp.id" placeholder="Please enter" />
+          <el-input v-model="temp.id" placeholder="Please enter" :disabled="dialogStatus==='create'? false : true"/>
         </el-form-item>
         <el-form-item label="课程名称" prop="name">
           <el-input v-model="temp.name" placeholder="Please enter" />
@@ -82,7 +82,7 @@
           <el-input v-model="temp.credit" placeholder="Please enter" />
         </el-form-item>
         <el-form-item label="上课时间" prop="time">
-          <el-input v-model="temp.time" placeholder="Please enter" />
+          <el-input v-model="temp.time" placeholder="'周三3-4'" />
         </el-form-item>
         <el-form-item label="开始周数" prop="durationStart">
           <el-input v-model="temp.durationStart" placeholder="Please enter" />
@@ -102,7 +102,17 @@
             v-for="item in teacherIds"
             :key="item.id"
             :label="item.name"
-            :value="item.name">
+            :value="item.id">
+          </el-option>
+        </el-select>
+        </el-form-item>
+        <el-form-item label="课程类别" prop="categoryId">
+          <el-select v-model="temp.categoryId" placeholder="请选择">
+          <el-option
+            v-for="item in categoryList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
           </el-option>
         </el-select>
         </el-form-item>
@@ -133,7 +143,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle,teacherList,getCourseInfo } from '@/api/manager/course.js'
+import { fetchList, fetchPv, createArticle, updateArticle,teacherList,getCourseInfo,categoryInfo } from '@/api/manager/course.js'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -170,6 +180,7 @@ export default {
   },
   data() {
     return {
+      categoryList: null,
       teacherIds: null,
       tableKey: 0,
       list: null,
@@ -214,8 +225,15 @@ export default {
   created() {
     this.getList()
     this.getTeacherList()
+    this.getCategoryList()
   },
   methods: {
+    //获取课程类别列表
+    getCategoryList(){
+      categoryInfo().then(response => {
+        this.categoryList = response
+      })
+    },
     //获取老师id列表
     getTeacherList(){
       teacherList().then(response => {
@@ -282,6 +300,12 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.temp.stock = this.temp.total
+          for(let i = 0;i<this.teacherIds.length;i++){
+            if(this.teacherIds[i].id == this.temp.teacherId){
+              this.temp.teacherName = this.teacherIds[i].name
+            }
+          }
+          this.temp.term = 0
           createArticle(this.temp).then(() => {
             this.list.unshift(this.temp)
             this.dialogFormVisible = false

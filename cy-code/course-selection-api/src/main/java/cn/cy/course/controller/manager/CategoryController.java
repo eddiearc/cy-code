@@ -35,7 +35,7 @@ public class CategoryController {
     }
 
     @PostMapping("/findPage")
-    public PageResult<Category> findPage(@RequestBody Map<String,Object> searchMap,int page, int size){
+    public PageResult<Category> findPage(@RequestBody(required = false) Map<String,Object> searchMap,int page, int size){
         return  categoryService.findPage(searchMap,page,size);
     }
 

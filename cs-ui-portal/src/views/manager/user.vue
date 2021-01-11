@@ -45,7 +45,7 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="登录名" prop="id">
-          <el-input v-model="temp.id" placeholder="请输入学生学号" />
+          <el-input v-model="temp.id" placeholder="请输入学生学号" :disabled="dialogStatus==='create'? false : true"/>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input placeholder="请输入密码" v-model="temp.password" show-password></el-input>
@@ -185,9 +185,28 @@ export default {
     },
     //删除user
     deleteUser(id){
-      deleteUserInfo(id).then(() => {
-        
+      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteUserInfo(id).then(() => {
+          this.$notify({
+                title: 'Success',
+                message: '删除成功',
+                type: 'success',
+                duration: 2000
+          })
       })
+      this.getList()
+        }).catch(() => {
+          this.$notify({
+                title: 'Cancel',
+                message: '取消删除',
+                type: 'info',
+                duration: 2000
+          });          
+        });
     },
     handleFilter() {
       this.listQuery.page = 1
@@ -270,6 +289,7 @@ export default {
         }else if(his.temp.role ===2){
           this.temp.role = '老师'
         }
+        this.temp.password = ''
       })
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
