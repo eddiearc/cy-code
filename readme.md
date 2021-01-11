@@ -36,10 +36,10 @@
 - Vue.js
 
 ## 设计文档
-[架构设计](https://gitee.com/eddievim/cy-code/wikis/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1)
-[数据库设计](https://gitee.com/eddievim/cy-code/wikis/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1)
-[系统权限设计](https://gitee.com/eddievim/cy-code/wikis/%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90%E8%AE%BE%E8%AE%A1)
-[高并发选课流程设计](https://gitee.com/eddievim/cy-code/wikis/%E9%AB%98%E5%B9%B6%E5%8F%91%E9%80%89%E8%AF%BE%E6%B5%81%E7%A8%8B%E8%AE%BE%E8%AE%A1)
+- [架构设计](https://gitee.com/eddievim/cy-code/wikis/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1)
+- [数据库设计](https://gitee.com/eddievim/cy-code/wikis/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1)
+- [系统权限设计](https://gitee.com/eddievim/cy-code/wikis/%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90%E8%AE%BE%E8%AE%A1)
+- [高并发选课流程设计](https://gitee.com/eddievim/cy-code/wikis/%E9%AB%98%E5%B9%B6%E5%8F%91%E9%80%89%E8%AF%BE%E6%B5%81%E7%A8%8B%E8%AE%BE%E8%AE%A1)
 
 ## 系统部署
 [环境部署文档](https://gitee.com/eddievim/cy-code/wikis/Course-Selection%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2)
