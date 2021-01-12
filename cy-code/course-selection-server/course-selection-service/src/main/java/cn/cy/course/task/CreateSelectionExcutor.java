@@ -12,8 +12,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-
 /**
  * @author eddieVim
  * @微信公众号 艾迪威姆 / PositiveEddie
@@ -31,11 +29,6 @@ public class CreateSelectionExcutor {
 
     @Autowired(required = false)
     private CourseService courseService;
-
-    @Async
-    public void testAsync() {
-        System.out.println("---TEST_ASYNC---");
-    }
 
     /**
      * 1. 从redis list中取出处理
