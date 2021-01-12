@@ -1,12 +1,12 @@
 package cn.cy.course.mapper;
 
 import cn.cy.course.pojo.Category;
-import cn.cy.course.vo.CategoryVo;
-import org.apache.ibatis.annotations.Param;
+import cn.cy.course.pojo.dto.CategoryIdCountDto;
 import org.apache.ibatis.annotations.Select;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author eddieVim
@@ -16,8 +16,15 @@ import java.util.List;
  */
 public interface CategoryMapper extends Mapper<Category> {
 
-    @Select("select category_id as id,count(*) as count\n" +
-            "from tb_course\n" +
+
+    @Select("select category_id id,count(*) count " +
+            "from tb_course " +
+            "where category_id is not null " +
             "group by category_id")
-    public List<CategoryVo> countProple();
+    /**
+     * 计算不同课程分类中的课程数量
+     *
+     * @return
+     */
+    List<CategoryIdCountDto> countPeople();
 }
