@@ -26,11 +26,8 @@ export function getHistoryList() {
  */
 export function seckillRemove(id) {
   return request({
-    url: '/stu/sk/rm',
-    method: 'get',
-    params: {
-      'courseId': id
-    }
+    url: '/stu/sk/rm?courseId=' + id,
+    method: 'get'
   })
 }
 

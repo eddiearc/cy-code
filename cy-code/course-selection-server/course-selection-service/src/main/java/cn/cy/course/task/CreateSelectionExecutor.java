@@ -12,8 +12,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-
 /**
  * @author eddieVim
  * @微信公众号 艾迪威姆 / PositiveEddie
@@ -21,7 +19,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
  * @create 2020/9/18 5:10 下午
  */
 @Component
-public class CreateSelectionExcutor {
+public class CreateSelectionExecutor {
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -31,11 +29,6 @@ public class CreateSelectionExcutor {
 
     @Autowired(required = false)
     private CourseService courseService;
-
-    @Async
-    public void testAsync() {
-        System.out.println("---TEST_ASYNC---");
-    }
 
     /**
      * 1. 从redis list中取出处理
@@ -113,7 +106,7 @@ public class CreateSelectionExcutor {
      *
      * @param courseId 课程ID
      */
-    private void redisStockRollBack(String courseId) {
+    public void redisStockRollBack(String courseId) {
         // 库存数回滚
         redisTemplate.boundListOps(RedisConstantKey.COURSE_STOCK_QUEUE.toString()).leftPush(courseId);
         redisTemplate.boundHashOps(RedisConstantKey.COURSE_STOCK_HASH.toString()).increment(courseId, 1);
