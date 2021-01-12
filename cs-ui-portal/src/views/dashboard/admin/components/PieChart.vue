@@ -6,6 +6,7 @@
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
+import { countCategory } from '@/api/seckill_selection.js'
 
 export default {
   mixins: [resize],
@@ -25,13 +26,26 @@ export default {
   },
   data() {
     return {
-      chart: null
+      chart: null,
+      catogory: []
     }
   },
+  watch: {
+    options: {
+      handler(options) {
+        this.chart.setOption(this.options)
+      },
+      deep: true
+    },
+  },
+  created(){
+    this.initData()
+  },
   mounted() {
-    this.$nextTick(() => {
-      this.initChart()
-    })
+    // this.$nextTick(() => {
+    //   this.initChart()
+    // })
+    this.initChart()
   },
   beforeDestroy() {
     if (!this.chart) {
@@ -41,6 +55,11 @@ export default {
     this.chart = null
   },
   methods: {
+    initData() {
+      countCategory().then(response => {
+        this.catogory = response
+      })
+    },
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
 
@@ -56,7 +75,7 @@ export default {
         },
         series: [
           {
-            name: 'WEEKLY WRITE ARTICLES',
+            name: '人数占比',
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],

@@ -3,13 +3,18 @@ package cn.cy.course.service.impl;
 import cn.cy.course.entity.PageResult;
 import cn.cy.course.mapper.CategoryMapper;
 import cn.cy.course.pojo.Category;
+import cn.cy.course.pojo.Course;
 import cn.cy.course.service.CategoryService;
+import cn.cy.course.service.CourseService;
+import cn.cy.course.vo.CategoryVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +23,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryMapper categoryMapper;
+
+    @Autowired
+    private CourseService courseService;
 
     /**
      * 返回全部记录
@@ -102,6 +110,32 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void delete(Integer id) {
         categoryMapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 统计课程分类课程数量用于图表显示
+     * @return
+     */
+    @Override
+    public List<CategoryVo> countCategory() {
+        List<CategoryVo> res = new ArrayList<>();
+        List<Category> categories = categoryMapper.selectAll();
+        for(Category category : categories){
+            CategoryVo categoryVo = new CategoryVo();
+            Integer id = category.getId();
+            String name = category.getName();
+            categoryVo.setName(name);
+            categoryVo.setId(id);
+            List<CategoryVo> categoryVos = categoryMapper.countProple();
+            for(CategoryVo categoryVo1 : categoryVos){
+                if(categoryVo1.getId() == id){
+                    categoryVo.setCount(categoryVo1.getCount());
+                    break;
+                }
+            }
+            res.add(categoryVo);
+        }
+        return res;
     }
 
     /**

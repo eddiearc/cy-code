@@ -4,6 +4,7 @@ import cn.cy.course.entity.PageResult;
 import cn.cy.course.entity.Result;
 import cn.cy.course.pojo.Category;
 import cn.cy.course.service.CategoryService;
+import cn.cy.course.vo.CategoryVo;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,4 +64,9 @@ public class CategoryController {
         return new Result();
     }
 
+    @GetMapping("/countCategory")
+    public List<CategoryVo> countCategory(){
+        List<CategoryVo> list = categoryService.countCategory();
+        return list;
+    }
 }

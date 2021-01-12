@@ -4,11 +4,13 @@ import cn.cy.course.entity.PageResult;
 import cn.cy.course.mapper.SelectionMapper;
 import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Selection;
+import cn.cy.course.service.CourseService;
 import cn.cy.course.service.SelectionService;
 import cn.cy.course.task.DB2RedisTimer;
 import cn.cy.course.util.RedisConstantKey;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -31,6 +33,8 @@ public class SelectionServiceImpl implements SelectionService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+
     @Override
     public List<Selection> findAll() {
         return selectionMapper.selectAll();
@@ -184,4 +188,5 @@ public class SelectionServiceImpl implements SelectionService {
         }
         return ans;
     }
+
 }

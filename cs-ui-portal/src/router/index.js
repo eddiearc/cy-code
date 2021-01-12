@@ -189,7 +189,8 @@ export const asyncRoutes = [
           title: '历史选课情况',
           icon: 'list',
           roles: ['ROLE_STUDENT']
-        }
+        },
+        hidden: true
       }
     ]
   },

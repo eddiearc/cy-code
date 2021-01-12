@@ -21,12 +21,12 @@
           <span>{{ row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="学分" align="center" width="100">
+      <el-table-column label="学分" align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.credit }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="上课周数时间地点" align="center" width="350px">
+      <el-table-column label="上课周数时间地点" align="center" width="300px">
         <template slot-scope="{row}">
           <span>{{ ' [ ' + row.durationStart + ' ~ ' + row.durationEnd + ' ]  ' + row.time + '  ' + row.place }}</span>
         </template>
@@ -41,7 +41,7 @@
           <span>计算机选修</span>
         </template>
       </el-table-column>
-      <el-table-column label="剩余" align="center" width="100">
+      <el-table-column label="剩余" align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.stock }}</span>
         </template>

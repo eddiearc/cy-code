@@ -105,4 +105,5 @@ public interface SelectionService {
      * @return id -> Course
      */
     public Map<String, Course> currentTermSelection(String studentId);
+
 }

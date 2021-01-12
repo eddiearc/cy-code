@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class Category implements Serializable {
 
     @Id
-    private String id;
+    private Integer id;
 
     /**
      * 分类名
@@ -29,11 +29,11 @@ public class Category implements Serializable {
                 '}';
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

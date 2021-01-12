@@ -49,4 +49,5 @@ public interface CourseService {
     List<Course> getInfoByTeacherId(String teacherId);
 
     List<Course> teachCourse(String teacherId);
+
 }

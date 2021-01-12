@@ -1,12 +1,15 @@
 package cn.cy.course.mapper;
 
 import cn.cy.course.pojo.Selection;
+import cn.cy.course.service.CategoryService;
+import cn.cy.course.vo.CategoryVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +26,9 @@ class SelectionMapperTest {
     @Autowired(required = false)
     private SelectionMapper selectionMapper;
 
+    @Autowired(required = false)
+    private CategoryService categoryService;
+
     @Test
     public void fun() {
         Selection selection = new Selection();
@@ -32,5 +38,6 @@ class SelectionMapperTest {
         selection.setCreateTime(new Date());
         selectionMapper.insert(selection);
     }
+
 
 }

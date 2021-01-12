@@ -33,3 +33,11 @@ export function seckillRemove(id) {
     }
   })
 }
+
+//统计课程分类课程数量用于图表显示
+export function countCategory() {
+  return request({
+    url: '/category/countCategory',
+    method: 'get'
+  })
+}
