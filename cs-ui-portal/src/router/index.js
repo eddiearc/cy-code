@@ -503,8 +503,8 @@ export const asyncRoutes = [
     component: Layout,
     children: [
       {
-        path: 'http://chengyi.jmu.edu.cn/',
-        meta: { title: '集美大学诚毅学院', icon: 'link' }
+        path: 'https://tva1.sinaimg.cn/large/008eGmZEly1gmkza78qrkj31bq0mgdje.jpg',
+        meta: { title: '微信公众号', icon: 'link' }
       }
     ]
   },
