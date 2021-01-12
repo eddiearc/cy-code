@@ -27,7 +27,7 @@
       </el-table-column>
       <el-table-column label="角色" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.role === 0 ? '管理员' : row.role === 1 ? '学生' : '教师' }}</span>
+          <span>{{ row.role === 0 ? '管理员' : row.role === 1 ? '学生' : row.role === 2 ? '教师' : '开发者'}}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center">
@@ -121,7 +121,7 @@ export default {
   },
   data() {
     return {
-      roles: ['管理员','学生','老师'],
+      roles: ['管理员','学生','教师', '开发者'],
       tableKey: 0,
       list: null,
       total: 0,
@@ -137,13 +137,6 @@ export default {
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -261,8 +254,10 @@ export default {
             this.temp.role = 0
           }else if(this.temp.role ==='学生'){
             this.temp.role = 1
-          }else if(this.temp.role ==='老师'){
+          }else if(this.temp.role ==='教师'){
             this.temp.role = 2
+          }else {
+            this.temp.role = -1
           }
           createArticle(this.temp).then(response => {
             this.list.unshift(this.temp)
@@ -286,8 +281,10 @@ export default {
           this.temp.role = '管理员'
         }else if(this.temp.role ===1){
           this.temp.role = '学生'
-        }else if(his.temp.role ===2){
-          this.temp.role = '老师'
+        }else if(this.temp.role ===2){
+          this.temp.role = '教师'
+        }else {
+          this.temp.role = '开发者'
         }
         this.temp.password = ''
       })
@@ -306,8 +303,10 @@ export default {
             this.temp.role = 0
           }else if(this.temp.role ==='学生'){
             this.temp.role = 1
-          }else if(his.temp.role ==='老师'){
+          }else if(this.temp.role ==='教师'){
             this.temp.role = 2
+          }else {
+            this.temp.role = -1
           }
           updateArticle(this.temp).then(() => {
             const index = this.list.findIndex(v => v.id === this.temp.id)
@@ -319,6 +318,7 @@ export default {
               type: 'success',
               duration: 2000
             })
+            this.getList()
           })
         }
       })
