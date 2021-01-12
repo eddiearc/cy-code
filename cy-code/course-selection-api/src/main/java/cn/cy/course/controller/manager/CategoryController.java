@@ -3,6 +3,7 @@ package cn.cy.course.controller.manager;
 import cn.cy.course.entity.PageResult;
 import cn.cy.course.entity.Result;
 import cn.cy.course.pojo.Category;
+import cn.cy.course.pojo.vo.CategoryCountVo;
 import cn.cy.course.service.CategoryService;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class CategoryController {
     }
 
     @PostMapping("/findPage")
-    public PageResult<Category> findPage(@RequestBody Map<String,Object> searchMap,int page, int size){
+    public PageResult<Category> findPage(@RequestBody(required = false) Map<String,Object> searchMap,int page, int size){
         return  categoryService.findPage(searchMap,page,size);
     }
 
@@ -63,4 +64,8 @@ public class CategoryController {
         return new Result();
     }
 
+    @GetMapping("/countCategory")
+    public CategoryCountVo countCategory(){
+        return categoryService.countCategory();
+    }
 }

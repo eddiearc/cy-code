@@ -26,10 +26,15 @@ export function getHistoryList() {
  */
 export function seckillRemove(id) {
   return request({
-    url: '/stu/sk/rm',
-    method: 'get',
-    params: {
-      'courseId': id
-    }
+    url: '/stu/sk/rm?courseId=' + id,
+    method: 'get'
+  })
+}
+
+// 统计课程分类课程数量用于图表显示
+export function countCategory() {
+  return request({
+    url: '/category/countCategory',
+    method: 'get'
   })
 }

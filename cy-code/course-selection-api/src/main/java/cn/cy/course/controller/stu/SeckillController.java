@@ -56,7 +56,13 @@ public class SeckillController {
             studentId  = (String) SecurityUserHelper.getCurrentPrincipal();
         }
 
+        //2. 封装Pack
+        Pack pack = new Pack();
+        pack.setStudentId(studentId);
+        pack.setCourseId(courseId);
 
+        //3. remove
+        seckillService.remove(pack);
 
         return AjaxResult.success("已经移除您的选课信息！");
     }

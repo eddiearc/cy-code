@@ -3,13 +3,18 @@ package cn.cy.course.service.impl;
 import cn.cy.course.entity.PageResult;
 import cn.cy.course.mapper.CategoryMapper;
 import cn.cy.course.pojo.Category;
+import cn.cy.course.pojo.dto.CategoryIdCountDto;
 import cn.cy.course.service.CategoryService;
+import cn.cy.course.service.CourseService;
+import cn.cy.course.pojo.vo.CategoryCountVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +23,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryMapper categoryMapper;
+
+    @Autowired
+    private CourseService courseService;
 
     /**
      * 返回全部记录
@@ -102,6 +110,38 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void delete(Integer id) {
         categoryMapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 统计课程分类课程数量用于图表显示
+     *
+     * @return
+     */
+    @Override
+    public CategoryCountVo countCategory() {
+        List<Category> categories = categoryMapper.selectAll();
+        // 将所有的课程分类转化为ID -> Category 的K-V 键值对
+        Map<Integer, Category> idCategoryMap = listToMap(categories);
+
+        CategoryCountVo ccv = new CategoryCountVo(categories.size());
+        List<CategoryIdCountDto> categoryIdCountDtos = categoryMapper.countPeople();
+
+        Collections.sort(categoryIdCountDtos, (a, b) -> b.getCount() - a.getCount());
+
+        for (CategoryIdCountDto categoryIdCountDto : categoryIdCountDtos) {
+            String name = idCategoryMap.get(categoryIdCountDto.getId()).getName();
+            ccv.add(name, categoryIdCountDto.getCount());
+        }
+
+        return ccv;
+    }
+
+    private Map<Integer, Category> listToMap(List<Category> categories) {
+        Map<Integer, Category> res = new HashMap<>();
+        for (Category category : categories) {
+            res.put(category.getId(), category);
+        }
+        return res;
     }
 
     /**

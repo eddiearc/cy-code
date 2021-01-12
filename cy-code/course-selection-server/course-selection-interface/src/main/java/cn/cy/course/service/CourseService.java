@@ -22,7 +22,7 @@ public interface CourseService {
     public List<Course> findList(Map<String, Object> searchMap);
 
 
-    public PageResult<Course> findPage(Map<String, Object> searchMap, int page, int size);
+    public PageResult<Course> findPageByKey(String key, int page, int size);
 
 
     public Course findById(String id);
@@ -45,4 +45,9 @@ public interface CourseService {
      * 实时获取课程的库存数量
      */
     public Map<String, Integer> getCourseStockRealTime();
+
+    List<Course> getInfoByTeacherId(String teacherId);
+
+    List<Course> teachCourse(String teacherId);
+
 }

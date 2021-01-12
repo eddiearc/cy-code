@@ -10,4 +10,5 @@ import tk.mybatis.mapper.common.Mapper;
  * @create 2020/9/12 4:29 下午
  */
 public interface CourseMapper extends Mapper<Course> {
+
 }

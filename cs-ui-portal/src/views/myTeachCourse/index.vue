@@ -5,9 +5,6 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        新增
-      </el-button>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
         导出Excel
       </el-button>
@@ -65,7 +62,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="{row}">
-          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-edit" @click="edit(row.id)">
+          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-edit" @click="getStudentList(row.id)">
             查看学生名单
           </el-button>
         </template>
@@ -153,6 +150,7 @@ export default {
   },
   data() {
     return {
+      teacherDetailInfo: null,
       tableKey: 0,
       list: null,
       total: 0,
@@ -206,6 +204,10 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
+    },
+    //课程id查看选课学生名单
+    getStudentList(id){
+      this.$router.push({ name: 'select_studentList', params: { courseId: id }});
     },
     handleFilter() {
       this.listQuery.page = 1

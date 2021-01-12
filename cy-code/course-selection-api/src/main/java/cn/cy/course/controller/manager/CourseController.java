@@ -32,10 +32,10 @@ public class CourseController {
         return courseService.findList(searchMap);
     }
 
-    @PostMapping("/findPage")
-    public PageResult<Course> findPage(@RequestBody(required = false) Map<String,Object> searchMap,int page, int size){
-        System.out.println(page + "  " + size);
-        return  courseService.findPage(searchMap,page,size);
+    @PostMapping("/findPageByKey")
+    public PageResult<Course> findPage(String key,int page, int size){
+        //System.out.println(key);
+        return  courseService.findPageByKey(key,page,size);
     }
 
     @GetMapping("/findById")
@@ -62,4 +62,10 @@ public class CourseController {
         return new Result();
     }
 
+    //根据教师id查询教师授课信息
+    @GetMapping("/getDetailInfo")
+    public List<Course> getDetailInfo(String teacherId){
+        List<Course> courseList = courseService.getInfoByTeacherId(teacherId);
+        return courseList;
+    }
 }

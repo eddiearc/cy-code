@@ -25,10 +25,6 @@ public class Student implements Serializable {
      */
     private String name;
 
-    /**
-     * 密码
-     */
-    private String password;
 
     /**
      * 性别：0 女， 1 男
@@ -61,7 +57,6 @@ public class Student implements Serializable {
         return "Student{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
                 ", sex=" + sex +
                 ", idNumber='" + idNumber + '\'' +
                 ", college='" + college + '\'' +
@@ -84,14 +79,6 @@ public class Student implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Integer getSex() {

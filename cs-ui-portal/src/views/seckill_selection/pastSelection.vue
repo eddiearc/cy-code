@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import { getPastList, fetchPv, createArticle, updateArticle } from '@/api/seckill_selection'
+import { getHistoryList, fetchPv, createArticle, updateArticle } from '@/api/seckill_selection'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 
@@ -169,9 +169,8 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      getPastList().then(response => {
+      getHistoryList().then(response => {
         this.list = response
-
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false

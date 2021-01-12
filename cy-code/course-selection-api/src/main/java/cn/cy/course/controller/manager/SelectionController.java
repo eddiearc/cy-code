@@ -3,6 +3,7 @@ package cn.cy.course.controller.manager;
 
 import cn.cy.course.entity.PageResult;
 import cn.cy.course.entity.Result;
+import cn.cy.course.pojo.Course;
 import cn.cy.course.pojo.Selection;
 import cn.cy.course.service.SelectionService;
 import org.apache.dubbo.config.annotation.Reference;
@@ -68,4 +69,5 @@ public class SelectionController {
         selectionService.delete(studentId, courseId);
         return new Result();
     }
+
 }

@@ -53,7 +53,7 @@ public class StuSelectionController {
                 return o2.getTerm() - o1.getTerm();
             }
         });
-
+        System.out.println(res);
         return res;
     }
 

@@ -2,6 +2,7 @@ package cn.cy.course.service;
 
 import cn.cy.course.entity.PageResult;
 import cn.cy.course.pojo.Category;
+import cn.cy.course.pojo.vo.CategoryCountVo;
 
 import java.util.*;
 
@@ -33,4 +34,5 @@ public interface CategoryService {
 
     public void delete(Integer id);
 
+    CategoryCountVo countCategory();
 }

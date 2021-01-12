@@ -7,6 +7,35 @@ export function fetchList(query) {
     params: query
   })
 }
+export function fetchListByKey(query) {
+  return request({
+    url: '/course/findPageByKey',
+    method: 'post',
+    params: query
+  })
+}
+
+//获取课程分类列表 categoryInfo
+export function categoryInfo() {
+  return request({
+    url: '/category/findAll',
+    method: 'get'
+  })
+}
+//根据课程id查询课程信息
+export function getCourseInfo(id) {
+  return request({
+    url: '/course/findById?id='+id,
+    method: 'get'
+  })
+}
+//获取教师id列表
+export function teacherList() {
+  return request({
+    url: '/teacher/findAll',
+    method: 'get',
+  })
+}
 
 export function fetchArticle(id) {
   return request({
@@ -23,19 +52,19 @@ export function fetchPv(pv) {
     params: { pv }
   })
 }
-
+// 添加课程信息
 export function createArticle(data) {
   return request({
-    url: '/vue-element-admin/article/create',
+    url: '/course/add',
     method: 'post',
     data
   })
 }
-
+//修改课程信息
 export function updateArticle(data) {
   return request({
-    url: '/vue-element-admin/article/update',
+    url: '/course/update',
     method: 'post',
-    data
+    data: data
   })
 }

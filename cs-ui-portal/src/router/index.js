@@ -130,6 +130,23 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/myTeachCourse',
+    component: Layout,
+    children: [
+      {
+        path: 'studentList',
+        component: () => import('@/views/myTeachCourse/studentList'),
+        name: 'select_studentList',
+        meta: {
+          title: '选课学生名单',
+          icon: 'peoples',
+          roles: ['ROLE_ADMIN', 'ROLE_DEV','ROLE_TEACHER'],
+        },
+        hidden: true
+      }
+    ]
+  },
+  {
     path: '/seckillCourse',
     component: Layout,
     children: [
@@ -172,7 +189,8 @@ export const asyncRoutes = [
           title: '历史选课情况',
           icon: 'list',
           roles: ['ROLE_STUDENT']
-        }
+        },
+        hidden: true
       }
     ]
   },

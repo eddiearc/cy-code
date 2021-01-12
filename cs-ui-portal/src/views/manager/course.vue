@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.key" placeholder="关键字" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.key" placeholder="请输入查询条件" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
       </el-button>
@@ -49,8 +49,8 @@
         </template>
       </el-table-column>
       <el-table-column label="课程类别" align="center" width="100">
-        <template>
-          <span>计算机选修</span>
+        <template slot-scope="{row}" >
+          <span v-for="item in categoryList" v-if="row.categoryId==item.id">{{ item.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="课程总人数" align="center" width="100">
@@ -60,7 +60,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="{row}">
-          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-edit" @click="edit(row.id)">
+          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-edit" @click="handleUpdate(row.id)">
             编辑
           </el-button>
         </template>
@@ -68,33 +68,63 @@
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
-
+    
+    <!-- 新增课程信息 -->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="课程序号" prop="id">
-          <el-input v-model="temp.id" placeholder="Please enter" />
+          <el-input v-model="temp.id" placeholder="Please enter" :disabled="dialogStatus==='create'? false : true"/>
         </el-form-item>
         <el-form-item label="课程名称" prop="name">
           <el-input v-model="temp.name" placeholder="Please enter" />
         </el-form-item>
+        <el-form-item label="学分" prop="credit">
+          <el-input v-model="temp.credit" placeholder="Please enter" />
+        </el-form-item>
         <el-form-item label="上课时间" prop="time">
-          <el-date-picker v-model="temp.time" type="datetime" placeholder="Please pick a date" />
+          <el-input v-model="temp.time" placeholder="'周三3-4'" />
+        </el-form-item>
+        <el-form-item label="开始周数" prop="durationStart">
+          <el-input v-model="temp.durationStart" placeholder="Please enter" />
+        </el-form-item>
+        <el-form-item label="结束周数" prop="durationEnd">
+          <el-input v-model="temp.durationEnd" placeholder="Please enter" />
         </el-form-item>
         <el-form-item label="上课地点" prop="place">
-          <el-input v-model="temp.place" />
+          <el-input v-model="temp.place" placeholder="Please enter" />
         </el-form-item>
-        <el-form-item label="授课老师" prop="teacherName">
-          <el-input v-model="temp.teacherName" placeholder="Please enter" />
+        <el-form-item label="授课形式" prop="online">
+          <el-input v-model="temp.online" placeholder="0为线下 1为网课" />
+        </el-form-item>
+        <el-form-item label="授课教师" prop="teacherId">
+          <el-select v-model="temp.teacherId" placeholder="请选择">
+          <el-option
+            v-for="item in teacherIds"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
+        </el-form-item>
+        <el-form-item label="课程类别" prop="categoryId">
+          <el-select v-model="temp.categoryId" placeholder="请选择">
+          <el-option
+            v-for="item in categoryList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
         </el-form-item>
         <el-form-item label="总人数" prop="total">
           <el-input v-model="temp.total" placeholder="Please enter" />
         </el-form-item>
-        <div slot="footer" class="dialog-footer">
+        <div class="dialog-footer">
           <el-button @click="dialogFormVisible = false">
-            Cancel
+            取消
           </el-button>
           <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
-            Confirm
+            完成
           </el-button>
         </div>
       </el-form>
@@ -105,7 +135,7 @@
         <el-table-column prop="key" label="Channel" />
         <el-table-column prop="pv" label="Pv" />
       </el-table>
-      <span slot="footer" class="dialog-footer">
+      <span class="dialog-footer">
         <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
       </span>
     </el-dialog>
@@ -113,7 +143,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/manager/course.js'
+import { fetchList, fetchPv, createArticle, updateArticle,teacherList,getCourseInfo,categoryInfo,fetchListByKey } from '@/api/manager/course.js'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -150,6 +180,9 @@ export default {
   },
   data() {
     return {
+      categoryName: '',
+      categoryList: null,
+      teacherIds: null,
       tableKey: 0,
       list: null,
       total: 0,
@@ -157,7 +190,7 @@ export default {
       listQuery: {
         page: 1,
         size: 20,
-        importance: undefined,
+        key: '',
         title: undefined,
         type: undefined
       },
@@ -192,11 +225,36 @@ export default {
   },
   created() {
     this.getList()
+    this.getTeacherList()
+    this.getCategoryList()
   },
   methods: {
+    //获取课程类别列表
+    getCategoryList(){
+      categoryInfo().then(response => {
+        this.categoryList = response
+      })
+    },
+    //获取老师id列表
+    getTeacherList(){
+      teacherList().then(response => {
+        this.teacherIds = response
+      })
+    },
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
+        this.list = response.rows
+        this.total = response.total
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1.5 * 1000)
+      })
+    },
+    getListBykey() {
+      this.listLoading = true
+      fetchListByKey(this.listQuery).then(response => {
         this.list = response.rows
         this.total = response.total
 
@@ -207,8 +265,13 @@ export default {
       })
     },
     handleFilter() {
-      this.listQuery.page = 1
-      this.getList()
+      if(this.listQuery.key == null) {
+        this.listQuery.page = 1
+        this.getList()
+      }else {
+        this.listQuery.page = 1
+        this.getListBykey()
+      }
     },
     handleModifyStatus(row, status) {
       this.$message({
@@ -253,14 +316,19 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = 'vue-element-admin'
+          this.temp.stock = this.temp.total
+          for(let i = 0;i<this.teacherIds.length;i++){
+            if(this.teacherIds[i].id == this.temp.teacherId){
+              this.temp.teacherName = this.teacherIds[i].name
+            }
+          }
+          this.temp.term = 0
           createArticle(this.temp).then(() => {
             this.list.unshift(this.temp)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
-              message: 'Created Successfully',
+              message: '添加课程成功',
               type: 'success',
               duration: 2000
             })
@@ -269,26 +337,30 @@ export default {
       })
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
+      getCourseInfo(row).then(response => {
+        this.temp = response
+      })
+      // this.temp = Object.assign({}, row) // copy obj
+      // this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
+      console.log(1)
     },
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateArticle(tempData).then(() => {
+          //const tempData = Object.assign({}, this.temp)
+          //tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          updateArticle(this.temp).then(() => {
             const index = this.list.findIndex(v => v.id === this.temp.id)
             this.list.splice(index, 1, this.temp)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
-              message: 'Update Successfully',
+              message: '成功修改课程信息',
               type: 'success',
               duration: 2000
             })

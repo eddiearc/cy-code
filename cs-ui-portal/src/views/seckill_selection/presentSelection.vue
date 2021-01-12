@@ -79,10 +79,10 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
-          Cancel
+          取消
         </el-button>
         <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
-          Confirm
+          完成
         </el-button>
       </div>
     </el-dialog>
@@ -184,8 +184,9 @@ export default {
         this.listLoading = false
       })
     },
-    seckillRemove() {
-      seckillRemove().then(response => {
+    seckillRemove(id) {
+      seckillRemove(id).then(response => {
+        // 访问取消选课接口
         // 弹窗
         this.$message(response.message)
         this.getList()

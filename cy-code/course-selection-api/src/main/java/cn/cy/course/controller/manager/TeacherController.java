@@ -37,7 +37,7 @@ public class TeacherController {
     }
 
     @PostMapping("/findPage")
-    public PageResult<Teacher> findPage(@RequestBody Map<String,Object> searchMap,int page, int size){
+    public PageResult<Teacher> findPage(@RequestBody(required = false) Map<String,Object> searchMap,int page, int size){
         return  teacherService.findPage(searchMap,page,size);
     }
 

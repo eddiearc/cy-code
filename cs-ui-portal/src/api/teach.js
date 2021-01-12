@@ -7,6 +7,15 @@ export function fetchList() {
   })
 }
 
+//根据课程id查询选课学生名单
+export function getStudentList(id) {
+  return request({
+    url: '/teach/getStudentList?id='+id,
+    method: 'get'
+  })
+}
+
+
 export function fetchArticle(id) {
   return request({
     url: '/vue-element-admin/article/detail',

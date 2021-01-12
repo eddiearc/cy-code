@@ -6,6 +6,7 @@ import cn.cy.course.entity.Result;
 import cn.cy.course.pojo.User;
 import cn.cy.course.service.UserService;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public class UserController {
 
     @Reference
     private UserService userService;
+
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/findAll")
     public List<User> findAll(){
@@ -49,12 +52,14 @@ public class UserController {
 
     @PostMapping("/add")
     public Result add(@RequestBody User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.add(user);
         return new Result();
     }
 
     @PostMapping("/update")
     public Result update(@RequestBody User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.update(user);
         return new Result();
     }

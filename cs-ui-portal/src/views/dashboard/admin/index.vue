@@ -62,7 +62,7 @@ export default {
   components: {
     GithubCorner,
     PanelGroup,
-    LineChart,
+    //LineChart,
     RaddarChart,
     PieChart,
     BarChart,
