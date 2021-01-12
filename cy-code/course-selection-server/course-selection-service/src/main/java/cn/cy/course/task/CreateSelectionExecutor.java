@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * @create 2020/9/18 5:10 下午
  */
 @Component
-public class CreateSelectionExcutor {
+public class CreateSelectionExecutor {
 
     @Autowired
     private RedisTemplate redisTemplate;

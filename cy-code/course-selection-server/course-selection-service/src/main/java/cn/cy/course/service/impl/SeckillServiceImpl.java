@@ -1,10 +1,9 @@
 package cn.cy.course.service.impl;
 
 import cn.cy.course.pojo.Pack;
-import cn.cy.course.pojo.Selection;
 import cn.cy.course.service.SeckillService;
 import cn.cy.course.service.SelectionService;
-import cn.cy.course.task.CreateSelectionExcutor;
+import cn.cy.course.task.CreateSelectionExecutor;
 import cn.cy.course.util.RedisConstantKey;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ public class SeckillServiceImpl implements SeckillService {
     private RedisTemplate redisTemplate;
 
     @Autowired
-    private CreateSelectionExcutor createSelectionExcutor;
+    private CreateSelectionExecutor createSelectionExecutor;
 
     @Autowired
     private SelectionService selectionService;
@@ -48,7 +47,7 @@ public class SeckillServiceImpl implements SeckillService {
         redisTemplate.boundListOps(RedisConstantKey.SECKILL_QUEUE.toString()).leftPush(pack);
 
         //4. 异步处理任务Pack
-        createSelectionExcutor.createSelection();
+        createSelectionExecutor.createSelection();
     }
 
     @Override
@@ -66,6 +65,6 @@ public class SeckillServiceImpl implements SeckillService {
         redisTemplate.boundSetOps(RedisConstantKey.SELECTION_SET.toString() + pack.getStudentId()).remove(pack.getCourseId());
 
         //3. redis课程库存回滚
-        createSelectionExcutor.redisStockRollBack(pack.getCourseId());
+        createSelectionExecutor.redisStockRollBack(pack.getCourseId());
     }
 }
