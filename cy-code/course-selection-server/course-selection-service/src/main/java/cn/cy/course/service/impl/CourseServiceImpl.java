@@ -46,6 +46,7 @@ public class CourseServiceImpl implements CourseService {
      */
     @Override
     public PageResult<Course> findPage(int page, int size) {
+        System.out.println(page + "  " + size);
         PageHelper.startPage(page,size);
         Page<Course> courses = (Page<Course>) courseMapper.selectAll();
         return new PageResult<Course>(courses.getTotal(),courses.getResult());
@@ -62,6 +63,23 @@ public class CourseServiceImpl implements CourseService {
         return courseMapper.selectByExample(example);
     }
 
+    @Override
+    public PageResult<Course> findPageByKey(String key, int page, int size) {
+        System.out.println(page + "  " + size);
+        System.out.println(key);
+        PageHelper.startPage(page,size);
+//        Course c = new Course();
+//        c.setName(key);
+        Example example = new Example(Course.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andLike("name","%"+key+"%");
+        criteria.orLike("teacherName","%"+key+"%");
+        Page<Course> courses = (Page<Course>) courseMapper.selectByExample(example);
+        System.out.println(courses);
+        return new PageResult<Course>(courses.getTotal(),courses.getResult());
+    }
+
+
     /**
      * 分页+条件查询
      * @param searchMap
@@ -69,7 +87,7 @@ public class CourseServiceImpl implements CourseService {
      * @param size
      * @return
      */
-    @Override
+
     public PageResult<Course> findPage(Map<String, Object> searchMap, int page, int size) {
         PageHelper.startPage(page,size);
         Example example = createExample(searchMap);

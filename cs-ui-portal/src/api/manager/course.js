@@ -3,6 +3,13 @@ import request from '@/utils/request'
 export function fetchList(query) {
   return request({
     url: '/course/findPage',
+    method: 'get',
+    params: query
+  })
+}
+export function fetchListByKey(query) {
+  return request({
+    url: '/course/findPageByKey',
     method: 'post',
     params: query
   })
