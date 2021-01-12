@@ -37,8 +37,11 @@
         </template>
       </el-table-column>
       <el-table-column label="课程类别" align="center" width="100">
-        <template>
-          <span>计算机选修</span>
+        <template slot-scope="{row}">
+          <span v-if="row.categoryId == 1">{{'自然科学'}}</span>
+          <span v-if="row.categoryId == 2">{{'体育艺术'}}</span>
+          <span v-if="row.categoryId == 3">{{'创新创业'}}</span>
+          <span v-if="row.categoryId == 4">{{'计算机选修'}}</span>
         </template>
       </el-table-column>
       <el-table-column label="剩余" align="center" width="80">

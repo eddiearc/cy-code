@@ -32,10 +32,10 @@ public class CourseController {
         return courseService.findList(searchMap);
     }
 
-    @PostMapping("/findPage")
-    public PageResult<Course> findPage(@RequestBody(required = false) Map<String,Object> searchMap,int page, int size){
-        System.out.println(page + "  " + size);
-        return  courseService.findPage(searchMap,page,size);
+    @PostMapping("/findPageByKey")
+    public PageResult<Course> findPage(String key,int page, int size){
+        //System.out.println(key);
+        return  courseService.findPageByKey(key,page,size);
     }
 
     @GetMapping("/findById")

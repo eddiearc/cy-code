@@ -22,7 +22,7 @@ public interface CourseService {
     public List<Course> findList(Map<String, Object> searchMap);
 
 
-    public PageResult<Course> findPage(Map<String, Object> searchMap, int page, int size);
+    public PageResult<Course> findPageByKey(String key, int page, int size);
 
 
     public Course findById(String id);

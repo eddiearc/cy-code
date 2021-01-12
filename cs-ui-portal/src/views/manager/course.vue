@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.key" placeholder="关键字" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.key" placeholder="请输入查询条件" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
       </el-button>
@@ -49,8 +49,8 @@
         </template>
       </el-table-column>
       <el-table-column label="课程类别" align="center" width="100">
-        <template>
-          <span>计算机选修</span>
+        <template slot-scope="{row}" >
+          <span v-for="item in categoryList" v-if="row.categoryId==item.id">{{ item.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="课程总人数" align="center" width="100">
@@ -143,7 +143,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle,teacherList,getCourseInfo,categoryInfo } from '@/api/manager/course.js'
+import { fetchList, fetchPv, createArticle, updateArticle,teacherList,getCourseInfo,categoryInfo,fetchListByKey } from '@/api/manager/course.js'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -180,6 +180,7 @@ export default {
   },
   data() {
     return {
+      categoryName: '',
       categoryList: null,
       teacherIds: null,
       tableKey: 0,
@@ -189,7 +190,7 @@ export default {
       listQuery: {
         page: 1,
         size: 20,
-        importance: undefined,
+        key: '',
         title: undefined,
         type: undefined
       },
@@ -245,6 +246,17 @@ export default {
       fetchList(this.listQuery).then(response => {
         this.list = response.rows
         this.total = response.total
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1.5 * 1000)
+      })
+    },
+    getListBykey() {
+      this.listLoading = true
+      fetchListByKey(this.listQuery).then(response => {
+        this.list = response.rows
+        this.total = response.total
 
         // Just to simulate the time of the request
         setTimeout(() => {
@@ -253,8 +265,13 @@ export default {
       })
     },
     handleFilter() {
-      this.listQuery.page = 1
-      this.getList()
+      if(this.listQuery.key == null) {
+        this.listQuery.page = 1
+        this.getList()
+      }else {
+        this.listQuery.page = 1
+        this.getListBykey()
+      }
     },
     handleModifyStatus(row, status) {
       this.$message({
