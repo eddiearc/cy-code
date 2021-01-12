@@ -35,6 +35,19 @@
 - Thymeleaf：生成静态页面，减少渲染速度
 - Vue.js
 
+## 部署图
+<img src="https://tva1.sinaimg.cn/large/008eGmZEly1gmknsb5txej30sa193tbg.jpg" style="zoom:50%;" />
+
+## 高并发选课Core
+### 思维导图
+![流程](https://tva1.sinaimg.cn/large/008eGmZEly1gmjre3wbqtj30u00v31hi.jpg)
+### 大致流程
+![选课流程](https://tva1.sinaimg.cn/large/008eGmZEly1gmjsfzeox4j31bu0u0gqt.jpg)
+### 核心类图
+![UML类图](https://tva1.sinaimg.cn/large/008eGmZEly1gmknyqef2qj312k0u07ax.jpg)
+### 时序图
+![Core时序图](https://tva1.sinaimg.cn/large/008eGmZEly1gmkou3vh7bj31k10u078t.jpg)
+
 ## 设计文档
 - [架构设计](https://gitee.com/eddievim/cy-code/wikis/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1)
 - [数据库设计](https://gitee.com/eddievim/cy-code/wikis/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1)
